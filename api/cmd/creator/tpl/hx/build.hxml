@@ -1,0 +1,7 @@
+--library ideckia_api
+--library hxnodejs
+--dce full
+-D js-es=6
+::name::
+
+--js index.js
