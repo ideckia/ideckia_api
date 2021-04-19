@@ -1,11 +1,24 @@
 # commands
 
-Here is the API for the commands used by [ideckia]().
+Here is the API for the commands used by [ideckia](https://github.com/ideckia/ideckia_server).
 
-# Command structure
+## Concepts
 
-* setProps(props, initialState,server):Void
+* Layout: Bunch of items
+* Item: An element that has one or more states and is clickable.
+* State: Definition of the item status: text, textColor, bgColor, icon and a command which will be executed when the item is pressed.
+
+## Command structure
+
+* setProps(props, initialState, server):Void
   * Server will call to this to inject the configuration of the command instance
+  * Parameters:
+    * props: Properties definde for the instance in the layout
+    * initialState: Initial state of the item of the layout
+    * server: Some tools that server offers:
+      * log: Logs in the server process. Four levels (debug, info, warn, error)
+      * sendToClient: a function to send to the client the state of the item.
+      * props: Properties read by the server from `app.props` file
 * init():Void
   * Entry point.
   * The server will call to this once, to initialize what you need

@@ -1,5 +1,5 @@
---library ideckia_api
 --library hxnodejs
+--library ideckia_api
 --dce full
 -D js-es=6
 ::name::

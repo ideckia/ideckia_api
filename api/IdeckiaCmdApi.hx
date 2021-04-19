@@ -65,4 +65,5 @@ typedef IdeckiaServer = {
         var error:(v:Dynamic) -> Void;
     }
     var sendToClient:(props:ItemState) -> Void;
+    var props:Map<String, String>;
 }
