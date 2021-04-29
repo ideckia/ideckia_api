@@ -1,11 +1,11 @@
 package api;
 
-typedef IdeckiaCmd = api.cmd.IdeckiaCmd;
+typedef IdeckiaAction = api.action.IdeckiaAction;
 
 // Client messages
 enum abstract ClientMsgType(String) {
 	var click;
-	var getCommands;
+	var getActions;
 }
 
 enum abstract Caller(String) {
@@ -22,7 +22,7 @@ typedef ClientMsg = {
 // Server messages
 enum abstract ServerMsgType(String) {
 	var layout;
-	var commandDescriptors;
+	var actionDescriptors;
 }
 
 typedef ServerMsg<T> = {
@@ -53,7 +53,7 @@ typedef PropDescriptor = {
 	var ?values:Array<String>;
 }
 
-typedef CmdDescriptor = {
+typedef ActionDescriptor = {
 	var ?id:UInt;
 	var name:String;
 	var ?props:Array<PropDescriptor>;
