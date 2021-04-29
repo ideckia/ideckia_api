@@ -2,7 +2,7 @@ package api.action;
 
 import haxe.macro.ExprTools;
 
-using api.IdeckiaActionApi;
+using api.IdeckiaApi;
 
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.Printer;

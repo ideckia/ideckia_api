@@ -1,6 +1,6 @@
 package;
 
-using api.IdeckiaActionApi;
+using api.IdeckiaApi;
 
 typedef Props = {
 	@:editable("property description", "default value", ["possible", "values", "for the property"])

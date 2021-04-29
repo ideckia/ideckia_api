@@ -1,6 +1,6 @@
 package api.action;
 
-using api.IdeckiaActionApi;
+using api.IdeckiaApi;
 
 @:keep
 @:autoBuild(api.action.IdeckiaAction.build())
