@@ -1,4 +1,4 @@
-package api.cmd.creator;
+package api.action.creator;
 
 #if macro
 import haxe.io.Path;

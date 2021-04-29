@@ -1,15 +1,15 @@
-package api.cmd.creator;
+package api.action.creator;
 
 import sys.FileSystem;
 import haxe.io.Path;
 
 using StringTools;
 
-class CmdCreator {
-	public static function create(?commandsPath:String) {
+class ActionCreator {
+	public static function create(?actionsPath:String) {
 		Sys.stdout().writeString('What template (hx | js)?  ');
 		var tplType = Sys.stdin().readLine().toString();
-		Sys.stdout().writeString('Command name?  ');
+		Sys.stdout().writeString('Action name?  ');
 		var name = Sys.stdin().readLine().toString();
 		var correctName = name.charAt(0).toUpperCase() + name.substr(1);
 
@@ -20,10 +20,10 @@ class CmdCreator {
 			tplFiles = Macros.getJsTemplate();
 
 		if (tplFiles != null) {
-			if (commandsPath == null)
-				commandsPath = Path.directory(Sys.programPath());
+			if (actionsPath == null)
+				actionsPath = Path.directory(Sys.programPath());
 
-			var directory = Path.join([FileSystem.fullPath(commandsPath), name.toLowerCase()]);
+			var directory = Path.join([FileSystem.fullPath(actionsPath), name.toLowerCase()]);
 			FileSystem.createDirectory(directory);
 
 			var filename;
@@ -39,7 +39,7 @@ class CmdCreator {
 				sys.io.File.saveContent(directory + '/$filename', fileContent);
 			}
 
-			Sys.stdout().writeString('Creating [$name] command from template [$tplType] in [$directory]');
+			Sys.stdout().writeString('Creating [$name] action from template [$tplType] in [$directory]');
 		} else {
 			Sys.stdout().writeString('Could not found the [$tplType] template.');
 		}

@@ -1,10 +1,10 @@
-package api.cmd;
+package api.action;
 
-using api.IdeckiaCmdApi;
+using api.IdeckiaApi;
 
 @:keep
-@:autoBuild(api.cmd.IdeckiaCmd.build())
-abstract class IdeckiaCmd {
+@:autoBuild(api.action.IdeckiaAction.build())
+abstract class IdeckiaAction {
 	var state:ItemState;
 	var server:IdeckiaServer;
 
@@ -16,5 +16,5 @@ abstract class IdeckiaCmd {
 
 	abstract public function toJson():Any;
 
-	abstract public function getCmdDescriptor():CmdDescriptor;
+	abstract public function getActionDescriptor():ActionDescriptor;
 }

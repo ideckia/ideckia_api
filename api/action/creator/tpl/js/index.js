@@ -18,7 +18,7 @@ class ::name:: {
 		return { name : "::lowerName::", props : this.props};
 	}
 	
-	getCmdDescriptor() {
+	getActionDescriptor() {
 		return {
 			name : "::name::",
 			// props : [{
@@ -31,4 +31,4 @@ class ::name:: {
 	}
 }
 
-exports['IdeckiaCmd'] = ::name::;
+exports['IdeckiaAction'] = ::name::;

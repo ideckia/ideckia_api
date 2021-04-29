@@ -1,13 +1,13 @@
 package;
 
-using api.IdeckiaCmdApi;
+using api.IdeckiaApi;
 
 typedef Props = {
 	@:editable("property description", "default value", ["possible", "values", "for the property"])
 	var propertyName:String;
 }
 
-class ::name:: extends IdeckiaCmd {
+class ::name:: extends IdeckiaAction {
 	override public function init() {}
 
 	public function execute():ItemState {
@@ -30,7 +30,7 @@ class ::name:: extends IdeckiaCmd {
 			return { name : "::lowerName::", props : this.props};
 		}
 
-		public function getCmdDescriptor():CmdDescriptor {
+		public function getActionDescriptor():ActionDescriptor {
 			return {
 				name : "::name::",
 				props : [{

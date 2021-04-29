@@ -1,8 +1,8 @@
-package api.cmd;
+package api.action;
 
 import haxe.macro.ExprTools;
 
-using api.IdeckiaCmdApi;
+using api.IdeckiaApi;
 
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.Printer;
@@ -11,8 +11,8 @@ import haxe.macro.Expr;
 import haxe.macro.Context;
 import haxe.macro.Type;
 
-class IdeckiaCmd {
-	static inline var EXPOSE_NAME = 'IdeckiaCmd';
+class IdeckiaAction {
+	static inline var EXPOSE_NAME = 'IdeckiaAction';
 	static inline var EDITABLE_METADATA = ':editable';
 	static inline var EDITABLE_DESCRIPTION_IDX = 0;
 	static inline var EDITABLE_DEFAULT_VALUE_IDX = 1;
@@ -28,7 +28,8 @@ class IdeckiaCmd {
 				var classType:ClassType = t.get();
 				className = classType.name;
 
-				// Add :expose('IdeckiaCmd') metadata to be available from Javascript under the name defined in 'IdeckiaCmd'
+				// Add :expose('IdeckiaAction') metadata to be available from Javascript under
+				// the name defined in 'IdeckiaAction'
 				classType.meta.add(':expose', [macro $v{EXPOSE_NAME}], Context.currentPos());
 				// Generate toJson method
 				fields.push(createToJsonFunction(className));
@@ -49,7 +50,7 @@ class IdeckiaCmd {
 						switch type.type {
 							case TAnonymous(a):
 								var anonType:AnonType = a.get();
-								var cmdDescriptor:CmdDescriptor = {name: className};
+								var actionDescriptor:ActionDescriptor = {name: className};
 
 								var propDescriptor:PropDescriptor;
 								var description;
@@ -92,9 +93,9 @@ class IdeckiaCmd {
 									});
 								}
 
-								// Generate getCmdDescriptor method
-								cmdDescriptor.props = propDescriptors;
-								fields.push(createGetCmdDescriptorFunction(className, cmdDescriptor));
+								// Generate getActionDescriptor method
+								actionDescriptor.props = propDescriptors;
+								fields.push(createGetActionDescriptorFunction(className, actionDescriptor));
 							default:
 						}
 
@@ -232,7 +233,7 @@ class IdeckiaCmd {
 	static function createToJsonFunction(className:String):Field {
 		return {
 			name: 'toJson',
-			doc: 'Method that returns this command Json representation to put it in the ideckia layout.',
+			doc: 'Method that returns this action Json representation to put it in the ideckia layout.',
 			access: [APublic, AInline],
 			kind: FFun({
 				args: [],
@@ -246,15 +247,15 @@ class IdeckiaCmd {
 		};
 	}
 
-	static function createGetCmdDescriptorFunction(className:String, cmdDescriptor:CmdDescriptor):Field {
+	static function createGetActionDescriptorFunction(className:String, actionDescriptor:ActionDescriptor):Field {
 		return {
-			name: 'getCmdDescriptor',
-			doc: 'Method that returns command properties descriptor (name, description, values).',
+			name: 'getActionDescriptor',
+			doc: 'Method that returns action properties descriptor (name, description, values).',
 			access: [APublic, AInline],
 			kind: FFun({
 				args: [],
-				ret: macro:CmdDescriptor,
-				expr: macro return $v{cmdDescriptor}
+				ret: macro:ActionDescriptor,
+				expr: macro return $v{actionDescriptor}
 			}),
 			pos: Context.currentPos()
 		};
