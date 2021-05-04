@@ -95,6 +95,7 @@ class IdeckiaAction {
 
 								// Generate getActionDescriptor method
 								actionDescriptor.props = propDescriptors;
+								createMarkdownPropsTable(actionDescriptor);
 								fields.push(createGetActionDescriptorFunction(className, actionDescriptor));
 							default:
 						}
@@ -112,7 +113,7 @@ class IdeckiaAction {
 							var propName = pd.name;
 							var defValue = pd.defaultValue;
 							// trace('$propName -> $defValue');
-							if (defValue != null) {
+							if (defValue != null && defValue != 'null') {
 								/*
 									Example:
 									if (this.props.delay_ms == null) {
@@ -259,5 +260,20 @@ class IdeckiaAction {
 			}),
 			pos: Context.currentPos()
 		};
+	}
+	
+	static function createMarkdownPropsTable(actionDescriptor:ActionDescriptor) {
+		var table = '| Name | Type | Description | Default | Possible values |\n';
+		table += '| ----- |----- | ----- | ----- | ----- |\n';
+		
+		for (prop in actionDescriptor.props) {
+			table += '| ${prop.name}';
+			table += '| ${prop.type}';
+			table += '| ${prop.description}';
+			table += '| ${prop.defaultValue}';
+			table += '| ${prop.values} |\n';
+		}
+		
+		sys.io.File.saveContent('./readme_table.md', table);
 	}
 }
