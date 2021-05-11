@@ -1,15 +1,14 @@
 class ::name:: {
 	
-	setProps(props, initialState,server) {
+	setProps(props, server) {
 		this.props = props;
-		this.state = initialState;
 		this.server = server;
 	}
 	
 	init() {
 	}
 	
-	execute() {
+	execute(currentState) {
 		throw 'Not implemented';
 		// return state;
 	}

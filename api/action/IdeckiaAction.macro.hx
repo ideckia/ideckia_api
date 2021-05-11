@@ -128,10 +128,9 @@ class IdeckiaAction {
 						}
 
 						/* Create
-								function setProps(props:Props, initialState:ItemState, server:IdeckiaServer) {
+								function setProps(props:Props, server:IdeckiaServer) {
 									this.props = props;
 									// default assignments
-									this.state = initialState;
 									this.server = server;
 								}
 							}
@@ -145,11 +144,6 @@ class IdeckiaAction {
 										type: macro:Any
 									},
 									{
-										name: 'initialState',
-										opt: true,
-										type: macro:ItemState
-									},
-									{
 										name: 'server',
 										opt: true,
 										type: macro:IdeckiaServer
@@ -158,7 +152,6 @@ class IdeckiaAction {
 								expr: macro {
 									this.props = props;
 									$b{assignDefaults};
-									this.state = initialState;
 									this.server = server;
 								}
 							}),
@@ -268,12 +261,12 @@ class IdeckiaAction {
 		
 		for (prop in actionDescriptor.props) {
 			table += '| ${prop.name}';
-			table += '| ${prop.type}';
-			table += '| ${prop.description}';
-			table += '| ${prop.defaultValue}';
-			table += '| ${prop.values} |\n';
+			table += ' | ${prop.type}';
+			table += ' | ${prop.description}';
+			table += ' | ${prop.defaultValue}';
+			table += ' | ${prop.values} |\n';
 		}
 		
-		sys.io.File.saveContent('./readme_table.md', table);
+		sys.io.File.saveContent('./props_table.md', table);
 	}
 }
