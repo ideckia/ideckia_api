@@ -11,6 +11,7 @@ class ::name:: extends IdeckiaAction {
 	override public function init() {}
 
 	public function execute(currentState:ItemState):js.lib.Promise<ItemState> {
+		// return return new js.lib.Promise((resolve, reject) -> resolve(currentState));
 		throw new haxe.exceptions.NotImplementedException();
 	}
 
