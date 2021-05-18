@@ -10,7 +10,9 @@ class ::name:: {
 	
 	execute(currentState) {
 		throw 'Not implemented';
-		// return state;
+		// return new Promise((resolve, reject) => {
+		// 		resolve(currentState);
+		// });
 	}
 	
 	toJson() {

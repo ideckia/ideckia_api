@@ -10,7 +10,7 @@ typedef Props = {
 class ::name:: extends IdeckiaAction {
 	override public function init() {}
 
-	public function execute(currentState:ItemState):ItemState {
+	public function execute(currentState:ItemState):js.lib.Promise<ItemState> {
 		throw new haxe.exceptions.NotImplementedException();
 	}
 

@@ -11,7 +11,7 @@ abstract class IdeckiaAction {
 
 	public function init():Void {}
 
-	abstract public function execute(currentState:ItemState):ItemState;
+	abstract public function execute(currentState:ItemState):js.lib.Promise<ItemState>;
 
 	abstract public function toJson():Any;
 
