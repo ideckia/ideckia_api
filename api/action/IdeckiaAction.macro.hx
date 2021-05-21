@@ -256,14 +256,14 @@ class IdeckiaAction {
 	}
 	
 	static function createMarkdownPropsTable(actionDescriptor:ActionDescriptor) {
-		var table = '| Name | Type | Description | Default | Possible values |\n';
+		var table = '| Name | Type | Default | Description | Possible values |\n';
 		table += '| ----- |----- | ----- | ----- | ----- |\n';
 		
 		for (prop in actionDescriptor.props) {
 			table += '| ${prop.name}';
 			table += ' | ${prop.type}';
-			table += ' | ${prop.description}';
 			table += ' | ${prop.defaultValue}';
+			table += ' | ${prop.description}';
 			table += ' | ${prop.values} |\n';
 		}
 		
