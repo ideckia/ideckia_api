@@ -80,6 +80,8 @@ class IdeckiaAction {
 										}
 									}
 
+									classField.meta.add(':optional', [], Context.currentPos());
+
 									// Get the property type
 									propType = TypeTools.toString(classField.type);
 
@@ -150,7 +152,7 @@ class IdeckiaAction {
 									}
 								],
 								expr: macro {
-									this.props = props;
+									this.props = (props == null) ? {} : props;
 									$b{assignDefaults};
 									this.server = server;
 								}
@@ -254,11 +256,11 @@ class IdeckiaAction {
 			pos: Context.currentPos()
 		};
 	}
-	
+
 	static function createMarkdownPropsTable(actionDescriptor:ActionDescriptor) {
 		var table = '| Name | Type | Default | Description | Possible values |\n';
 		table += '| ----- |----- | ----- | ----- | ----- |\n';
-		
+
 		for (prop in actionDescriptor.props) {
 			table += '| ${prop.name}';
 			table += ' | ${prop.type}';
@@ -266,7 +268,7 @@ class IdeckiaAction {
 			table += ' | ${prop.description}';
 			table += ' | ${prop.values} |\n';
 		}
-		
+
 		sys.io.File.saveContent('./props_table.md', table);
 	}
 }
