@@ -32,4 +32,4 @@ class ::name:: {
 	}
 }
 
-exports['IdeckiaAction'] = ::name::;
+exports.IdeckiaAction = ::name::;

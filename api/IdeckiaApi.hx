@@ -6,6 +6,7 @@ typedef IdeckiaAction = api.action.IdeckiaAction;
 enum abstract ClientMsgType(String) {
 	var click;
 	var getActions;
+	var getServerItem;
 }
 
 enum abstract Caller(String) {
@@ -23,6 +24,7 @@ typedef ClientMsg = {
 enum abstract ServerMsgType(String) {
 	var layout;
 	var actionDescriptors;
+	var serverItem;
 }
 
 typedef ServerMsg<T> = {
@@ -59,12 +61,21 @@ typedef ActionDescriptor = {
 	var ?props:Array<PropDescriptor>;
 }
 
+#if macro
+typedef Promise<T> = Dynamic<T>;
+#else
+typedef Promise<T> = js.lib.Promise<T>;
+#end
+
+enum abstract DialogType(String) {
+	var info;
+	var error;
+	var question;
+	var entry;
+}
+
 typedef IdeckiaServer = {
-	var log:{
-		var debug:(v:Dynamic) -> Void;
-		var info:(v:Dynamic) -> Void;
-		var warn:(v:Dynamic) -> Void;
-		var error:(v:Dynamic) -> Void;
-	}
+	var log:(v:Dynamic) -> Void;
+	var dialog:(type:DialogType, text:String) -> Promise<String>;
 	var sendToClient:(props:ItemState) -> Void;
 }
