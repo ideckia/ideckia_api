@@ -1,7 +1,7 @@
 class ::name:: {
 	
 	setProps(props, server) {
-		this.props = props;
+		this.props = props == null ? {} : props;
 		this.server = server;
 	}
 	
