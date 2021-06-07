@@ -68,10 +68,10 @@ typedef Promise<T> = js.lib.Promise<T>;
 #end
 
 enum abstract DialogType(String) {
-	var info;
-	var error;
-	var question;
-	var entry;
+	var Info = 'info';
+	var Error = 'error';
+	var Question = 'question';
+	var Entry = 'entry';
 }
 
 typedef IdeckiaServer = {
