@@ -72,6 +72,7 @@ enum abstract DialogType(String) {
 	var Error = 'error';
 	var Question = 'question';
 	var Entry = 'entry';
+	var FileSelect = 'fileselect';
 }
 
 typedef IdeckiaServer = {
