@@ -130,7 +130,7 @@ class IdeckiaAction {
 						}
 
 						/* Create
-								function setProps(props:Props, server:IdeckiaServer) {
+								function setup(props:Props, server:IdeckiaServer) {
 									this.props = props;
 									// default assignments
 									this.server = server;
@@ -138,7 +138,7 @@ class IdeckiaAction {
 							}
 						 */
 						fields.push({
-							name: 'setProps',
+							name: 'setup',
 							kind: FFun({
 								args: [
 									{

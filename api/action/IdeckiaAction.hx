@@ -7,7 +7,7 @@ using api.IdeckiaApi;
 abstract class IdeckiaAction {
 	var server:IdeckiaServer;
 
-	abstract public function setProps(props:Any, ?server:IdeckiaServer):Void;
+	abstract public function setup(props:Any, ?server:IdeckiaServer):Void;
 
 	public function init():Void {}
 

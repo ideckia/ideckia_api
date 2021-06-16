@@ -20,7 +20,7 @@ class ::name:: extends IdeckiaAction {
 		var props:Props;
 		var server:IdeckiaServer;
 
-		public function setProps(props:Props, server:IdeckiaServer) {
+		public function setup(props:Props, server:IdeckiaServer) {
 			this.props = props;
 			this.server = server;
 		}
