@@ -5,6 +5,7 @@ typedef IdeckiaAction = api.action.IdeckiaAction;
 // Client messages
 enum abstract ClientMsgType(String) {
 	var click;
+	var longPress;
 	var getActions;
 	var getServerItem;
 }
