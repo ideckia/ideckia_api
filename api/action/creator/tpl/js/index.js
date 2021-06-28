@@ -1,4 +1,4 @@
-class ::name:: {
+class :: name:: {
 
     setup(props, server) {
         this.props = props == null ? {} : props;
@@ -13,6 +13,12 @@ class ::name:: {
         // return new Promise((resolve, reject) => {
         // 		resolve(currentState);
         // });
+    }
+
+    onLongPress(currentState) {
+        return new Promise((resolve, reject) => {
+            resolve(currentState);
+        });
     }
 
     toJson() {
@@ -32,4 +38,4 @@ class ::name:: {
     }
 }
 
-exports.IdeckiaAction = ::name:: ;
+exports.IdeckiaAction = :: name:: ;
