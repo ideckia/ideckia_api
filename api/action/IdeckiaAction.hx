@@ -13,6 +13,9 @@ abstract class IdeckiaAction {
 
 	abstract public function execute(currentState:ItemState):js.lib.Promise<ItemState>;
 
+	public function onLongPress(currentState:ItemState):js.lib.Promise<ItemState>
+		return new js.lib.Promise((resolve, reject) -> resolve(currentState));
+
 	abstract public function toJson():Any;
 
 	abstract public function getActionDescriptor():ActionDescriptor;
