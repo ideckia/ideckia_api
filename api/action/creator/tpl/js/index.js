@@ -5,7 +5,7 @@ class :: name:: {
         this.server = server;
     }
 
-    init() {
+    init(initialState) {
     }
 
     execute(currentState) {

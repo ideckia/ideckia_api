@@ -1,0 +1,16 @@
+{
+	"name": "ideckia_api",
+	"classPath": ".",
+	"url": "https://github.com/ideckia/ideckia_api/",
+	"contributors": [
+		"josuigoa"
+	],
+	"version": "1.0.0",
+	"releasenote": "First release",
+	"tags": [
+		"ideckia",
+		"nodejs",
+		"deck"
+	],
+	"license": "GPL"
+}

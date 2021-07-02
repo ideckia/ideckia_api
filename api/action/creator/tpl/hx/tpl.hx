@@ -8,7 +8,7 @@ typedef Props = {
 }
 
 class ::name:: extends IdeckiaAction {
-	override public function init() {}
+	override public function init(initialState:ItemState) {}
 
 	public function execute(currentState:ItemState):js.lib.Promise<ItemState> {
 		// return new js.lib.Promise((resolve, reject) -> resolve(currentState));
