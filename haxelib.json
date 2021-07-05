@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.0",
-	"releasenote": "First release",
+	"version": "1.0.1",
+	"releasenote": "add ItemState.textSize. different row/column on each folder",
 	"tags": [
 		"ideckia",
 		"nodejs",
