@@ -37,6 +37,8 @@ typedef ServerItem = {
 
 typedef Folder = {
 	> BaseState,
+	var ?rows:UInt;
+	var ?columns:UInt;
 	var ?id:FolderId;
 	var items:Array<ServerItem>;
 }
