@@ -35,6 +35,7 @@ typedef ServerMsg<T> = {
 
 typedef ItemState = {
 	var ?text:String;
+	var ?textSize:UInt;
 	var ?textColor:String;
 	var ?icon:String;
 	var ?bgColor:String;
