@@ -1,4 +1,4 @@
-class :: name:: {
+class ::name:: {
 
     setup(props, server) {
         this.props = props == null ? {} : props;
@@ -38,4 +38,4 @@ class :: name:: {
     }
 }
 
-exports.IdeckiaAction = :: name:: ;
+exports.IdeckiaAction = ::name:: ;
