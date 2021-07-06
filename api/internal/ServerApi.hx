@@ -46,6 +46,7 @@ typedef Folder = {
 typedef Layout = {
 	var rows:UInt;
 	var columns:UInt;
+	var ?textSize:UInt;
 	var folders:Array<Folder>;
 	var ?icons:Array<{key:String, value:String}>;
 }
