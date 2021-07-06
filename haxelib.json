@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.1",
-	"releasenote": "add ItemState.textSize. different row/column on each folder",
+	"version": "1.0.2",
+	"releasenote": "add Layout.textSize. Add readme when creating actions",
 	"tags": [
 		"ideckia",
 		"nodejs",
