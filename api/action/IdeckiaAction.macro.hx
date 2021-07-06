@@ -3,6 +3,7 @@ package api.action;
 import haxe.macro.ExprTools;
 
 using api.IdeckiaApi;
+using StringTools;
 
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.Printer;
@@ -263,7 +264,7 @@ class IdeckiaAction {
 
 		for (prop in actionDescriptor.props) {
 			table += '| ${prop.name}';
-			table += ' | ${prop.type}';
+			table += ' | ${prop.type.replace('<', '&lt;').replace('>', '&gt;')}';
 			table += ' | ${prop.defaultValue}';
 			table += ' | ${prop.description}';
 			table += ' | ${prop.values} |\n';
