@@ -3,7 +3,7 @@ package;
 using api.IdeckiaApi;
 
 typedef Props = {
-	@:editable("property description", "default value", ["possible", "values", "for the property"])
+	@:editable("Property description", "default value", ["possible", "values", "for the property"])
 	var propertyName:String;
 }
 

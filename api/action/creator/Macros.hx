@@ -29,6 +29,10 @@ class Macros {
 				templateFiles.push(macro $v{f} => $v{content});
 			}
 
+			var readme = 'readme.md';
+			var content = sys.io.File.getContent(Path.join([directory, 'tpl', readme]));
+			templateFiles.push(macro $v{readme} => $v{content});
+
 			// return as expression
 			return macro $a{templateFiles};
 		} else {
