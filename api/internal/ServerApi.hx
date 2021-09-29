@@ -21,13 +21,12 @@ typedef Action = {
 typedef ServerState = {
 	> BaseState,
 	var ?id:StateId;
-	var ?action:Action;
+	var ?actions:Array<Action>;
 }
 
 enum Kind {
 	SwitchFolder(toFolder:FolderId, state:ServerState);
-	SingleState(state:ServerState);
-	MultiState(index:Int, states:Array<ServerState>);
+	States(?index:Int, list:Array<ServerState>);
 }
 
 typedef ServerItem = {

@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.2",
-	"releasenote": "add Layout.textSize. Add readme when creating actions",
+	"version": "1.0.3",
+	"releasenote": "Joined SingleState/MultiState to States. Array of actions in state instead of a single action.",
 	"tags": [
 		"ideckia",
 		"nodejs",
