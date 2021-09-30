@@ -26,7 +26,7 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
           * Ok/Cancel type notification
         * entry(text:String):Promise<String>
           * User input dialog
-      * sendToClient: a function to send to the client the state of the item.
+      * updateClientState: a function to send to the client the state of the item.
 * init():Void
   * Entry point.
   * The server will call to this once, to initialize what you need
