@@ -80,5 +80,5 @@ enum abstract DialogType(String) {
 typedef IdeckiaServer = {
 	var log:(v:Dynamic) -> Void;
 	var dialog:(type:DialogType, text:String) -> Promise<String>;
-	var sendToClient:(props:ItemState) -> Void;
+	var updateClientState:(props:ItemState) -> Void;
 }
