@@ -14,15 +14,15 @@ TODO
 
 ```json
 {
-    "state": {
-        "text": "::name:: example",
-        "bgColor": "00ff00",
-        "action": {
-            "name": "::lowerName::",
-            "props": {
-                "propertyName": "possible"
+    "text": "::name:: example",
+    "bgColor": "00ff00",
+        "actions": [
+            {
+                "name": "::lowerName::",
+                "props": {
+                    "propertyName": "possible"
             }
         }
-    }
+    ]
 }
 ```
