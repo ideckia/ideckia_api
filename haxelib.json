@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.4",
-	"releasenote": "sentToClient renamed to updateClientState",
+	"version": "1.0.5",
+	"releasenote": "identify folders by names instead of number ids",
 	"tags": [
 		"ideckia",
 		"nodejs",

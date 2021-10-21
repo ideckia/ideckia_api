@@ -25,7 +25,7 @@ typedef ServerState = {
 }
 
 enum Kind {
-	SwitchFolder(toFolder:FolderId, state:ServerState);
+	SwitchFolder(toFolder:FolderName, state:ServerState);
 	States(?index:Int, list:Array<ServerState>);
 }
 
@@ -38,7 +38,7 @@ typedef Folder = {
 	> BaseState,
 	var ?rows:UInt;
 	var ?columns:UInt;
-	var ?id:FolderId;
+	var name:FolderName;
 	var items:Array<ServerItem>;
 }
 
@@ -56,7 +56,7 @@ abstract ActionId(UInt) {
 
 	@:to function toRepresentation():Representation<UInt>
 		return new Representation(this);
-	
+
 	public function toUInt():UInt
 		return this;
 
@@ -70,7 +70,7 @@ abstract ItemId(UInt) {
 
 	@:to function toRepresentation():Representation<UInt>
 		return new Representation(this);
-	
+
 	public function toUInt():UInt
 		return this;
 
@@ -78,18 +78,18 @@ abstract ItemId(UInt) {
 		return new ItemId(rep.get());
 }
 
-abstract FolderId(UInt) {
+abstract FolderName(String) {
 	public inline function new(v)
 		this = v;
 
-	@:to function toRepresentation():Representation<UInt>
+	@:to function toRepresentation():Representation<String>
 		return new Representation(this);
-	
-	public function toUInt():UInt
+
+	public function toString():String
 		return this;
 
-	@:from static function ofRepresentation(rep:Representation<UInt>)
-		return new FolderId(rep.get());
+	@:from static function ofRepresentation(rep:Representation<String>)
+		return new FolderName(rep.get());
 }
 
 abstract StateId(UInt) {
@@ -98,7 +98,7 @@ abstract StateId(UInt) {
 
 	@:to function toRepresentation():Representation<UInt>
 		return new Representation(this);
-	
+
 	public function toUInt():UInt
 		return this;
 
