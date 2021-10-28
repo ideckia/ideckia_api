@@ -7,8 +7,11 @@ typedef Props = {
 	var propertyName:String;
 }
 
-class ::name:: extends IdeckiaAction {
-	override public function init(initialState:ItemState) {}
+@:name("::name::")
+@:description("::description::")
+class ::className:: extends IdeckiaAction {
+	override public function init(initialState:ItemState):js.lib.Promise<ItemState>
+		return super.init(initialState);
 
 	public function execute(currentState:ItemState):js.lib.Promise<ItemState> {
 		// return new js.lib.Promise((resolve, reject) -> resolve(currentState));
@@ -29,12 +32,13 @@ class ::name:: extends IdeckiaAction {
 		}
 
 		public function toJson():Any {
-			return { name : "::lowerName::", props : this.props};
+			return { name : "::name::", props : this.props};
 		}
 
 		public function getActionDescriptor():ActionDescriptor {
 			return {
 				name : "::name::",
+				description : "::description::",
 				props : [{
 					name : "propertyName",
 					defaultValue: "default value",

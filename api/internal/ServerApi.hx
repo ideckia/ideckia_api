@@ -25,7 +25,7 @@ typedef ServerState = {
 }
 
 enum Kind {
-	SwitchFolder(toFolder:FolderName, state:ServerState);
+	ChangeDir(toDir:DirName, state:ServerState);
 	States(?index:Int, list:Array<ServerState>);
 }
 
@@ -34,11 +34,11 @@ typedef ServerItem = {
 	var ?kind:Kind;
 }
 
-typedef Folder = {
+typedef Dir = {
 	> BaseState,
 	var ?rows:UInt;
 	var ?columns:UInt;
-	var name:FolderName;
+	var name:DirName;
 	var items:Array<ServerItem>;
 }
 
@@ -46,8 +46,13 @@ typedef Layout = {
 	var rows:UInt;
 	var columns:UInt;
 	var ?textSize:UInt;
-	var folders:Array<Folder>;
+	var dirs:Array<Dir>;
 	var ?icons:Array<{key:String, value:String}>;
+}
+
+typedef EditorData = {
+	var layout:Layout;
+	var actionDescriptors:Array<ActionDescriptor>;
 }
 
 abstract ActionId(UInt) {
@@ -78,7 +83,7 @@ abstract ItemId(UInt) {
 		return new ItemId(rep.get());
 }
 
-abstract FolderName(String) {
+abstract DirName(String) {
 	public inline function new(v)
 		this = v;
 
@@ -89,7 +94,7 @@ abstract FolderName(String) {
 		return this;
 
 	@:from static function ofRepresentation(rep:Representation<String>)
-		return new FolderName(rep.get());
+		return new DirName(rep.get());
 }
 
 abstract StateId(UInt) {

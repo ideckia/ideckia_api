@@ -1,4 +1,4 @@
-class ::name:: {
+class ::className:: {
 
     setup(props, server) {
         this.props = props == null ? {} : props;
@@ -6,6 +6,9 @@ class ::name:: {
     }
 
     init(initialState) {
+        return new Promise((resolve, reject) => {
+            resolve(initialState);
+        });
     }
 
     execute(currentState) {
@@ -22,12 +25,13 @@ class ::name:: {
     }
 
     toJson() {
-        return { name: "::lowerName::", props: this.props };
+        return { name: "::name::", props: this.props };
     }
 
     getActionDescriptor() {
         return {
             name: "::name::",
+            description: "::description::",
             // props : [{
             // 	name : "propertyName",
             //	defaultValue: "default value",
@@ -38,4 +42,4 @@ class ::name:: {
     }
 }
 
-exports.IdeckiaAction = ::name:: ;
+exports.IdeckiaAction = ::className::;

@@ -23,20 +23,37 @@ class IdeckiaAction {
 		var fields:Array<Field> = Context.getBuildFields();
 
 		var localType:Type = Context.getLocalType();
-		var className:String = "";
+		var actionName:String = "";
+		var actionDescription:String = "";
 		switch localType {
 			case TInst(t, params):
 				var classType:ClassType = t.get();
-				className = classType.name;
+
+				for (metadata in classType.meta.get())
+					if (metadata.name == ":name")
+						switch metadata.params[0].expr {
+							case EConst(CString(s, kind)):
+								actionName = s;
+							default:
+						};
+					else if (metadata.name == ":description")
+						switch metadata.params[0].expr {
+							case EConst(CString(s, kind)):
+								actionDescription = s;
+							default:
+						};
 
 				// Add :expose('IdeckiaAction') metadata to be available from Javascript under
 				// the name defined in 'IdeckiaAction'
 				classType.meta.add(':expose', [macro $v{EXPOSE_NAME}], Context.currentPos());
 				// Generate toJson method
-				fields.push(createToJsonFunction(className));
+				fields.push(createToJsonFunction(actionName));
 
 			default:
 		}
+
+		if (actionName == '')
+			Context.fatalError('Please define @:name("action-name") metadata in the class.', Context.currentPos());
 
 		var moduleName:String = Context.getLocalModule();
 		var moduleTypes:Array<Type> = Context.getModule(moduleName);
@@ -51,7 +68,7 @@ class IdeckiaAction {
 						switch type.type {
 							case TAnonymous(a):
 								var anonType:AnonType = a.get();
-								var actionDescriptor:ActionDescriptor = {name: className};
+								var actionDescriptor:ActionDescriptor = {name: actionName, description: actionDescription};
 
 								var propDescriptor:PropDescriptor;
 								var description;
@@ -98,8 +115,8 @@ class IdeckiaAction {
 
 								// Generate getActionDescriptor method
 								actionDescriptor.props = propDescriptors;
-								createMarkdownPropsTable(actionDescriptor);
-								fields.push(createGetActionDescriptorFunction(className, actionDescriptor));
+								createMarkdown(actionDescriptor);
+								fields.push(createGetActionDescriptorFunction(actionDescriptor));
 							default:
 						}
 
@@ -227,7 +244,7 @@ class IdeckiaAction {
 		return possibleValues;
 	}
 
-	static function createToJsonFunction(className:String):Field {
+	static function createToJsonFunction(actionName:String):Field {
 		return {
 			name: 'toJson',
 			doc: 'Method that returns this action Json representation to put it in the ideckia layout.',
@@ -236,7 +253,7 @@ class IdeckiaAction {
 				args: [],
 				ret: macro:Any,
 				expr: macro return {
-					name: $v{className.toLowerCase()},
+					name: $v{actionName.toLowerCase()},
 					props: props
 				}
 			}),
@@ -244,7 +261,7 @@ class IdeckiaAction {
 		};
 	}
 
-	static function createGetActionDescriptorFunction(className:String, actionDescriptor:ActionDescriptor):Field {
+	static function createGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
 		return {
 			name: 'getActionDescriptor',
 			doc: 'Method that returns action properties descriptor (name, description, values).',
@@ -256,6 +273,12 @@ class IdeckiaAction {
 			}),
 			pos: Context.currentPos()
 		};
+	}
+
+	static function createMarkdown(actionDescriptor:ActionDescriptor) {
+		var table = createMarkdownPropsTable(actionDescriptor);
+		var sample = createMarkdownSample(actionDescriptor);
+		sys.io.File.saveContent('./gen.readme.md', table + '\n' + sample);
 	}
 
 	static function createMarkdownPropsTable(actionDescriptor:ActionDescriptor) {
@@ -270,6 +293,29 @@ class IdeckiaAction {
 			table += ' | ${prop.values} |\n';
 		}
 
-		sys.io.File.saveContent('./props_table.md', table);
+		return table;
+	}
+
+	static function createMarkdownSample(actionDescriptor:ActionDescriptor) {
+		var sample = '```json\n';
+		sample += '{\n';
+		sample += '    "state": {\n';
+		sample += '        "text": "${actionDescriptor.name} action example",\n';
+		sample += '        "actions": [\n';
+		sample += '            {\n';
+		sample += '                "name": "${actionDescriptor.name}",\n';
+		sample += '                "props": {\n';
+		var props = actionDescriptor.props.map(p -> '                    "${p.name}": ${p.defaultValue}');
+		sample += props.join(',\n');
+		sample += '\n';
+
+		sample += '                }\n';
+		sample += '            }\n';
+		sample += '        ]\n';
+		sample += '    }\n';
+		sample += '}\n';
+		sample += '```';
+
+		return sample;
 	}
 }

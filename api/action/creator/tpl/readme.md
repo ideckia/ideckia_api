@@ -18,7 +18,7 @@ TODO
     "bgColor": "00ff00",
         "actions": [
             {
-                "name": "::lowerName::",
+                "name": "::name::",
                 "props": {
                     "propertyName": "possible"
             }

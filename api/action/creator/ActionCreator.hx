@@ -9,9 +9,20 @@ class ActionCreator {
 	public static function create(?actionsPath:String) {
 		Sys.stdout().writeString('What template (hx | js)?  ');
 		var tplType = Sys.stdin().readLine().toString();
-		Sys.stdout().writeString('Action name?  ');
-		var name = Sys.stdin().readLine().toString();
-		var correctName = name.charAt(0).toUpperCase() + name.substr(1);
+		var name = '';
+		while (name.trim() == '') {
+			Sys.stdout().writeString('Action name?  ');
+			name = Sys.stdin().readLine().toString();
+		}
+		Sys.stdout().writeString('Action description?  ');
+		var description = Sys.stdin().readLine().toString();
+
+		name = ~/\s+/g.replace(name, '-').toLowerCase();
+		var splittedName = name.split('-');
+		var className = '';
+		for (s in splittedName) {
+			className += s.charAt(0).toUpperCase() + s.substr(1);
+		}
 
 		var tplFiles:Map<String, String> = null;
 		if (tplType == 'hx')
@@ -23,7 +34,7 @@ class ActionCreator {
 			if (actionsPath == null)
 				actionsPath = Path.directory(Sys.programPath());
 
-			var directory = Path.join([FileSystem.fullPath(actionsPath), name.toLowerCase()]);
+			var directory = Path.join([FileSystem.fullPath(actionsPath), name]);
 			FileSystem.createDirectory(directory);
 
 			var filename;
@@ -31,10 +42,10 @@ class ActionCreator {
 			for (key => value in tplFiles) {
 				filename = key;
 				if (key.endsWith('.hx')) {
-					filename = correctName + '.hx';
+					filename = className + '.hx';
 				}
 
-				fileContent = value.replace('::name::', correctName).replace('::lowerName::', name.toLowerCase());
+				fileContent = value.replace('::className::', className).replace('::name::', name).replace('::description::', description);
 
 				sys.io.File.saveContent(directory + '/$filename', fileContent);
 			}

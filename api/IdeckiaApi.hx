@@ -6,7 +6,7 @@ typedef IdeckiaAction = api.action.IdeckiaAction;
 enum abstract ClientMsgType(String) {
 	var click;
 	var longPress;
-	var getActions;
+	var getEditorData;
 	var getServerItem;
 }
 
@@ -24,7 +24,7 @@ typedef ClientMsg = {
 // Server messages
 enum abstract ServerMsgType(String) {
 	var layout;
-	var actionDescriptors;
+	var editorData;
 	var serverItem;
 }
 
@@ -60,6 +60,7 @@ typedef PropDescriptor = {
 typedef ActionDescriptor = {
 	var ?id:UInt;
 	var name:String;
+	var ?description:String;
 	var ?props:Array<PropDescriptor>;
 }
 

@@ -9,7 +9,8 @@ abstract class IdeckiaAction {
 
 	abstract public function setup(props:Any, ?server:IdeckiaServer):Void;
 
-	public function init(initialState:ItemState):Void {}
+	public function init(initialState:ItemState):js.lib.Promise<ItemState>
+		return new js.lib.Promise((resolve, reject) -> resolve(initialState));
 
 	abstract public function execute(currentState:ItemState):js.lib.Promise<ItemState>;
 
