@@ -10,6 +10,14 @@ TODO
 | ----- |----- | ----- | ----- | ----- |
 | propertyName | String | ["possible", "values", "for the property"] | Property description | "default_value" |
 
+## On single click
+
+TODO
+
+## On long press
+
+TODO
+
 ## Example in layout file
 
 ```json
