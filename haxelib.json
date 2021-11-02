@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.6",
-	"releasenote": "Folder -> Dir / Action.init returns state / Added description to ActionDescriptor.",
+	"version": "1.0.7",
+	"releasenote": "more options of logging. Check if local libs are in haxe_libraries.",
 	"tags": [
 		"ideckia",
 		"nodejs",

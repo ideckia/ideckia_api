@@ -16,7 +16,10 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
   * Parameters:
     * props: Properties defined for the instance in the layout file
     * server: Object to access to some tools that ideckia_server offers:
-      * log: Logs in the server process in debug level
+      * log: Logs in the server process:
+        * error(text:String): Logs in ERROR level
+        * debug(text:String): Logs in DEBUG level
+        * info(text:String): Logs in INFO level
       * dialogs: Access to some host dialogs. All of them return a Promise of the clicked button or the input of the user (only in 'entry' type)
         * info(text:String):Promise<String>
           * Informative notification
