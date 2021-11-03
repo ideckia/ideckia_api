@@ -30,7 +30,7 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
         * entry(text:String):Promise<String>
           * User input dialog
       * updateClientState: a function to send to the client the state of the item.
-* init():Void
+* init(initialState:ItemState):Promise<ItemState>
   * Entry point.
   * The server will call to this once, to initialize what you need
 * execute(currentState:ItemState):Promise<ItemState>
