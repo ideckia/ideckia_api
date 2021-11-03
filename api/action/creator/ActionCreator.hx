@@ -1,5 +1,6 @@
 package api.action.creator;
 
+import api.action.creator.Macros.TplFile;
 import sys.FileSystem;
 import haxe.io.Path;
 
@@ -7,14 +8,19 @@ using StringTools;
 
 class ActionCreator {
 	public static function create(?actionsPath:String) {
-		Sys.stdout().writeString('What template (hx | js)?  ');
-		var tplType = Sys.stdin().readLine().toString();
+		var tplType = '';
+		while (tplType != 'hx' && tplType != 'js') {
+			Sys.stdout().writeString('Select template (hx | js):  ');
+			tplType = Sys.stdin().readLine().toString();
+		}
+
 		var name = '';
 		while (name.trim() == '') {
-			Sys.stdout().writeString('Action name?  ');
+			Sys.stdout().writeString('Action name:  ');
 			name = Sys.stdin().readLine().toString();
 		}
-		Sys.stdout().writeString('Action description?  ');
+
+		Sys.stdout().writeString('Action description:  ');
 		var description = Sys.stdin().readLine().toString();
 
 		name = ~/\s+/g.replace(name, '-').toLowerCase();
@@ -24,35 +30,32 @@ class ActionCreator {
 			className += s.charAt(0).toUpperCase() + s.substr(1);
 		}
 
-		var tplFiles:Map<String, String> = null;
+		var tplFiles:Array<TplFile> = null;
 		if (tplType == 'hx')
 			tplFiles = Macros.getHxTemplate();
 		else if (tplType == 'js')
 			tplFiles = Macros.getJsTemplate();
 
-		if (tplFiles != null) {
-			if (actionsPath == null)
-				actionsPath = Path.directory(Sys.programPath());
+		if (actionsPath == null)
+			actionsPath = Path.directory(Sys.programPath());
 
-			var directory = Path.join([FileSystem.fullPath(actionsPath), name]);
-			FileSystem.createDirectory(directory);
+		var directory = Path.join([FileSystem.fullPath(actionsPath), name]);
+		FileSystem.createDirectory(directory);
 
-			var filename;
-			var fileContent;
-			for (key => value in tplFiles) {
-				filename = key;
-				if (key.endsWith('.hx')) {
-					filename = className + '.hx';
-				}
-
-				fileContent = value.replace('::className::', className).replace('::name::', name).replace('::description::', description);
-
-				sys.io.File.saveContent(directory + '/$filename', fileContent);
+		var fileContent;
+		for (tplFile in tplFiles) {
+			if (tplFile.path.endsWith('.hx')) {
+				tplFile.path = Path.directory(tplFile.path) + '/$className.hx';
 			}
 
-			Sys.stdout().writeString('Creating [$name] action from template [$tplType] in [$directory]');
-		} else {
-			Sys.stdout().writeString('Could not found the [$tplType] template.');
+			if (tplFile.isDir) {
+				FileSystem.createDirectory(directory + '/${tplFile.path}');
+			} else {
+				fileContent = tplFile.content.replace('::className::', className).replace('::name::', name).replace('::description::', description);
+				sys.io.File.saveContent(directory + '/${tplFile.path}', fileContent);
+			}
 		}
+
+		Sys.stdout().writeString('Created [$name] action from template [$tplType] in [$directory]');
 	}
 }

@@ -9,9 +9,15 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
+typedef TplFile = {
+	var isDir:Bool;
+	var path:String;
+	var content:String;
+}
+
 class Macros {
 	#if macro
-	static function getTemplate(templateType:String):ExprOf<Map<String, String>> {
+	static function getTemplate(templateType:String):ExprOf<Array<TplFile>> {
 		// get the current fields of the class
 		var fields:Array<Field> = Context.getBuildFields();
 
@@ -24,14 +30,12 @@ class Macros {
 
 		if (FileSystem.exists(templatePath) && FileSystem.isDirectory(templatePath)) {
 			var templateFiles:Array<Expr> = [];
-			for (f in FileSystem.readDirectory(templatePath)) {
-				var content = sys.io.File.getContent(templatePath + '/$f');
-				templateFiles.push(macro $v{f} => $v{content});
-			}
+			extractTplFilesRec(templatePath, '.', templateFiles);
 
 			var readme = 'readme.md';
 			var content = sys.io.File.getContent(Path.join([directory, 'tpl', readme]));
-			templateFiles.push(macro $v{readme} => $v{content});
+			var readmeTpl = {isDir: false, path: readme, content: content};
+			templateFiles.push(macro $v{readmeTpl});
 
 			// return as expression
 			return macro $a{templateFiles};
@@ -39,13 +43,30 @@ class Macros {
 			return macro null;
 		}
 	}
+
+	static function extractTplFilesRec(baseDir:String, relDir:String, files:Array<Expr>) {
+		var absPath, relPath, isDir, value, absDir = baseDir + relDir;
+		for (f in FileSystem.readDirectory(absDir)) {
+			absPath = absDir + '/$f';
+			relPath = relDir + '/$f';
+			isDir = FileSystem.isDirectory(absPath);
+			value = {
+				isDir: isDir,
+				path: relPath,
+				content: (isDir) ? null : sys.io.File.getContent(absPath)
+			};
+			files.push(macro $v{value});
+			if (isDir)
+				extractTplFilesRec(baseDir, relPath, files);
+		}
+	}
 	#end
 
-	public static macro function getHxTemplate():ExprOf<Map<String, String>> {
+	public static macro function getHxTemplate():ExprOf<Array<TplFile>> {
 		return getTemplate('hx');
 	}
 
-	public static macro function getJsTemplate():ExprOf<Map<String, String>> {
+	public static macro function getJsTemplate():ExprOf<Array<TplFile>> {
 		return getTemplate('js');
 	}
 }
