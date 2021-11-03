@@ -45,7 +45,7 @@ class Macros {
 	}
 
 	static function extractTplFilesRec(baseDir:String, relDir:String, files:Array<Expr>) {
-		var absPath, relPath, isDir, value, absDir = baseDir + relDir;
+		var absPath, relPath, isDir, value, absDir = baseDir + '/' + relDir;
 		for (f in FileSystem.readDirectory(absDir)) {
 			absPath = absDir + '/$f';
 			relPath = relDir + '/$f';
