@@ -12,6 +12,17 @@ typedef ClientItem = {
 	var id:UInt;
 }
 
+enum abstract EditorMsgType(String) {
+	var getEditorData;
+	var saveLayout;
+}
+
+typedef EditorMsg = {
+	var type:EditorMsgType;
+	var whoami:Caller;
+	var ?layout:Layout;
+}
+
 typedef Action = {
 	var ?id:ActionId;
 	var name:String;

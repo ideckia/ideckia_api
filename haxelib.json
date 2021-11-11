@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.7",
-	"releasenote": "more options of logging. Check if local libs are in haxe_libraries.",
+	"version": "1.0.8",
+	"releasenote": "move Editor messages to ServerApi",
 	"tags": [
 		"ideckia",
 		"nodejs",

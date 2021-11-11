@@ -6,8 +6,6 @@ typedef IdeckiaAction = api.action.IdeckiaAction;
 enum abstract ClientMsgType(String) {
 	var click;
 	var longPress;
-	var getEditorData;
-	var getServerItem;
 }
 
 enum abstract Caller(String) {
@@ -25,7 +23,6 @@ typedef ClientMsg = {
 enum abstract ServerMsgType(String) {
 	var layout;
 	var editorData;
-	var serverItem;
 }
 
 typedef ServerMsg<T> = {
