@@ -54,11 +54,17 @@ typedef PropDescriptor = {
 	var ?values:Array<String>;
 }
 
+typedef PresetAction = {
+	var name:String;
+	var props:Any;
+}
+
 typedef ActionDescriptor = {
 	var ?id:UInt;
 	var name:String;
 	var ?description:String;
 	var ?props:Array<PropDescriptor>;
+	var ?presets:Array<PresetAction>;
 }
 
 #if macro
