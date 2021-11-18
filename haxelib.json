@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.8",
-	"releasenote": "move Editor messages to ServerApi",
+	"version": "1.0.9",
+	"releasenote": "added ActionDescriptor.presets",
 	"tags": [
 		"ideckia",
 		"nodejs",
