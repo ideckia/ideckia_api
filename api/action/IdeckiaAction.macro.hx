@@ -113,18 +113,10 @@ class IdeckiaAction {
 								}
 
 								// Generate getActionDescriptor method
-								var actionDescriptor:ExprOf<ActionDescriptor> = macro {
-									name: $v{actionName},
-									description: $v{actionDescription},
-									props: $v{propDescriptors},
-									presets: {
-										var presetsFilePath = js.Node.__dirname + '/presets.json';
-										if (sys.FileSystem.exists(presetsFilePath)) {
-											haxe.Json.parse(sys.io.File.getContent(presetsFilePath));
-										} else {
-											[];
-										}
-									}
+								var actionDescriptor:ActionDescriptor = {
+									name: actionName,
+									description: actionDescription,
+									props: propDescriptors
 								};
 								createMarkdown(actionName, propDescriptors);
 								fields.push(createGetActionDescriptorFunction(actionDescriptor));
@@ -271,7 +263,7 @@ class IdeckiaAction {
 		};
 	}
 
-	static function createGetActionDescriptorFunction(actionDescriptor:ExprOf<ActionDescriptor>):Field {
+	static function createGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
 		return {
 			name: 'getActionDescriptor',
 			doc: 'Method that returns action properties descriptor (name, description, values).',
@@ -279,7 +271,7 @@ class IdeckiaAction {
 			kind: FFun({
 				args: [],
 				ret: macro:ActionDescriptor,
-				expr: macro return ${actionDescriptor}
+				expr: macro return $v{actionDescriptor}
 			}),
 			pos: Context.currentPos()
 		};
