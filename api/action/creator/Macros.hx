@@ -32,10 +32,14 @@ class Macros {
 			var templateFiles:Array<Expr> = [];
 			extractTplFilesRec(templatePath, '.', templateFiles);
 
-			var readme = 'readme.md';
-			var content = sys.io.File.getContent(Path.join([directory, 'tpl', readme]));
-			var readmeTpl = {isDir: false, path: readme, content: content};
-			templateFiles.push(macro $v{readmeTpl});
+			inline function addFile(filename:String) {
+				var content = sys.io.File.getContent(Path.join([directory, 'tpl', filename]));
+				var fileTpl = {isDir: false, path: filename, content: content};
+				templateFiles.push(macro $v{fileTpl});
+			}
+
+			addFile('readme.md');
+			addFile('presets.json');
 
 			// return as expression
 			return macro $a{templateFiles};

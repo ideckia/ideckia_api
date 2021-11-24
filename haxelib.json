@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.9",
-	"releasenote": "added ActionDescriptor.presets",
+	"version": "1.0.10",
+	"releasenote": "added presets.json to templates",
 	"tags": [
 		"ideckia",
 		"nodejs",
