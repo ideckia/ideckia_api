@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.10",
-	"releasenote": "added presets.json to templates",
+	"version": "1.0.11",
+	"releasenote": "remove unused IdeckiaAction.toJson",
 	"tags": [
 		"ideckia",
 		"nodejs",

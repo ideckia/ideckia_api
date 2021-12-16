@@ -46,8 +46,6 @@ class IdeckiaAction {
 				// Add :expose('IdeckiaAction') metadata to be available from Javascript under
 				// the name defined in 'IdeckiaAction'
 				classType.meta.add(':expose', [macro $v{EXPOSE_NAME}], Context.currentPos());
-				// Generate toJson method
-				fields.push(createToJsonFunction(actionName));
 
 			default:
 		}
@@ -244,23 +242,6 @@ class IdeckiaAction {
 		}
 
 		return possibleValues;
-	}
-
-	static function createToJsonFunction(actionName:String):Field {
-		return {
-			name: 'toJson',
-			doc: 'Method that returns this action Json representation to put it in the ideckia layout.',
-			access: [APublic, AInline],
-			kind: FFun({
-				args: [],
-				ret: macro:Any,
-				expr: macro return {
-					name: $v{actionName.toLowerCase()},
-					props: props
-				}
-			}),
-			pos: Context.currentPos()
-		};
 	}
 
 	static function createGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
