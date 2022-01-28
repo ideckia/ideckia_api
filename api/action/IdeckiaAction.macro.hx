@@ -15,6 +15,7 @@ using api.IdeckiaApi;
 class IdeckiaAction {
 	static inline var EXPOSE_NAME = 'IdeckiaAction';
 	static inline var EDITABLE_METADATA = ':editable';
+	static inline var SHARED_METADATA = ':shared';
 	static inline var EDITABLE_DESCRIPTION_IDX = 0;
 	static inline var EDITABLE_DEFAULT_VALUE_IDX = 1;
 	static inline var EDITABLE_POSSIBLE_VALUES_IDX = 2;
@@ -68,22 +69,24 @@ class IdeckiaAction {
 								var anonType:AnonType = a.get();
 
 								var propDescriptor:PropDescriptor;
-								var description;
+								var propDescription;
 								var propPossibleValues;
 								var defaultValue:Any;
+								var isShared:Bool;
 								var propType;
 								var defaultExpr:Expr;
 								for (classField in anonType.fields) {
-									description = null;
+									propDescription = null;
 									propPossibleValues = null;
 									defaultValue = null;
+									isShared = false;
 									propType = null;
 
 									var metas:haxe.macro.Metadata = classField.meta.get();
 									for (meta in metas) {
 										// Look for the editor parameter metadata
 										if (meta.name == EDITABLE_METADATA) {
-											description = extractDescription(meta);
+											propDescription = extractDescription(meta);
 											defaultExpr = extractDefaultValueExpr(meta);
 											if (defaultExpr != null) {
 												defaultExprMap.set(classField.name, defaultExpr);
@@ -92,6 +95,8 @@ class IdeckiaAction {
 												defaultValue = null;
 											}
 											propPossibleValues = extractPossibleValues(meta);
+										} else if (meta.name == SHARED_METADATA) {
+											isShared = true;
 										}
 									}
 
@@ -104,8 +109,9 @@ class IdeckiaAction {
 									propDescriptors.push({
 										name: classField.name,
 										defaultValue: defaultValue,
+										isShared: isShared,
 										type: propType,
-										description: description,
+										description: propDescription,
 										values: propPossibleValues
 									});
 								}
@@ -247,7 +253,7 @@ class IdeckiaAction {
 	static function createGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
 		return {
 			name: 'getActionDescriptor',
-			doc: 'Method that returns action properties descriptor (name, description, values).',
+			doc: 'Method that returns action properties descriptor (name, type, isShared, description, values).',
 			access: [APublic, AInline],
 			kind: FFun({
 				args: [],
@@ -265,14 +271,15 @@ class IdeckiaAction {
 	}
 
 	static function createMarkdownPropsTable(propDescriptors:Array<PropDescriptor>) {
-		var table = '| Name | Type | Default | Description | Possible values |\n';
-		table += '| ----- |----- | ----- | ----- | ----- |\n';
+		var table = '| Name | Type | Description | Shared | Default | Possible values |\n';
+		table += '| ----- |----- | ----- | ----- | ----- | ----- |\n';
 
 		for (prop in propDescriptors) {
 			table += '| ${prop.name}';
 			table += ' | ${prop.type.replace('<', '&lt;').replace('>', '&gt;')}';
-			table += ' | ${prop.defaultValue}';
 			table += ' | ${prop.description}';
+			table += ' | ${prop.isShared}';
+			table += ' | ${prop.defaultValue}';
 			table += ' | ${prop.values} |\n';
 		}
 

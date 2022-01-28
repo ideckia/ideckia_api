@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.11",
-	"releasenote": "remove unused IdeckiaAction.toJson",
+	"version": "1.0.12",
+	"releasenote": "add shared variables",
 	"tags": [
 		"ideckia",
 		"nodejs",

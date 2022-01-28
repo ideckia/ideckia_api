@@ -50,6 +50,7 @@ typedef PropDescriptor = {
 	var name:String;
 	var defaultValue:String;
 	var type:String;
+	var ?isShared:Bool;
 	var ?description:String;
 	var ?values:Array<String>;
 }

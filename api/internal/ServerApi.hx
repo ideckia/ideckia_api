@@ -56,6 +56,7 @@ typedef Dir = {
 typedef Layout = {
 	var rows:UInt;
 	var columns:UInt;
+	var ?sharedVars:Array<{key:String, value:Any}>;
 	var ?textSize:UInt;
 	var dirs:Array<Dir>;
 	var ?icons:Array<{key:String, value:String}>;
