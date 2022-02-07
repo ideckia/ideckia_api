@@ -97,3 +97,26 @@ typedef IdeckiaServer = {
 	}
 	var updateClientState:(props:ItemState) -> Void;
 }
+
+abstract RichText(String) to String {
+	public inline function new(v)
+		this = v;
+
+	public inline function toString():String
+		return this;
+
+	public inline function bold()
+		return new RichText('*$this*');
+
+	public inline function italic()
+		return new RichText('/$this/');
+
+	public inline function underline()
+		return new RichText('_${this}_');
+
+	public inline function size(size:Float)
+		return new RichText('~{fontSize:$size}$this~');
+
+	public inline function color(color:String)
+		return new RichText('~{color:$color}$this~');
+}

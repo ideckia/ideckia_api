@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.12",
-	"releasenote": "add shared variables",
+	"version": "1.0.13",
+	"releasenote": "add RichText (bold, underline, italic, font size and color)",
 	"tags": [
 		"ideckia",
 		"nodejs",
