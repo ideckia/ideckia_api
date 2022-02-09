@@ -214,8 +214,7 @@ class IdeckiaAction {
 	 * Get the default expression for the property
 	 */
 	static function extractDefaultValueExpr(meta:MetadataEntry) {
-		var param = meta.params[EDITABLE_DEFAULT_VALUE_IDX];
-		return param == null ? null : param;
+		return meta.params[EDITABLE_DEFAULT_VALUE_IDX];
 	}
 
 	/*
