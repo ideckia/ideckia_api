@@ -19,7 +19,7 @@ class Utils {
 		while (detectorRreg.match(text)) {
 			detected = detectorRreg.matched(0);
 			var value;
-			var rs:RichString = {};
+			var rs:TRichString = {};
 			while (extractorEreg.match(detected)) {
 				value = extractorEreg.matched(1);
 				if (value == 'b')

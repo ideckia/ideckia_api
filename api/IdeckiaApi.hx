@@ -44,6 +44,9 @@ typedef ClientLayout = {
 	var items:Array<{
 		> ItemState, var id:UInt;
 	}>;
+	var ?fixedItems:Array<{
+		> ItemState, var id:UInt;
+	}>;
 }
 
 typedef PropDescriptor = {

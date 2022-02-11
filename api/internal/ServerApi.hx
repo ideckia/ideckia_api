@@ -59,6 +59,7 @@ typedef Layout = {
 	var ?sharedVars:Array<{key:String, value:Any}>;
 	var ?textSize:UInt;
 	var dirs:Array<Dir>;
+	var ?fixedItems:Array<ServerItem>;
 	var ?icons:Array<{key:String, value:String}>;
 }
 

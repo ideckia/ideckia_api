@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.13",
-	"releasenote": "add RichText (bold, underline, italic, font size and color)",
+	"version": "1.0.14",
+	"releasenote": "added Layout.fixedItems",
 	"tags": [
 		"ideckia",
 		"nodejs",
