@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.14",
-	"releasenote": "added Layout.fixedItems",
+	"version": "1.0.15",
+	"releasenote": "use properties in the defined order",
 	"tags": [
 		"ideckia",
 		"nodejs",

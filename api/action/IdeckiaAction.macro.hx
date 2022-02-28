@@ -1,5 +1,6 @@
 package api.action;
 
+import haxe.macro.PositionTools;
 import haxe.macro.Compiler;
 import haxe.macro.ComplexTypeTools;
 import haxe.macro.Context;
@@ -75,6 +76,11 @@ class IdeckiaAction {
 								var isShared:Bool;
 								var propType;
 								var defaultExpr:Expr;
+								anonType.fields.sort((field1, field2) -> {
+									var fieldLine1 = PositionTools.toLocation(field1.pos).range.start.line;
+									var fieldLine2 = PositionTools.toLocation(field2.pos).range.start.line;
+									return fieldLine1 - fieldLine2;
+								});
 								for (classField in anonType.fields) {
 									propDescription = null;
 									propPossibleValues = null;
