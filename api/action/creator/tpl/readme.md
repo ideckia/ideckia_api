@@ -1,14 +1,14 @@
-# Action for ideckia: ::name::
+# Action for [ideckia](https://ideckia.github.io/): ::name::
 
-## Definition
+## Description
 
-TODO
+::description::
 
 ## Properties
 
-| Name | Type | Default | Description | Possible values |
-| ----- |----- | ----- | ----- | ----- |
-| propertyName | String | ["possible", "values", "for the property"] | Property description | "default_value" |
+| Name | Type | Description | Shared | Default | Possible values |
+| ----- |----- | ----- | ----- | ----- | ----- |
+| propertyName | String | Property description | false | "default_value" | ["possible", "values", "for the property"] |
 
 ## On single click
 
