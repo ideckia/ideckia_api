@@ -18,6 +18,14 @@ TODO
 
 TODO
 
+## Test the action
+
+There is a script called `test_action.js` to test the new action. Set the `props` variable in the script with the properties you want and run this command:
+
+```
+node test_action.js
+```
+
 ## Example in layout file
 
 ```json

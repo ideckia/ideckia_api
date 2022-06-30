@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.15",
-	"releasenote": "use properties in the defined order",
+	"version": "1.0.16",
+	"releasenote": "added test_action.js script",
 	"tags": [
 		"ideckia",
 		"nodejs",

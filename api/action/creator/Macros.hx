@@ -40,6 +40,7 @@ class Macros {
 
 			addFile('readme.md');
 			addFile('presets.json');
+			addFile('test_action.js');
 
 			// return as expression
 			return macro $a{templateFiles};
