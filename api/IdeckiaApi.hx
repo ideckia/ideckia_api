@@ -77,14 +77,6 @@ typedef Promise<T> = Dynamic<T>;
 typedef Promise<T> = js.lib.Promise<T>;
 #end
 
-enum abstract DialogType(String) {
-	var Info = 'info';
-	var Error = 'error';
-	var Question = 'question';
-	var Entry = 'entry';
-	var FileSelect = 'fileselect';
-}
-
 typedef IdeckiaServer = {
 	var log:{
 		var error:(v:Dynamic) -> Void;
@@ -93,9 +85,11 @@ typedef IdeckiaServer = {
 	}
 	var dialog:{
 		var info:(text:String) -> Promise<String>;
+		var warning:(text:String) -> Promise<String>;
 		var error:(text:String) -> Promise<String>;
 		var question:(text:String) -> Promise<String>;
 		var entry:(text:String) -> Promise<String>;
+		var calendar:(text:String) -> Promise<String>;
 		var fileselect:(text:String) -> Promise<String>;
 	}
 	var updateClientState:(props:ItemState) -> Void;
