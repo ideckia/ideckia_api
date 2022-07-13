@@ -20,21 +20,7 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
         * error(text:String): Logs in ERROR level
         * debug(text:String): Logs in DEBUG level
         * info(text:String): Logs in INFO level
-      * dialogs: Access to some host dialogs. All of them return a Promise of the clicked button or the input of the user (only in 'entry' type)
-        * info(text:String):Promise<String>
-          * Informative notification
-        * warning(text:String):Promise<String>
-          * Warning notification
-        * error(text:String):Promise<String>
-          * Error notification
-        * question(text:String):Promise<String>
-          * Ok/Cancel type notification
-        * entry(text:String):Promise<String>
-          * User input dialog
-        * calendar(text:String):Promise<String>
-          * Prompts user to select or type a date
-        * fileselect(text:String):Promise<String>
-          * Prompts user to select a file
+      * dialogs: Access to some host dialogs. The dialog property is an implementation of [Dialog](/api/dialog/Dialog.hx)
       * updateClientState: a function to send to the client the state of the item.
 * init(initialState:ItemState):Promise<ItemState>
   * Entry point.
