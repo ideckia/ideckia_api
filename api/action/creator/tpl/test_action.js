@@ -1,6 +1,6 @@
 const { IdeckiaAction } = require('.');
 
-// put here the properties generated in the gen.readme.md file
+// put here the properties you want to test
 const props = {};
 
 const server = {
@@ -14,21 +14,57 @@ const server = {
         notify: (title, _text) => console.log(title),
         info: (title, _text) => console.log(title),
         error: (title, _text) => console.log(title),
-        question: (title, _text) => console.log(title),
-        selectFile: (title, _isDirectory = false, _multiple = false, _fileFilter = null) => console.log(title),
-        saveFile: (title, _saveName = null, _fileFilter = null) => console.log(title),
-        entry: (title, _text, _placeholder = null) => console.log(title),
-        password: (title, _text) => console.log(title),
-        progress: (title, _text, _pulsate = false, _autoClose = true) => console.log(title),
-        color: (title, _initialColor = "#FFFFFF", _palette = false) => console.log(title),
-        calendar: (title, _text, _year = null, _month = null, _day = null, _dateFormat = null) => console.log(title),
-        list: (title, _text, _columnHeader, _values, _multiple = false) => console.log(title)
+        question: (title, _text) => {
+            console.log(title);
+            return Promise.resolve(true);
+        },
+        selectFile: (title, _isDirectory = false, _multiple = false, _fileFilter = null) => {
+            console.log(title);
+            return Promise.resolve(['file0path', 'file1path']);
+        },
+        saveFile: (title, _saveName = null, _fileFilter = null) => {
+            console.log(title);
+            return Promise.resolve('filepath');
+        },
+        entry: (title, _text, _placeholder = null) => {
+            console.log(title);
+            return Promise.resolve('');
+        },
+        password: (title, _text, _username = false) => {
+            console.log(title);
+            return Promise.resolve(['username', 'password']);
+        },
+        progress: (title, _text, _pulsate = false, _autoClose = true) => {
+            console.log(title);
+            return Promise.resolve('');
+        },
+        color: (title, _initialColor = "#FFFFFF", _palette = false) => {
+            console.log(title);
+            return Promise.resolve({ red: 192, green: 192, blue: 192 });
+        },
+        calendar: (title, _text, _year = null, _month = null, _day = null, _dateFormat = null) => {
+            console.log(title);
+            return Promise.resolve(new Date().toString());
+        },
+        list: (title, _text, _columnHeader, _values, _multiple = false) => {
+            console.log(title);
+            return Promise.resolve(['item0', 'item1']);
+        },
     },
     updateClientState: state => console.log('New state sent to the client: ' + state)
 };
 
 const action = new IdeckiaAction();
 action.setup(props, server);
-action.execute({})
-    .then(state => console.log('Resolved: ' + state))
+
+const itemState = {
+    text: 'State text',
+    textSize: 15,
+    textColor: '0x333333',
+    icon: '',
+    bgColor: '0x999999',
+}
+action.setup(itemState);
+action.execute(itemState)
+    .then(responseState => console.log(responseState))
     .catch(error => console.error('Rejected: ' + error));

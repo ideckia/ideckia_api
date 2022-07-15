@@ -15,7 +15,7 @@ typedef ColorDef = {
 
 @:forward
 abstract Color(ColorDef) {
-	inline function new(cd)
+	public inline function new(cd)
 		this = cd;
 
 	@:to
