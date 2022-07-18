@@ -58,13 +58,16 @@ class IdeckiaAction {
 		var moduleName:String = Context.getLocalModule();
 		var moduleTypes:Array<Type> = Context.getModule(moduleName);
 		var defaultExprMap:Map<String, Expr> = [];
+		var propDescriptors:Array<PropDescriptor> = [];
+		var assignDefaults = [];
+		var propsType = macro:Any;
 
 		for (moduleType in moduleTypes) {
 			switch moduleType {
 				case TType(t, params):
 					var type = t.get();
 					if (type.name == 'Props') {
-						var propDescriptors:Array<PropDescriptor> = [];
+						propsType = macro:Props;
 						switch type.type {
 							case TAnonymous(a):
 								var anonType:AnonType = a.get();
@@ -122,26 +125,11 @@ class IdeckiaAction {
 									});
 								}
 
-								// Generate getActionDescriptor method
-								var actionDescriptor:ActionDescriptor = {
-									name: actionName,
-									description: actionDescription,
-									props: propDescriptors
-								};
 								createMarkdown(actionName, propDescriptors);
-								fields.push(createGetActionDescriptorFunction(actionDescriptor));
 							default:
 						}
 
-						// Create 'var props:Props' class property
-						fields.push({
-							name: 'props',
-							kind: FVar(macro:Props),
-							pos: Context.currentPos()
-						});
-
 						// Create default assigments if needed
-						var assignDefaults = [];
 						for (pd in propDescriptors) {
 							var propName = pd.name;
 							var defValue = pd.defaultValue;
@@ -159,43 +147,62 @@ class IdeckiaAction {
 								});
 							}
 						}
-
-						/* Create
-								function setup(props:Props, server:IdeckiaServer) {
-									this.props = props;
-									// default assignments
-									this.server = server;
-								}
-							}
-						 */
-						fields.push({
-							name: 'setup',
-							kind: FFun({
-								args: [
-									{
-										name: 'props',
-										type: macro:Any
-									},
-									{
-										name: 'server',
-										opt: true,
-										type: macro:IdeckiaServer
-									}
-								],
-								expr: macro {
-									this.props = (props == null) ? {} : props;
-									$b{assignDefaults};
-									this.server = server;
-								}
-							}),
-							access: [APublic],
-							pos: Context.currentPos()
-						});
 					}
 				default:
 			}
 		}
+
+		// Create 'var props:Props' or 'var props:Any' (if 'typedef Props' is not defined) class property
+		fields.push({
+			name: 'props',
+			kind: FVar(propsType),
+			pos: Context.currentPos()
+		});
+
+		fields.push(createSetup(assignDefaults));
+
+		// Generate getActionDescriptor method
+		fields.push(createGetActionDescriptorFunction({
+			name: actionName,
+			description: actionDescription,
+			props: propDescriptors
+		}));
+
 		return fields;
+	}
+
+	/**
+		Create
+			function setup(props:Props, server:IdeckiaServer) {
+				this.props = props;
+				// default assignments
+				this.server = server;
+			}
+	**/
+	static function createSetup(assignDefaults:Array<Expr>):Field {
+		return {
+			name: 'setup',
+			kind: FFun({
+				args: [
+					{
+						name: 'props',
+						type: macro:Any
+					},
+					{
+						name: 'server',
+						opt: true,
+						type: macro:IdeckiaServer
+					}
+				],
+				expr: macro {
+					this.props = (props == null) ? {} : props;
+					$b{assignDefaults};
+					this.server = server;
+				}
+			}),
+			access: [APublic],
+			pos: Context.currentPos()
+		};
 	}
 
 	/*
