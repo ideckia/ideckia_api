@@ -36,7 +36,9 @@ const server = {
         },
         progress: (title, _text, _pulsate = false, _autoClose = true) => {
             console.log(title);
-            return Promise.resolve('');
+            return {
+                progress: (percentage) => console.log(`progress: ${percentage}`)
+            };
         },
         color: (title, _initialColor = "#FFFFFF", _palette = false) => {
             console.log(title);
@@ -64,7 +66,7 @@ const itemState = {
     icon: '',
     bgColor: '0x999999',
 }
-action.setup(itemState);
+action.init(itemState);
 action.execute(itemState)
     .then(responseState => console.log(responseState))
     .catch(error => console.error('Rejected: ' + error));

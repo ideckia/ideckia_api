@@ -31,10 +31,6 @@ class ::className:: extends IdeckiaAction {
 			this.server = server;
 		}
 
-		public function toJson():Any {
-			return { name : "::name::", props : this.props};
-		}
-
 		public function getActionDescriptor():ActionDescriptor {
 			return {
 				name : "::name::",

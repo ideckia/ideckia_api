@@ -24,10 +24,6 @@ class ::className:: {
         });
     }
 
-    toJson() {
-        return { name: "::name::", props: this.props };
-    }
-
     getActionDescriptor() {
         return {
             name: "::name::",
