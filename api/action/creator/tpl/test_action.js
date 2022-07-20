@@ -10,9 +10,10 @@ const server = {
         info: text => console.info(text)
     },
     dialog: {
-        setOptions: (options) => console.log(options),
+        setDefaultOptions: (options) => console.log(options),
         notify: (title, _text) => console.log(title),
         info: (title, _text) => console.log(title),
+        warning: (title, _text) => console.log(title),
         error: (title, _text) => console.log(title),
         question: (title, _text) => {
             console.log(title);

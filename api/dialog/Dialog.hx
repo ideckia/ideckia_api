@@ -4,11 +4,11 @@ import api.dialog.DialogTypes;
 
 interface Dialog {
 	/**
-		Set options for the dialogs. If the parameters is missing, options will be set to default
+		Set default options for the dialogs.
 
-		@param options Any option to send. Send null to reset options
+		@param options Any option to send.
 	**/
-	function setOptions(options:Any):Void;
+	function setDefaultOptions(options:WindowOptions):Void;
 
 	/**
 		Shows notification
@@ -16,7 +16,7 @@ interface Dialog {
 		@param title The title of the notification.
 		@param text The text of the notification.
 	**/
-	function notify(title:String, text:String):Void;
+	function notify(title:String, text:String, ?options:WindowOptions):Void;
 
 	/**
 		Shows information window
@@ -24,15 +24,23 @@ interface Dialog {
 		@param title The title of the window
 		@param text The information text.
 	**/
-	function info(title:String, text:String):Void;
+	function info(title:String, text:String, ?options:WindowOptions):Void;
 
 	/**
-		Shows information window
+		Shows warning window
+
+		@param title The title of the window
+		@param text The warning text.
+	**/
+	function warning(title:String, text:String, ?options:WindowOptions):Void;
+
+	/**
+		Shows error window
 
 		@param title The title of the window
 		@param text The error text.
 	**/
-	function error(title:String, text:String):Void;
+	function error(title:String, text:String, ?options:WindowOptions):Void;
 
 	/**
 		Shows YES/NO question window
@@ -41,7 +49,7 @@ interface Dialog {
 		@param text The text of the question
 		@returns A promise with value true if OK is clicked, false otherwise.
 	**/
-	function question(title:String, text:String):api.IdeckiaApi.Promise<Bool>;
+	function question(title:String, text:String, ?options:WindowOptions):api.IdeckiaApi.Promise<Bool>;
 
 	/**
 		Select one or multiple file or directories
@@ -52,7 +60,8 @@ interface Dialog {
 		@param fileFilter Filter to show files
 		@returns A promise with selected files paths
 	**/
-	function selectFile(title:String, isDirectory:Bool = false, multiple:Bool = false, ?fileFilter:FileFilter):api.IdeckiaApi.Promise<Array<String>>;
+	function selectFile(title:String, isDirectory:Bool = false, multiple:Bool = false, ?fileFilter:FileFilter,
+		?options:WindowOptions):api.IdeckiaApi.Promise<Array<String>>;
 
 	/**
 		Open a dialog to save file
@@ -62,7 +71,7 @@ interface Dialog {
 		@param fileFilter Filter to show files
 		@returns A promise with selected files paths
 	**/
-	function saveFile(title:String, ?saveName:String, ?fileFilter:FileFilter):api.IdeckiaApi.Promise<String>;
+	function saveFile(title:String, ?saveName:String, ?fileFilter:FileFilter, ?options:WindowOptions):api.IdeckiaApi.Promise<String>;
 
 	/**
 		Open a dialog to get user input text
@@ -72,7 +81,7 @@ interface Dialog {
 		@param placeholder The input text placeholder.
 		@returns A promise with the entered text
 	**/
-	function entry(title:String, text:String, ?placeholder:String):api.IdeckiaApi.Promise<String>;
+	function entry(title:String, text:String, ?placeholder:String, ?options:WindowOptions):api.IdeckiaApi.Promise<String>;
 
 	/**
 		Open a dialog to get user input password
@@ -82,7 +91,7 @@ interface Dialog {
 		@param showUsername Display the username field
 		@returns A promise with the an array containing username (if required) and password
 	**/
-	function password(title:String, text:String, showUsername:Bool = false):api.IdeckiaApi.Promise<Array<String>>;
+	function password(title:String, text:String, showUsername:Bool = false, ?options:WindowOptions):api.IdeckiaApi.Promise<Array<String>>;
 
 	/**
 		Create and show a progress dialog
@@ -93,7 +102,7 @@ interface Dialog {
 		@param autoClose Close automatically when finished
 		@returns A Progress instance
 	**/
-	function progress(title:String, text:String, pulsate:Bool = false, autoClose:Bool = true):Progress;
+	function progress(title:String, text:String, pulsate:Bool = false, autoClose:Bool = true, ?options:WindowOptions):Progress;
 
 	/**
 		Open a color selection dialog
@@ -103,7 +112,7 @@ interface Dialog {
 		@param palette Show palette
 		@returns A promise with the selected color
 	**/
-	function color(title:String, initialColor:String = "#FFFFFF", palette:Bool = false):api.IdeckiaApi.Promise<Color>;
+	function color(title:String, initialColor:String = "#FFFFFF", palette:Bool = false, ?options:WindowOptions):api.IdeckiaApi.Promise<Color>;
 
 	/**
 		Open a dialog to get user input text
@@ -116,7 +125,8 @@ interface Dialog {
 		@param dateFormat Set the format for the returned date. The default depends on the user locale or be set with the strftime style. For example %A %d/%m/%y 
 		@returns A promise with the entered date
 	**/
-	function calendar(title:String, text:String, ?year:UInt, ?month:UInt, ?day:UInt, ?dateFormat:String):api.IdeckiaApi.Promise<String>;
+	function calendar(title:String, text:String, ?year:UInt, ?month:UInt, ?day:UInt, ?dateFormat:String,
+		?options:WindowOptions):api.IdeckiaApi.Promise<String>;
 
 	/**
 		Shows a list dialog
@@ -128,7 +138,8 @@ interface Dialog {
 		@param values Values to list.
 		@returns A promise with the selected items
 	**/
-	function list(title:String, text:String, columnHeader:String, values:Array<String>, multiple:Bool = false):api.IdeckiaApi.Promise<Array<String>>;
+	function list(title:String, text:String, columnHeader:String, values:Array<String>, multiple:Bool = false,
+		?options:WindowOptions):api.IdeckiaApi.Promise<Array<String>>;
 }
 
 interface Progress {

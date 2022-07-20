@@ -13,6 +13,16 @@ typedef ColorDef = {
 	var blue:UInt;
 }
 
+typedef WindowOptions = {
+	var ?height:UInt;
+	var ?width:UInt;
+	var ?windowIcon:String;
+	var ?dialogIcon:String;
+	var ?okLabel:String;
+	var ?cancelLabel:String;
+	var ?extraData:Any; // Keep a door open for any extra data needed by an implementation
+}
+
 @:forward
 abstract Color(ColorDef) {
 	public inline function new(cd)
