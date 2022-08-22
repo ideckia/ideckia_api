@@ -32,11 +32,11 @@ node test_action.js
 {
     "text": "::name:: example",
     "bgColor": "00ff00",
-        "actions": [
-            {
-                "name": "::name::",
-                "props": {
-                    "propertyName": "possible"
+    "actions": [
+        {
+            "name": "::name::",
+            "props": {
+                "propertyName": "possible"
             }
         }
     ]
