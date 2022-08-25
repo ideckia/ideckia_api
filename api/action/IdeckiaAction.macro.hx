@@ -133,7 +133,7 @@ class IdeckiaAction {
 						for (pd in propDescriptors) {
 							var propName = pd.name;
 							var defValue = pd.defaultValue;
-							// trace('$propName -> $defValue');
+							var possibleValues = pd.values;
 							if (defValue != null && defValue != 'null') {
 								/*
 									Example:
@@ -145,6 +145,18 @@ class IdeckiaAction {
 									if (this.props.$propName == null)
 										this.props.$propName = ${defaultExprMap.get(propName)};
 								});
+								/*
+									Example: If the value is not one of the possibles, assign the default value
+									if (![0, 10, 100, 1000].contains(this.props.delay_ms)) {
+										this.props.delay_ms = 1000;
+									}
+								 */
+								if (possibleValues != null) {
+									assignDefaults.push(macro @:pos(Context.currentPos()) {
+										if (!$v{possibleValues}.contains(this.props.$propName))
+											this.props.$propName = ${defaultExprMap.get(propName)};
+									});
+								}
 							}
 						}
 					}
