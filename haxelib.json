@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.18",
-	"releasenote": "change dialog system",
+	"version": "1.0.19",
+	"releasenote": "add textPosition to item state",
 	"tags": [
 		"ideckia",
 		"nodejs",

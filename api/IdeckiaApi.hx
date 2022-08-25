@@ -25,6 +25,12 @@ enum abstract ServerMsgType(String) {
 	var editorData;
 }
 
+enum abstract TextPosition(String) from String to String {
+	var top;
+	var center;
+	var bottom;
+}
+
 typedef ServerMsg<T> = {
 	var type:ServerMsgType;
 	var data:T;
@@ -34,6 +40,7 @@ typedef ItemState = {
 	var ?text:String;
 	var ?textSize:UInt;
 	var ?textColor:String;
+	var ?textPosition:TextPosition;
 	var ?icon:String;
 	var ?bgColor:String;
 }
