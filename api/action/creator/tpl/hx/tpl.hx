@@ -4,7 +4,7 @@ using api.IdeckiaApi;
 
 typedef Props = {
 	@:editable("Property description", "default value", ["possible", "values", "for the property"])
-	var propertyName:String;
+	var property_name:String;
 }
 
 @:name("::name::")
@@ -36,7 +36,7 @@ class ::className:: extends IdeckiaAction {
 				name : "::name::",
 				description : "::description::",
 				props : [{
-					name : "propertyName",
+					name : "property_name",
 					defaultValue: "default value",
 					description : "property description",
 					values : ["possible", "values", "for the property"]

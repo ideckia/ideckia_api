@@ -54,6 +54,18 @@ const server = {
             return Promise.resolve(['item0', 'item1']);
         },
     },
+    mediaPlayer: {
+        play: (path) => {
+            console.log(`Playing ${path} file.`);
+            return 0;
+        },
+        pause: (id) => {
+            console.log(`Pause ${id} media.`);
+        },
+        stop: (id) => {
+            console.log(`Stop ${id} media.`);
+        },
+    },
     updateClientState: state => console.log('New state sent to the client: ' + state)
 };
 

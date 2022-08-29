@@ -90,7 +90,8 @@ typedef IdeckiaServer = {
 		var debug:(v:Dynamic) -> Void;
 		var info:(v:Dynamic) -> Void;
 	}
-	var dialog:api.dialog.Dialog;
+	var dialog:api.dialog.IDialog;
+	var mediaPlayer:api.media.IMediaPlayer;
 	var updateClientState:(props:ItemState) -> Void;
 }
 

@@ -2,7 +2,7 @@ package api.dialog;
 
 import api.dialog.DialogTypes;
 
-interface Dialog {
+interface IDialog {
 	/**
 		Set default options for the dialogs.
 

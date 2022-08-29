@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.19",
-	"releasenote": "add textPosition to item state",
+	"version": "1.0.20",
+	"releasenote": "add MediaPlayer definition",
 	"tags": [
 		"ideckia",
 		"nodejs",
