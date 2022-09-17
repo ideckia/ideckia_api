@@ -23,8 +23,9 @@ typedef EditorMsg = {
 	var ?layout:Layout;
 }
 
-typedef Action = {
+typedef ActionDef = {
 	var ?id:ActionId;
+	var enabled:Bool;
 	var name:String;
 	var ?props:Any;
 }
@@ -32,7 +33,7 @@ typedef Action = {
 typedef ServerState = {
 	> BaseState,
 	var ?id:StateId;
-	var ?actions:Array<Action>;
+	var ?actions:Array<ActionDef>;
 }
 
 enum Kind {
