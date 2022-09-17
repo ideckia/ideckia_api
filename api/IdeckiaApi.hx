@@ -43,6 +43,10 @@ typedef ItemState = {
 	var ?textPosition:TextPosition;
 	var ?icon:String;
 	var ?bgColor:String;
+	var ?extraData:{
+		fromAction:String,
+		data:Any
+	};
 }
 
 typedef ClientLayout = {
