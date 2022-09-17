@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.20",
-	"releasenote": "add MediaPlayer definition",
+	"version": "1.0.21",
+	"releasenote": "add action.enabled and ItemState.extraData to send data from an action to the next action.",
 	"tags": [
 		"ideckia",
 		"nodejs",
