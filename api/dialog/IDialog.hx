@@ -2,6 +2,7 @@ package api.dialog;
 
 import api.dialog.DialogTypes;
 
+@:autoBuild(api.macros.Macros.addExposeMetadata('Dialog'))
 interface IDialog {
 	/**
 		Set default options for the dialogs.

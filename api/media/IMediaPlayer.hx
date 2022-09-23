@@ -1,5 +1,6 @@
 package api.media;
 
+@:autoBuild(api.macros.Macros.addExposeMetadata('MediaPlayer'))
 interface IMediaPlayer {
 	/**
 		Play the media from the give path
@@ -17,6 +18,13 @@ interface IMediaPlayer {
 		@param id The identifier of the sound to be paused
 	**/
 	function pause(id:Int):Void;
+
+	/**
+		Resumes the media if paused
+
+		@param id The identifier of the sound to be paused
+	**/
+	function resume(id:Int):Void;
 
 	/**
 		Stop the media
