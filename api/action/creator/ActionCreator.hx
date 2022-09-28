@@ -59,7 +59,8 @@ class ActionCreator {
 		Sys.println('Created [$name] action from template [$tplType] in [$directory]');
 
 		if (tplType == 'hx') {
-			Sys.println('If you are using lix package manager, you must execute this command: lix install gh:ideckia/ideckia_api');
+			Sys.println('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
+			Sys.command('cd ' + directory + ' && lix install gh:ideckia/ideckia_api');
 		}
 	}
 }
