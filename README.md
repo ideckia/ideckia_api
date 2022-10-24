@@ -20,7 +20,8 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
         * error(text:String): Logs in ERROR level
         * debug(text:String): Logs in DEBUG level
         * info(text:String): Logs in INFO level
-      * dialogs: Access to host dialogs. The dialog property is an implementation of [Dialog](/api/dialog/Dialog.hx)
+      * dialogs: Access to host dialogs. The dialog property is an implementation of [IDialog](/api/dialog/IDialog.hx)
+      * mediaPlayer: Access to host media player. The mediaPlayer property is an implementation of [IMediaPlayer](/api/media/IMediaPlayer.hx)
       * updateClientState: a function to send to the client the state of the item.
 * init(initialState:ItemState):Promise<ItemState>
   * Entry point.

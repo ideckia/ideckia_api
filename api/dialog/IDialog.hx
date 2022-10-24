@@ -1,6 +1,8 @@
 package api.dialog;
 
 import api.dialog.DialogTypes;
+import api.IdeckiaApi.Promise;
+import haxe.ds.Option;
 
 @:autoBuild(api.macros.Macros.addExposeMetadata('Dialog'))
 interface IDialog {
@@ -50,7 +52,7 @@ interface IDialog {
 		@param text The text of the question
 		@returns A promise with value true if OK is clicked, false otherwise.
 	**/
-	function question(title:String, text:String, ?options:WindowOptions):api.IdeckiaApi.Promise<Bool>;
+	function question(title:String, text:String, ?options:WindowOptions):Promise<Bool>;
 
 	/**
 		Select one or multiple file or directories
@@ -62,7 +64,7 @@ interface IDialog {
 		@returns A promise with selected files paths
 	**/
 	function selectFile(title:String, isDirectory:Bool = false, multiple:Bool = false, ?fileFilter:FileFilter,
-		?options:WindowOptions):api.IdeckiaApi.Promise<Array<String>>;
+		?options:WindowOptions):Promise<Option<Array<String>>>;
 
 	/**
 		Open a dialog to save file
@@ -72,7 +74,7 @@ interface IDialog {
 		@param fileFilter Filter to show files
 		@returns A promise with selected files paths
 	**/
-	function saveFile(title:String, ?saveName:String, ?fileFilter:FileFilter, ?options:WindowOptions):api.IdeckiaApi.Promise<String>;
+	function saveFile(title:String, ?saveName:String, ?fileFilter:FileFilter, ?options:WindowOptions):Promise<Option<String>>;
 
 	/**
 		Open a dialog to get user input text
@@ -82,7 +84,7 @@ interface IDialog {
 		@param placeholder The input text placeholder.
 		@returns A promise with the entered text
 	**/
-	function entry(title:String, text:String, ?placeholder:String, ?options:WindowOptions):api.IdeckiaApi.Promise<String>;
+	function entry(title:String, text:String, ?placeholder:String, ?options:WindowOptions):Promise<Option<String>>;
 
 	/**
 		Open a dialog to get user input password
@@ -90,30 +92,28 @@ interface IDialog {
 		@param title The title of the window
 		@param text The text of the window
 		@param showUsername Display the username field
-		@returns A promise with the an array containing username (if required) and password
+		@returns A promise with the an object containing username (if required) and password
 	**/
-	function password(title:String, text:String, showUsername:Bool = false, ?options:WindowOptions):api.IdeckiaApi.Promise<Array<String>>;
+	function password(title:String, text:String, showUsername:Bool = false, ?options:WindowOptions):Promise<Option<{username:String, password:String}>>;
 
 	/**
 		Create and show a progress dialog
 
 		@param title The title of the window
 		@param text The text of the window
-		@param pulsate Pulsate progress bar
 		@param autoClose Close automatically when finished
 		@returns A Progress instance
 	**/
-	function progress(title:String, text:String, pulsate:Bool = false, autoClose:Bool = true, ?options:WindowOptions):Progress;
+	function progress(title:String, text:String, autoClose:Bool = true, ?options:WindowOptions):Progress;
 
 	/**
 		Open a color selection dialog
 
 		@param title The title of the window
 		@param initialColor The initial selected color.
-		@param palette Show palette
 		@returns A promise with the selected color
 	**/
-	function color(title:String, initialColor:String = "#FFFFFF", palette:Bool = false, ?options:WindowOptions):api.IdeckiaApi.Promise<Color>;
+	function color(title:String, initialColor:String = "#FFFFFF", ?options:WindowOptions):Promise<Option<Color>>;
 
 	/**
 		Open a dialog to get user input text
@@ -126,8 +126,7 @@ interface IDialog {
 		@param dateFormat Set the format for the returned date. The default depends on the user locale or be set with the strftime style. For example %A %d/%m/%y 
 		@returns A promise with the entered date
 	**/
-	function calendar(title:String, text:String, ?year:UInt, ?month:UInt, ?day:UInt, ?dateFormat:String,
-		?options:WindowOptions):api.IdeckiaApi.Promise<String>;
+	function calendar(title:String, text:String, ?year:UInt, ?month:UInt, ?day:UInt, ?dateFormat:String, ?options:WindowOptions):Promise<Option<String>>;
 
 	/**
 		Shows a list dialog
@@ -140,7 +139,15 @@ interface IDialog {
 		@returns A promise with the selected items
 	**/
 	function list(title:String, text:String, columnHeader:String, values:Array<String>, multiple:Bool = false,
-		?options:WindowOptions):api.IdeckiaApi.Promise<Array<String>>;
+		?options:WindowOptions):Promise<Option<Array<String>>>;
+
+	/**
+		Custom dialog. Passing a path to the dialog definition file the implementation will render it. When closed, it will return an array with filled values.
+
+		@param definitionPath The path of the definition file of the dialog
+		@returns A promise for an array with {id:String, value:Any}. Being `id` the identifier of the field and `value` the value of that field
+	**/
+	function custom(definitionPath:String):Promise<Option<Array<IdValue<String>>>>;
 }
 
 interface Progress {

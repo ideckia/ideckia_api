@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.0.21",
-	"releasenote": "add action.enabled and ItemState.extraData to send data from an action to the next action.",
+	"version": "1.0.22",
+	"releasenote": "add IDialog.custom",
 	"tags": [
 		"ideckia",
 		"nodejs",

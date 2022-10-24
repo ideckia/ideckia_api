@@ -23,6 +23,11 @@ typedef WindowOptions = {
 	var ?extraData:Any; // Keep a door open for any extra data needed by an implementation
 }
 
+typedef IdValue<T> = {
+	var id:String;
+	var value:T;
+}
+
 @:forward
 abstract Color(ColorDef) {
 	public inline function new(cd)
