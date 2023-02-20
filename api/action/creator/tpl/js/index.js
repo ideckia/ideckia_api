@@ -30,6 +30,8 @@ class ::className:: {
             description: "::description::",
             // props : [{
             // 	name : "propertyName",
+            // 	type : "String",
+            // 	isShared : false,
             //	defaultValue: "default value",
             // 	description : "property description",
             // 	values : ["possible", "values", "for the property"]
