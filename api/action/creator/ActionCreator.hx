@@ -45,7 +45,10 @@ class ActionCreator {
 		var fileContent;
 		for (tplFile in tplFiles) {
 			if (tplFile.path.endsWith('.hx')) {
-				tplFile.path = Path.directory(tplFile.path) + '/$className.hx';
+				tplFile.path = Path.join([Path.directory(tplFile.path), '$className.hx']);
+			}
+			if (tplFile.path.startsWith('./_')) {
+				tplFile.path = tplFile.path.replace('./_', '.');
 			}
 
 			if (tplFile.isDir) {
