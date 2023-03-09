@@ -1,29 +1,47 @@
+/**
+ * [Find here the action structure]{@link https://github.com/ideckia/ideckia_api/blob/develop/README.md#action-structure}
+ */
 class ::className:: {
 
+    /**
+     * Method called to inject the properties and server access
+     */
     setup(props, server) {
         this.props = props == null ? {} : props;
         this.server = server;
     }
 
+    /**
+     * Method called when the action is loaded
+     */
     init(initialState) {
         return new Promise((resolve, reject) => {
             resolve(initialState);
         });
     }
 
+    /**
+     * Method called when the item is clicked in the client
+     */
     execute(currentState) {
         throw 'Not implemented';
         // return new Promise((resolve, reject) => {
-        // 		resolve(currentState);
+        // 		resolve({state: currentState});
         // });
     }
 
+    /**
+     * Method called when the item is long pressed in the client
+     */
     onLongPress(currentState) {
         return new Promise((resolve, reject) => {
-            resolve(currentState);
+            resolve({state: currentState});
         });
     }
 
+    /**
+     * Method called from the editor to create an UI to configure the action
+     */
     getActionDescriptor() {
         return {
             name: "::name::",

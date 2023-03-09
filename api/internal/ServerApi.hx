@@ -70,8 +70,16 @@ typedef EditorData = {
 }
 
 abstract ActionId(UInt) {
-	public inline function new(v)
+	static var last = 0;
+
+	public static function next()
+		return new ActionId(last++);
+
+	public inline function new(v) {
+		if (v > last)
+			last = v + 1;
 		this = v;
+	}
 
 	@:to function toRepresentation():Representation<UInt>
 		return new Representation(this);
@@ -84,8 +92,16 @@ abstract ActionId(UInt) {
 }
 
 abstract ItemId(UInt) {
-	public inline function new(v)
+	static var last = 0;
+
+	public static function next()
+		return new ItemId(last++);
+
+	public inline function new(v) {
+		if (v > last)
+			last = v + 1;
 		this = v;
+	}
 
 	@:to function toRepresentation():Representation<UInt>
 		return new Representation(this);
@@ -112,8 +128,16 @@ abstract DirName(String) {
 }
 
 abstract StateId(UInt) {
-	public inline function new(v)
+	static var last = 0;
+
+	public static function next()
+		return new StateId(last++);
+
+	public inline function new(v) {
+		if (v > last)
+			last = v + 1;
 		this = v;
+	}
 
 	@:to function toRepresentation():Representation<UInt>
 		return new Representation(this);

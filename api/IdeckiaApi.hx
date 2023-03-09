@@ -31,6 +31,41 @@ enum abstract TextPosition(String) from String to String {
 	var bottom;
 }
 
+typedef TActionOutcome = {
+	var ?state:ItemState;
+	var ?directory:DynamicDir;
+}
+
+typedef DynamicDir = {
+	var ?rows:UInt;
+	var ?columns:UInt;
+	var items:Array<DynamicDirItem>;
+}
+
+typedef DynamicDirItem = {
+	> ItemState,
+	var ?toDir:String;
+	var ?actions:Array<{
+		var name:String;
+		var ?props:Any;
+	}>;
+}
+
+@:forward
+abstract ActionOutcome(TActionOutcome) from TActionOutcome to TActionOutcome {
+	public inline function new(v)
+		this = v;
+
+	@:from static function fromAny(v:Any) {
+		if (Reflect.hasField(v, 'state') || Reflect.hasField(v, 'dynamicDir')) {
+			return new ActionOutcome(v);
+		} else if (Reflect.hasField(v, 'text') || Reflect.hasField(v, 'icon') || Reflect.hasField(v, 'bgColor')) {
+			return {state: v};
+		}
+		throw new haxe.Exception('Cannot parse this object to ActionOutcome: $v');
+	}
+}
+
 typedef ServerMsg<T> = {
 	var type:ServerMsgType;
 	var data:T;
@@ -52,6 +87,7 @@ typedef ItemState = {
 typedef ClientLayout = {
 	var rows:UInt;
 	var columns:UInt;
+	var icons:haxe.DynamicAccess<String>;
 	var items:Array<{
 		> ItemState, var id:UInt;
 	}>;
