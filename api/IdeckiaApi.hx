@@ -41,6 +41,7 @@ typedef TActionOutcome = {
 typedef DynamicDir = {
 	var ?rows:UInt;
 	var ?columns:UInt;
+	var ?bgColor:String;
 	var items:Array<DynamicDirItem>;
 }
 
@@ -89,6 +90,7 @@ typedef ItemState = {
 typedef ClientLayout = {
 	var rows:UInt;
 	var columns:UInt;
+	var ?bgColor:String;
 	var icons:haxe.DynamicAccess<String>;
 	var items:Array<{
 		> ItemState, var id:UInt;

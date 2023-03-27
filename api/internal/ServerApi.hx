@@ -50,6 +50,7 @@ typedef Dir = {
 	> BaseState,
 	var ?rows:UInt;
 	var ?columns:UInt;
+	var ?bgColor:String;
 	var name:DirName;
 	var items:Array<ServerItem>;
 }
@@ -57,6 +58,7 @@ typedef Dir = {
 typedef Layout = {
 	var rows:UInt;
 	var columns:UInt;
+	var ?bgColor:String;
 	var ?sharedVars:Array<{key:String, value:Any}>;
 	var ?textSize:UInt;
 	var dirs:Array<Dir>;

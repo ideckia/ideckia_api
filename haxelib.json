@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.1.0",
-	"releasenote": "add ActionOutcome for returning directories or states from an action",
+	"version": "1.1.1",
+	"releasenote": "Directories with background color. New ClientMsgType.gotoDir",
 	"tags": [
 		"ideckia",
 		"nodejs",
