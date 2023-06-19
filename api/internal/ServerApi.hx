@@ -78,7 +78,7 @@ abstract ActionId(UInt) {
 		return new ActionId(last++);
 
 	public inline function new(v) {
-		if (v > last)
+		if (v >= last)
 			last = v + 1;
 		this = v;
 	}
@@ -100,7 +100,7 @@ abstract ItemId(UInt) {
 		return new ItemId(last++);
 
 	public inline function new(v) {
-		if (v > last)
+		if (v >= last)
 			last = v + 1;
 		this = v;
 	}
@@ -136,7 +136,7 @@ abstract StateId(UInt) {
 		return new StateId(last++);
 
 	public inline function new(v) {
-		if (v > last)
+		if (v >= last)
 			last = v + 1;
 		this = v;
 	}
