@@ -21,6 +21,12 @@ class ::className:: {
     }
 
     /**
+     * Method called when the state that belongs this action goes out of sight
+     */
+    hide() {
+    }
+
+    /**
      * Method called when the item is clicked in the client
      */
     execute(currentState) {

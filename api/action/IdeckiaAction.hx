@@ -25,6 +25,11 @@ abstract class IdeckiaAction {
 		return new js.lib.Promise((resolve, reject) -> resolve(initialState));
 
 	/**
+     * Method called when the state that belongs this action goes out of sight
+	 */
+	public function hide():Void {}
+
+	/**
 	 *  Method called when the item is clicked in the client
 	 *
 	 *  @param currentState: The current ItemState of the item @see <https://github.com/ideckia/ideckia_api/blob/develop/api/IdeckiaApi.hx#L74-L85>

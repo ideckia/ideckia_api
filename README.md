@@ -25,7 +25,9 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
       * updateClientState: a function to send to the client the state of the item.
 * init(initialState:ItemState):Promise<ItemState>
   * Entry point.
-  * The server will call to this once, to initialize what you need
+  * The server will call to this once, to initialize what you need.
+* hide():Void
+  * Method called when the state that belongs this action goes out of sight.
 * execute(currentState:ItemState):Promise<ActionOutcome>
   * Needs to be implemented.
   * The server will call when the associated item is clicked. 

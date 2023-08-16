@@ -12,6 +12,8 @@ typedef Props = {
 class ::className:: extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState>
 		return super.init(initialState);
+        
+	override public function hide():Void {}
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
 		// return new js.lib.Promise((resolve, reject) -> resolve(new ActionOutcome({state: currentState})));

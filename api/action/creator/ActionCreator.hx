@@ -1,45 +1,39 @@
 package api.action.creator;
 
 import api.action.creator.Macros.TplFile;
+import api.internal.ServerApi;
 import sys.FileSystem;
 import haxe.io.Path;
 
 using StringTools;
 
 class ActionCreator {
-	public static function create(?actionsPath:String) {
-		var tplType = '';
-		while (tplType != 'hx' && tplType != 'js') {
-			Sys.stdout().writeString('Select template (hx | js):  ');
-			tplType = Sys.stdin().readLine().toString();
-		}
-
-		var name = '';
-		while (name.trim() == '') {
-			Sys.stdout().writeString('Action name:  ');
-			name = Sys.stdin().readLine().toString();
-		}
-
-		Sys.stdout().writeString('Action description:  ');
-		var description = Sys.stdin().readLine().toString();
-
-		name = ~/\s+/g.replace(name, '-').toLowerCase();
+	public static function create(createActionDef:CreateActionDef) {
+		var name = ~/\s+/g.replace(createActionDef.name, '-').toLowerCase();
+		var description = createActionDef.description;
 		var splittedName = name.split('-');
 		var className = '';
 		for (s in splittedName) {
 			className += s.charAt(0).toUpperCase() + s.substr(1);
 		}
 
+		var isHxTpl = false;
 		var tplFiles:Array<TplFile> = null;
-		if (tplType == 'hx')
-			tplFiles = Macros.getHxTemplate();
-		else if (tplType == 'js')
-			tplFiles = Macros.getJsTemplate();
+		var tplType = createActionDef.tpl.toLowerCase();
+		switch createActionDef.tpl {
+			case HX:
+				isHxTpl = true;
+				tplFiles = Macros.getHxTemplate();
+			case JS:
+				tplFiles = Macros.getJsTemplate();
+			default:
+		};
 
-		if (actionsPath == null)
-			actionsPath = Path.directory(Sys.programPath());
+		var actionPath = createActionDef.path;
+		if (actionPath == null || actionPath == '')
+			actionPath = Path.directory(Sys.programPath());
 
-		var directory = Path.join([FileSystem.fullPath(actionsPath), name]);
+		var directory = Path.join([FileSystem.fullPath(actionPath), name]);
 		FileSystem.createDirectory(directory);
 
 		var fileContent;
@@ -61,7 +55,7 @@ class ActionCreator {
 
 		Sys.println('Created [$name] action from template [$tplType] in [$directory]');
 
-		if (tplType == 'hx') {
+		if (isHxTpl) {
 			Sys.println('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
 			Sys.command('cd ' + directory + ' && lix install gh:ideckia/ideckia_api');
 		}

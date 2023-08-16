@@ -15,12 +15,14 @@ typedef ClientItem = {
 enum abstract EditorMsgType(String) {
 	var getEditorData;
 	var saveLayout;
+	var createAction;
 }
 
 typedef EditorMsg = {
 	var type:EditorMsgType;
 	var whoami:Caller;
 	var ?layout:Layout;
+	var ?createActionDef:CreateActionDef;
 }
 
 typedef ActionDef = {
@@ -28,6 +30,19 @@ typedef ActionDef = {
 	var enabled:Bool;
 	var name:String;
 	var ?props:Any;
+}
+
+@:forward
+enum abstract ActionTemplate(String) {
+	var HX;
+	var JS;
+}
+
+typedef CreateActionDef = {
+	var tpl:ActionTemplate;
+	var name:String;
+	var description:String;
+	var ?path:String;
 }
 
 typedef ServerState = {
