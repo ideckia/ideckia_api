@@ -28,7 +28,7 @@ class ::className:: extends IdeckiaAction {
 		var props:Props;
 		var server:IdeckiaServer;
 
-		public function setup(props:Props, server:IdeckiaServer) {
+		public function setup(props:Any, ?server:IdeckiaServer) {
 			this.props = props;
 			this.server = server;
 		}
@@ -40,6 +40,9 @@ class ::className:: extends IdeckiaAction {
 				props : [{
 					name : "property_name",
 					defaultValue: "default value",
+					type: "String",
+					value: "possible",
+					isShared: false,
 					description : "property description",
 					values : ["possible", "values", "for the property"]
 				}]

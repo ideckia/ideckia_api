@@ -60,14 +60,14 @@ class IdeckiaAction {
 		var defaultExprMap:Map<String, Expr> = [];
 		var propDescriptors:Array<PropDescriptor> = [];
 		var assignDefaults = [];
-		var propsType = macro:Any;
+		var propsType = macro :Any;
 
 		for (moduleType in moduleTypes) {
 			switch moduleType {
 				case TType(t, params):
 					var type = t.get();
 					if (type.name == 'Props') {
-						propsType = macro:Props;
+						propsType = macro :Props;
 						switch type.type {
 							case TAnonymous(a):
 								var anonType:AnonType = a.get();
@@ -171,14 +171,27 @@ class IdeckiaAction {
 			pos: Context.currentPos()
 		});
 
-		fields.push(createSetup(assignDefaults));
+		var setupExists = false;
+		var getActionDescExists = false;
+		for (field in fields) {
+			switch field.name {
+				case 'setup':
+					setupExists = true;
+				case 'getActionDescriptor':
+					getActionDescExists = true;
+			}
+		}
 
-		// Generate getActionDescriptor method
-		fields.push(createGetActionDescriptorFunction({
-			name: actionName,
-			description: actionDescription,
-			props: propDescriptors
-		}));
+		if (!setupExists)
+			fields.push(createSetup(assignDefaults));
+
+		if (!getActionDescExists)
+			// Generate getActionDescriptor method
+			fields.push(createGetActionDescriptorFunction({
+				name: actionName,
+				description: actionDescription,
+				props: propDescriptors
+			}));
 
 		return fields;
 	}
@@ -198,12 +211,12 @@ class IdeckiaAction {
 				args: [
 					{
 						name: 'props',
-						type: macro:Any
+						type: macro :Any
 					},
 					{
 						name: 'server',
 						opt: true,
-						type: macro:IdeckiaServer
+						type: macro :IdeckiaServer
 					}
 				],
 				expr: macro {
@@ -281,7 +294,7 @@ class IdeckiaAction {
 			access: [APublic, AInline],
 			kind: FFun({
 				args: [],
-				ret: macro:ActionDescriptor,
+				ret: macro :ActionDescriptor,
 				expr: macro return $v{actionDescriptor}
 			}),
 			pos: Context.currentPos()

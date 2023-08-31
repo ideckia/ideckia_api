@@ -8,7 +8,7 @@ import haxe.io.Path;
 using StringTools;
 
 class ActionCreator {
-	public static function create(createActionDef:CreateActionDef) {
+	public static function create(createActionDef:CreateActionDef, logInfo:(data:Dynamic, ?posInfos:Null<haxe.PosInfos>) -> Void) {
 		var name = ~/\s+/g.replace(createActionDef.name, '-').toLowerCase();
 		var description = createActionDef.description;
 		var splittedName = name.split('-');
@@ -53,10 +53,10 @@ class ActionCreator {
 			}
 		}
 
-		Sys.println('Created [$name] action from template [$tplType] in [$directory]');
+		logInfo('Created [$name] action from template [$tplType] in [$directory]');
 
 		if (isHxTpl) {
-			Sys.println('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
+			logInfo('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
 			Sys.command('cd ' + directory + ' && lix install gh:ideckia/ideckia_api');
 		}
 	}
