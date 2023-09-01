@@ -41,7 +41,7 @@ class ::className:: {
      */
     onLongPress(currentState) {
         return new Promise((resolve, reject) => {
-            resolve({state: currentState});
+            resolve({ state: currentState });
         });
     }
 
@@ -53,7 +53,7 @@ class ::className:: {
             name: "::name::",
             description: "::description::",
             // props : [{
-            // 	name : "propertyName",
+            // 	name : "property_name",
             // 	type : "String",
             // 	isShared : false,
             //	defaultValue: "default value",

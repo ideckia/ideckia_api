@@ -23,7 +23,7 @@ class ActionCreator {
 		var tplFiles:Array<TplFile> = null;
 		var tplDirectory = createActionDef.tplDirectory;
 		var tplName = createActionDef.tplName.toLowerCase();
-		if (tplDirectory == 'macro') {
+		if (tplDirectory == 'embed') {
 			switch createActionDef.tplName {
 				case 'haxe':
 					isHxTpl = true;
