@@ -32,17 +32,16 @@ typedef ActionDef = {
 	var ?props:Any;
 }
 
-@:forward
-enum abstract ActionTemplate(String) {
-	var HX;
-	var JS;
+typedef TemplateDef = {
+	var tplName:String;
+	var tplDirectory:String;
 }
 
 typedef CreateActionDef = {
-	var tpl:ActionTemplate;
+	> TemplateDef,
 	var name:String;
 	var description:String;
-	var ?path:String;
+	var ?destPath:String;
 }
 
 typedef ServerState = {

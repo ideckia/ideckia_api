@@ -8,6 +8,8 @@ import haxe.io.Path;
 using StringTools;
 
 class ActionCreator {
+	public static var TEMPLATES_LIST = Macros.getTemplatesList();
+
 	public static function create(createActionDef:CreateActionDef, logInfo:(data:Dynamic, ?posInfos:Null<haxe.PosInfos>) -> Void) {
 		var name = ~/\s+/g.replace(createActionDef.name, '-').toLowerCase();
 		var description = createActionDef.description;
@@ -19,17 +21,22 @@ class ActionCreator {
 
 		var isHxTpl = false;
 		var tplFiles:Array<TplFile> = null;
-		var tplType = createActionDef.tpl.toLowerCase();
-		switch createActionDef.tpl {
-			case HX:
-				isHxTpl = true;
-				tplFiles = Macros.getHxTemplate();
-			case JS:
-				tplFiles = Macros.getJsTemplate();
-			default:
-		};
+		var tplDirectory = createActionDef.tplDirectory;
+		var tplName = createActionDef.tplName.toLowerCase();
+		if (tplDirectory == 'macro') {
+			switch createActionDef.tplName {
+				case 'haxe':
+					isHxTpl = true;
+					tplFiles = Macros.getHxTemplate();
+				case 'javascript':
+					tplFiles = Macros.getJsTemplate();
+				default:
+			};
+		} else {
+			tplFiles = Macros.getTemplate(tplDirectory, createActionDef.tplName);
+		}
 
-		var actionPath = createActionDef.path;
+		var actionPath = createActionDef.destPath;
 		if (actionPath == null || actionPath == '')
 			actionPath = Path.directory(Sys.programPath());
 
@@ -53,7 +60,7 @@ class ActionCreator {
 			}
 		}
 
-		logInfo('Created [$name] action from template [$tplType] in [$directory]');
+		logInfo('Created [$name] action from template [$tplName] in [$directory]');
 
 		if (isHxTpl) {
 			logInfo('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
