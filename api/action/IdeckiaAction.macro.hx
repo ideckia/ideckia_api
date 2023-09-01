@@ -185,13 +185,16 @@ class IdeckiaAction {
 		if (!setupExists)
 			fields.push(createSetup(assignDefaults));
 
+		// Generate _getActionDescriptor method
+		fields.push(createPrivateGetActionDescriptorFunction({
+			name: actionName,
+			description: actionDescription,
+			props: propDescriptors
+		}));
+
 		if (!getActionDescExists)
 			// Generate getActionDescriptor method
-			fields.push(createGetActionDescriptorFunction({
-				name: actionName,
-				description: actionDescription,
-				props: propDescriptors
-			}));
+			fields.push(createGetActionDescriptorFunction());
 
 		return fields;
 	}
@@ -287,7 +290,21 @@ class IdeckiaAction {
 		return possibleValues;
 	}
 
-	static function createGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
+	static function createPrivateGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
+		return {
+			name: '_getActionDescriptor',
+			doc: 'Private method to get action properties descriptor (it can be used if getActionDescriptor is overwritten).',
+			access: [],
+			kind: FFun({
+				args: [],
+				ret: macro :ActionDescriptor,
+				expr: macro return $v{actionDescriptor}
+			}),
+			pos: Context.currentPos()
+		};
+	}
+
+	static function createGetActionDescriptorFunction():Field {
 		return {
 			name: 'getActionDescriptor',
 			doc: 'Method that returns action properties descriptor (name, type, isShared, description, values).',
@@ -295,7 +312,7 @@ class IdeckiaAction {
 			kind: FFun({
 				args: [],
 				ret: macro :ActionDescriptor,
-				expr: macro return $v{actionDescriptor}
+				expr: macro return _getActionDescriptor()
 			}),
 			pos: Context.currentPos()
 		};
