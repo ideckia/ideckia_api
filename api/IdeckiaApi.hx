@@ -14,6 +14,15 @@ enum abstract Caller(String) {
 	var editor;
 }
 
+enum abstract Endpoint(String) to String {
+	var editorEndpoint = '/editor';
+	var pingEndpoint = '/ping';
+	var newActionEndpoint = '/actions/new';
+	var actionTemplatesEndpoint = '/actions/templates';
+	var layoutAppendEndpoint = '/layout/append';
+	var directoryExportEndpoint = '/directory/export';
+}
+
 typedef ClientMsg = {
 	var type:ClientMsgType;
 	var whoami:Caller;
@@ -104,6 +113,7 @@ typedef PropDescriptor = {
 	var name:String;
 	var defaultValue:String;
 	var type:String;
+	var ?value:String;
 	var ?isShared:Bool;
 	var ?description:String;
 	var ?values:Array<String>;
@@ -114,9 +124,16 @@ typedef PresetAction = {
 	var props:Any;
 }
 
+enum abstract ActionStatus(String) {
+	var unknown;
+	var error;
+	var ok;
+}
+
 typedef ActionDescriptor = {
 	var ?id:UInt;
 	var name:String;
+	var ?status:ActionStatus;
 	var ?description:String;
 	var ?props:Array<PropDescriptor>;
 	var ?presets:Array<PresetAction>;
