@@ -41,6 +41,7 @@ class ActionCreator {
 			actionPath = Path.directory(Sys.programPath());
 
 		var directory = Path.join([FileSystem.fullPath(actionPath), name]);
+		logInfo('Creating new action [$directory]');
 		FileSystem.createDirectory(directory);
 
 		var fileContent;
@@ -66,5 +67,7 @@ class ActionCreator {
 			logInfo('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
 			Sys.command('cd ' + directory + ' && lix install gh:ideckia/ideckia_api');
 		}
+
+		return directory;
 	}
 }
