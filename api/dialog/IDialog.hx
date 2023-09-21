@@ -59,11 +59,12 @@ interface IDialog {
 
 		@param title The title of the window
 		@param isDirectory Do you want to select a directory instead of a file?
+		@param openDirectory Open the dialog in an directory
 		@param multiple Allow multiple selection
 		@param fileFilter Filter to show files
 		@returns A promise with selected files paths
 	**/
-	function selectFile(title:String, isDirectory:Bool = false, multiple:Bool = false, ?fileFilter:FileFilter,
+	function selectFile(title:String, isDirectory:Bool = false, ?openDirectory:String, multiple:Bool = false, ?fileFilter:FileFilter,
 		?options:WindowOptions):Promise<Option<Array<String>>>;
 
 	/**
@@ -71,10 +72,11 @@ interface IDialog {
 
 		@param title The title of the window
 		@param saveName Optional name for saving
+		@param openDirectory Open the dialog in an directory
 		@param fileFilter Filter to show files
 		@returns A promise with selected files paths
 	**/
-	function saveFile(title:String, ?saveName:String, ?fileFilter:FileFilter, ?options:WindowOptions):Promise<Option<String>>;
+	function saveFile(title:String, ?saveName:String, ?openDirectory:String, ?fileFilter:FileFilter, ?options:WindowOptions):Promise<Option<String>>;
 
 	/**
 		Open a dialog to get user input text

@@ -19,11 +19,11 @@ const server = {
             console.log(title);
             return Promise.resolve(true);
         },
-        selectFile: (title, _isDirectory = false, _multiple = false, _fileFilter = null) => {
+        selectFile: (title, _isDirectory = false, _openDirectory = "", _multiple = false, _fileFilter = null) => {
             console.log(title);
             return Promise.resolve(['file0path', 'file1path']);
         },
-        saveFile: (title, _saveName = null, _fileFilter = null) => {
+        saveFile: (title, _saveName = null, _openDirectory = "", _fileFilter = null) => {
             console.log(title);
             return Promise.resolve('filepath');
         },
