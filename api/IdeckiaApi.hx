@@ -17,10 +17,16 @@ enum abstract Caller(String) {
 enum abstract Endpoint(String) to String {
 	var editorEndpoint = '/editor';
 	var pingEndpoint = '/ping';
-	var newActionEndpoint = '/actions/new';
-	var actionTemplatesEndpoint = '/actions/templates';
+	var newActionEndpoint = '/action/new';
+	var actionTemplatesEndpoint = '/action/templates';
 	var layoutAppendEndpoint = '/layout/append';
 	var directoryExportEndpoint = '/directory/export';
+
+	public static inline function actionDescriptorForId(id:UInt)
+		return 'action/${id}/descriptor';
+
+	public static inline function stateActionsForId(id:UInt)
+		return 'state/${id}/actions/status';
 }
 
 typedef ClientMsg = {
@@ -59,6 +65,7 @@ typedef DynamicDirItem = {
 	var ?toDir:String;
 	var ?actions:Array<{
 		var name:String;
+		var ?status:ActionStatus;
 		var ?props:Any;
 	}>;
 }
@@ -124,16 +131,20 @@ typedef PresetAction = {
 	var props:Any;
 }
 
-enum abstract ActionStatus(String) {
+enum abstract ActionStatusCode(String) from String {
 	var unknown;
 	var error;
 	var ok;
 }
 
+typedef ActionStatus = {
+	var code:ActionStatusCode;
+	var ?message:String;
+}
+
 typedef ActionDescriptor = {
 	var ?id:UInt;
 	var name:String;
-	var ?status:ActionStatus;
 	var ?description:String;
 	var ?props:Array<PropDescriptor>;
 	var ?presets:Array<PresetAction>;

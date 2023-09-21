@@ -15,20 +15,19 @@ typedef ClientItem = {
 enum abstract EditorMsgType(String) {
 	var getEditorData;
 	var saveLayout;
-	var createAction;
 }
 
 typedef EditorMsg = {
 	var type:EditorMsgType;
 	var whoami:Caller;
 	var ?layout:Layout;
-	var ?createActionDef:CreateActionDef;
 }
 
 typedef ActionDef = {
 	var ?id:ActionId;
 	var enabled:Bool;
 	var name:String;
+	var ?status:ActionStatus;
 	var ?props:Any;
 }
 
