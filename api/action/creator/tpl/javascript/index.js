@@ -21,12 +21,6 @@ class ::className:: {
     }
 
     /**
-     * Method called when the state that belongs this action goes out of sight
-     */
-    hide() {
-    }
-
-    /**
      * Method called when the item is clicked in the client
      */
     execute(currentState) {
@@ -43,6 +37,30 @@ class ::className:: {
         return new Promise((resolve, reject) => {
             resolve({ state: currentState });
         });
+    }
+
+    /**
+     * Method called from the editor to show if the action has any problems
+     */
+    getStatus() {
+        return new Promise((resolve, reject) => {
+            resolve({ code: 'ok' });
+        });
+    }
+
+    /**
+     * Method called when the state that belongs this action shows up
+     */
+    show(currentState) {
+        return new Promise((resolve, reject) => {
+            resolve(initialState);
+        });
+    }
+
+    /**
+     * Method called when the state that belongs this action goes out of sight
+     */
+    hide() {
     }
 
     /**

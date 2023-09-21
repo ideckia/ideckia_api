@@ -13,7 +13,7 @@ abstract class IdeckiaAction {
 	 *  @param props: Properties defined for the instance in the layout file
 	 *  @param server: Object to access to some tools that ideckia_server @see <https://github.com/ideckia/ideckia_api/blob/develop/api/IdeckiaApi.hx#L126-L135>
 	 */
-	abstract public function setup(props:Any, ?server:IdeckiaServer):Void;
+	abstract public function setup(props:Any, server:IdeckiaServer):Void;
 
 	/**
 	 *  Method called when the action is loaded
@@ -23,11 +23,6 @@ abstract class IdeckiaAction {
 	 */
 	public function init(initialState:ItemState):js.lib.Promise<ItemState>
 		return new js.lib.Promise((resolve, reject) -> resolve(initialState));
-
-	/**
-     * Method called when the state that belongs this action goes out of sight
-	 */
-	public function hide():Void {}
 
 	/**
 	 *  Method called when the item is clicked in the client
@@ -44,7 +39,24 @@ abstract class IdeckiaAction {
 	 *  @return A Promise with the outcome given by the action. It can be a new state or a new directory @see <https://github.com/ideckia/ideckia_api/blob/develop/api/IdeckiaApi.hx#L34-L37>
 	 */
 	public function onLongPress(currentState:ItemState):js.lib.Promise<ActionOutcome>
-		return new js.lib.Promise((resolve, reject) -> resolve(new ActionOutcome({state: currentState})));
+		return js.lib.Promise.resolve(new ActionOutcome({state: currentState}));
+
+	/**
+	 * Method called from the editor to show if the action has any problems
+	 */
+	public function getStatus():js.lib.Promise<ActionStatus>
+		return js.lib.Promise.resolve({code: ActionStatusCode.ok});
+
+	/**
+	 * Method called when the state that belongs this action shows up
+	 */
+	public function show(currentState:ItemState):js.lib.Promise<ItemState>
+		return js.lib.Promise.resolve(currentState);
+
+	/**
+	 * Method called when the state that belongs this action goes out of sight
+	 */
+	public function hide():Void {}
 
 	abstract public function getActionDescriptor():ActionDescriptor;
 }

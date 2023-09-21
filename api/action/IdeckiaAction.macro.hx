@@ -218,7 +218,6 @@ class IdeckiaAction {
 					},
 					{
 						name: 'server',
-						opt: true,
 						type: macro :IdeckiaServer
 					}
 				],
