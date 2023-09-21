@@ -342,20 +342,18 @@ class IdeckiaAction {
 	static function createMarkdownSample(actionName:String, propDescriptors:Array<PropDescriptor>) {
 		var sample = '```json\n';
 		sample += '{\n';
-		sample += '    "state": {\n';
-		sample += '        "text": "${actionName} action example",\n';
-		sample += '        "actions": [\n';
-		sample += '            {\n';
-		sample += '                "name": "${actionName}",\n';
-		sample += '                "props": {\n';
-		var props = propDescriptors.map(p -> '                    "${p.name}": ${p.defaultValue}');
+		sample += '    "text": "${actionName} action example",\n';
+		sample += '    "actions": [\n';
+		sample += '        {\n';
+		sample += '            "name": "${actionName}",\n';
+		sample += '            "props": {\n';
+		var props = propDescriptors.map(p -> '                "${p.name}": ${p.defaultValue}');
 		sample += props.join(',\n');
 		sample += '\n';
 
-		sample += '                }\n';
 		sample += '            }\n';
-		sample += '        ]\n';
-		sample += '    }\n';
+		sample += '        }\n';
+		sample += '    ]\n';
 		sample += '}\n';
 		sample += '```';
 
