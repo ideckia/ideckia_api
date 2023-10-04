@@ -67,18 +67,20 @@ class ::className:: {
      * Method called from the editor to create an UI to configure the action
      */
     getActionDescriptor() {
-        return {
-            name: "::name::",
-            description: "::description::",
-            // props : [{
-            // 	name : "property_name",
-            // 	type : "String",
-            // 	isShared : false,
-            //	defaultValue: "default value",
-            // 	description : "property description",
-            // 	values : ["possible", "values", "for the property"]
-            // }]
-        };
+        return new Promise((resolve, reject) => {
+            resolve({
+                name: "::name::",
+                description: "::description::",
+                // props : [{
+                // 	name : "property_name",
+                // 	type : "String",
+                // 	isShared : false,
+                //	defaultValue: "default value",
+                // 	description : "property description",
+                // 	values : ["possible", "values", "for the property"]
+                // }]
+            });
+        });
     }
 }
 

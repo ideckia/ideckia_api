@@ -310,8 +310,8 @@ class IdeckiaAction {
 			access: [APublic, AInline],
 			kind: FFun({
 				args: [],
-				ret: macro :ActionDescriptor,
-				expr: macro return _getActionDescriptor()
+				ret: macro :js.lib.Promise<ActionDescriptor>,
+				expr: macro return js.lib.Promise.resolve(_getActionDescriptor())
 			}),
 			pos: Context.currentPos()
 		};

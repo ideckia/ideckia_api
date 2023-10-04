@@ -22,7 +22,7 @@ abstract class IdeckiaAction {
 	 *  @return A Promise with the new state of the item
 	 */
 	public function init(initialState:ItemState):js.lib.Promise<ItemState>
-		return new js.lib.Promise((resolve, reject) -> resolve(initialState));
+		return js.lib.Promise.resolve(initialState);
 
 	/**
 	 *  Method called when the item is clicked in the client
@@ -58,5 +58,5 @@ abstract class IdeckiaAction {
 	 */
 	public function hide():Void {}
 
-	abstract public function getActionDescriptor():ActionDescriptor;
+	abstract public function getActionDescriptor():js.lib.Promise<ActionDescriptor>;
 }
