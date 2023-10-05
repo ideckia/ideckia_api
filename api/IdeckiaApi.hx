@@ -122,6 +122,7 @@ typedef PropDescriptor = {
 	var type:String;
 	var ?value:String;
 	var ?isShared:Bool;
+	var ?sharedName:String;
 	var ?description:String;
 	var ?values:Array<String>;
 }

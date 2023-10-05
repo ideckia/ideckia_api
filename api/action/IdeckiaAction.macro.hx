@@ -72,13 +72,15 @@ class IdeckiaAction {
 							case TAnonymous(a):
 								var anonType:AnonType = a.get();
 
-								var propDescriptor:PropDescriptor;
-								var propDescription;
-								var propPossibleValues;
-								var defaultValue:Any;
-								var isShared:Bool;
-								var propType;
-								var defaultExpr:Expr;
+								var propDescriptor:PropDescriptor,
+									propDescription,
+									propPossibleValues,
+									defaultValue:Any,
+									isShared:Bool,
+									sharedName:String,
+									propType,
+									defaultExpr:Expr,
+									metas:haxe.macro.Metadata;
 								anonType.fields.sort((field1, field2) -> {
 									var fieldLine1 = PositionTools.toLocation(field1.pos).range.start.line;
 									var fieldLine2 = PositionTools.toLocation(field2.pos).range.start.line;
@@ -89,9 +91,10 @@ class IdeckiaAction {
 									propPossibleValues = null;
 									defaultValue = null;
 									isShared = false;
+									sharedName = '';
 									propType = null;
 
-									var metas:haxe.macro.Metadata = classField.meta.get();
+									metas = classField.meta.get();
 									for (meta in metas) {
 										// Look for the editor parameter metadata
 										if (meta.name == EDITABLE_METADATA) {
@@ -106,6 +109,7 @@ class IdeckiaAction {
 											propPossibleValues = extractPossibleValues(meta);
 										} else if (meta.name == SHARED_METADATA) {
 											isShared = true;
+											sharedName = extractsharedName(meta);
 										}
 									}
 
@@ -119,6 +123,7 @@ class IdeckiaAction {
 										name: classField.name,
 										defaultValue: defaultValue,
 										isShared: isShared,
+										sharedName: sharedName,
 										type: propType,
 										description: propDescription,
 										values: propPossibleValues
@@ -248,6 +253,24 @@ class IdeckiaAction {
 		}
 
 		return description;
+	}
+
+	/*
+	 * Get the shared property name
+	 */
+	static function extractsharedName(meta:MetadataEntry) {
+		var param = meta.params[0];
+		var name = "";
+		if (param != null) {
+			name = switch param.expr {
+				case EConst(CString(s, kind)):
+					s;
+				default:
+					"";
+			}
+		}
+
+		return name;
 	}
 
 	/*
