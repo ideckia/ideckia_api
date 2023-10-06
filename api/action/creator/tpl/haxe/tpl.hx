@@ -21,10 +21,10 @@ class ::className:: extends IdeckiaAction {
 	override public function onLongPress(currentState:ItemState):js.lib.Promise<ActionOutcome>
 		return super.onLongPress(currentState);
 
-	public function getStatus():js.lib.Promise<ActionStatus>
+	override public function getStatus():js.lib.Promise<ActionStatus>
 		return super.getStatus();
 
-	public function show(currentState:ItemState):js.lib.Promise<ItemState>
+	override public function show(currentState:ItemState):js.lib.Promise<ItemState>
 		return super.show(currentState);
 
 	override public function hide():Void {}

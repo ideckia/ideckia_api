@@ -25,9 +25,9 @@ jobs:
 
     - name: Install lix, haxe ${{ env.HAXE_VERSION }} and dependencies
       run: |
-            npm i -g lix
-            lix install haxe ${{ env.HAXE_VERSION }}
-            lix download
+        npm i -g lix
+        lix install haxe ${{ env.HAXE_VERSION }}
+        lix download
 
     - name: Compile project
       run: haxe deploy.hxml
