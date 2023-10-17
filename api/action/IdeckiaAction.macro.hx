@@ -109,7 +109,7 @@ class IdeckiaAction {
 											propPossibleValues = extractPossibleValues(meta);
 										} else if (meta.name == SHARED_METADATA) {
 											isShared = true;
-											sharedName = extractsharedName(meta);
+											sharedName = extractSharedName(meta);
 										}
 									}
 
@@ -258,7 +258,7 @@ class IdeckiaAction {
 	/*
 	 * Get the shared property name
 	 */
-	static function extractsharedName(meta:MetadataEntry) {
+	static function extractSharedName(meta:MetadataEntry) {
 		var param = meta.params[0];
 		var name = "";
 		if (param != null) {
