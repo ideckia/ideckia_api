@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.1.5",
-	"releasenote": "add optional name to the shared properties metadata of IdeckiaAction",
+	"version": "1.1.6",
+	"releasenote": "added api.action.Data helper to embed files on compilation or read them in runtime",
 	"tags": [
 		"ideckia",
 		"nodejs",
