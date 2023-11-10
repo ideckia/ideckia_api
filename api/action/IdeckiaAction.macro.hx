@@ -78,6 +78,7 @@ class IdeckiaAction {
 									defaultValue:Any,
 									isShared:Bool,
 									sharedName:String,
+									isEditable:Bool,
 									propType,
 									defaultExpr:Expr,
 									metas:haxe.macro.Metadata;
@@ -95,9 +96,11 @@ class IdeckiaAction {
 									propType = null;
 
 									metas = classField.meta.get();
+									isEditable = false;
 									for (meta in metas) {
 										// Look for the editor parameter metadata
 										if (meta.name == EDITABLE_METADATA) {
+											isEditable = true;
 											propDescription = extractDescription(meta);
 											defaultExpr = extractDefaultValueExpr(meta);
 											if (defaultExpr != null) {
@@ -115,19 +118,22 @@ class IdeckiaAction {
 
 									classField.meta.add(':optional', [], Context.currentPos());
 
-									// Get the property type
-									propType = TypeTools.toString(classField.type);
+									// Only @:editable and @:shared props goes in the descriptor
+									if (isEditable || isShared) {
+										// Get the property type
+										propType = TypeTools.toString(classField.type);
 
-									// Create the descriptor and add it to the array
-									propDescriptors.push({
-										name: classField.name,
-										defaultValue: defaultValue,
-										isShared: isShared,
-										sharedName: sharedName,
-										type: propType,
-										description: propDescription,
-										values: propPossibleValues
-									});
+										// Create the descriptor and add it to the array
+										propDescriptors.push({
+											name: classField.name,
+											defaultValue: defaultValue,
+											isShared: isShared,
+											sharedName: sharedName,
+											type: propType,
+											description: propDescription,
+											values: propPossibleValues
+										});
+									}
 								}
 
 								createMarkdown(actionName, propDescriptors);
