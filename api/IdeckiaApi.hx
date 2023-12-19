@@ -98,7 +98,7 @@ typedef ItemState = {
 	var ?icon:String;
 	var ?bgColor:String;
 	var ?extraData:{
-		fromAction:String,
+		?fromAction:String,
 		data:Any
 	};
 }
