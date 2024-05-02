@@ -17,6 +17,7 @@ enum abstract Caller(String) {
 enum abstract Endpoint(String) to String {
 	var editorEndpoint = '/editor';
 	var pingEndpoint = '/ping';
+	var newTranslationEndpoint = '/translation/new';
 	var newActionEndpoint = '/action/new';
 	var actionTemplatesEndpoint = '/action/templates';
 	var layoutAppendEndpoint = '/layout/append';
