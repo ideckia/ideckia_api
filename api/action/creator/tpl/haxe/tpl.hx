@@ -14,8 +14,8 @@ class ::className:: extends IdeckiaAction {
 		return super.init(initialState);
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
-		// return new js.lib.Promise((resolve, reject) -> resolve(new ActionOutcome({state: currentState})));
-		throw new haxe.exceptions.NotImplementedException();
+        return js.lib.Promise.reject('Not implemented');
+        // return js.lib.Promise.resolve(new ActionOutcome({state: currentState}));
 	}
 
 	override public function onLongPress(currentState:ItemState):js.lib.Promise<ActionOutcome>

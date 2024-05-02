@@ -1,7 +1,7 @@
 /**
  * [Find here the action structure]{@link https://github.com/ideckia/ideckia_api/blob/develop/README.md#action-structure}
  */
-class ::className:: {
+class :: className:: {
 
     /**
      * Method called to inject the properties and server access
@@ -24,9 +24,11 @@ class ::className:: {
      * Method called when the item is clicked in the client
      */
     execute(currentState) {
-        throw 'Not implemented';
+        return new Promise((resolve, reject) => {
+            reject('Not implemented');
+        });
         // return new Promise((resolve, reject) => {
-        // 		resolve({state: currentState});
+        //     resolve({state: currentState});
         // });
     }
 
@@ -84,4 +86,4 @@ class ::className:: {
     }
 }
 
-exports.IdeckiaAction = ::className::;
+exports.IdeckiaAction = :: className:: ;
