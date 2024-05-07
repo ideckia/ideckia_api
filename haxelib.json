@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.1.8",
-	"releasenote": "added IdeckiaApi.Endpoint.newTranslationEndpoint",
+	"version": "1.1.9",
+	"releasenote": "added IdeckiaServer.getCurrentLang()",
 	"tags": [
 		"ideckia",
 		"nodejs",

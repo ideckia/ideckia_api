@@ -167,6 +167,7 @@ typedef IdeckiaServer = {
 	var dialog:api.dialog.IDialog;
 	var mediaPlayer:api.media.IMediaPlayer;
 	var updateClientState:(props:ItemState) -> Void;
+	var getCurrentLang:() -> String;
 }
 
 abstract RichString(String) to String {

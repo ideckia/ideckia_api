@@ -66,7 +66,8 @@ const server = {
             console.log(`Stop ${id} media.`);
         },
     },
-    updateClientState: state => console.log('New state sent to the client: ' + state)
+    updateClientState: state => console.log('New state sent to the client: ' + state),
+    getCurrentLang: () => 'en'
 };
 
 const action = new IdeckiaAction();

@@ -1,7 +1,7 @@
 /**
  * [Find here the action structure]{@link https://github.com/ideckia/ideckia_api/blob/develop/README.md#action-structure}
  */
-class :: className:: {
+class ::className:: {
 
     /**
      * Method called to inject the properties and server access
@@ -77,6 +77,7 @@ class :: className:: {
                 // 	name : "property_name",
                 // 	type : "String",
                 // 	isShared : false,
+                // 	sharedName : "shared_property_name",
                 //	defaultValue: "default value",
                 // 	description : "property description",
                 // 	values : ["possible", "values", "for the property"]
@@ -86,4 +87,4 @@ class :: className:: {
     }
 }
 
-exports.IdeckiaAction = :: className:: ;
+exports.IdeckiaAction = ::className:: ;

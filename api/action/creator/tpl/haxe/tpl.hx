@@ -49,6 +49,7 @@ class ::className:: extends IdeckiaAction {
 					type: "String",
 					value: "possible",
 					isShared: false,
+					sharedName : "shared_property_name",
 					description : "property description",
 					values : ["possible", "values", "for the property"]
 				}]
