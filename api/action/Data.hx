@@ -1,5 +1,6 @@
 package api.action;
 
+import api.IdeckiaApi.Translations;
 import haxe.io.Path;
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -15,6 +16,12 @@ class Data {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
 		return macro $v{_getJson(Path.join([directory, filename]))};
+	}
+
+	public static macro function embedTranslations(translationDir:String):ExprOf<Translations> {
+		var posInfos = Context.getPosInfos(Context.currentPos());
+		var directory = Path.directory(posInfos.file);
+		return macro $v{_getTranslations(Path.join([directory, translationDir]))};
 	}
 
 	public static macro function embedBytes(filename:String):ExprOf<haxe.io.Bytes> {
@@ -38,6 +45,14 @@ class Data {
 		return _getJson(Path.join([js.Node.__dirname, filename]));
 	}
 
+	public static function getTranslations(translationDir:String):Translations {
+		return getTranslationsAbsolute(Path.join([js.Node.__dirname, translationDir]));
+	}
+
+	public static function getTranslationsAbsolute(translationAbsoluteDir:String):Translations {
+		return _getTranslations(translationAbsoluteDir);
+	}
+
 	public static function getBytes(filename:String) {
 		return _getBytes(Path.join([js.Node.__dirname, filename]));
 	}
@@ -53,6 +68,18 @@ class Data {
 		} else {
 			null;
 		}
+	}
+
+	static function _getTranslations(translationsDir:String):Translations {
+		var translations:Translations = new Map();
+		if (sys.FileSystem.exists(translationsDir) && sys.FileSystem.isDirectory(translationsDir)) {
+			for (langFile in sys.FileSystem.readDirectory(translationsDir)) {
+				var transContent = _getJson(translationsDir + '/$langFile');
+				translations.set(StringTools.replace(langFile.toLowerCase(), '.json', ''), transContent);
+			}
+		}
+
+		return translations;
 	}
 
 	static function _getJson(filePath:String) {

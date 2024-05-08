@@ -192,3 +192,45 @@ abstract RichString(String) to String {
 	public inline function color(color:String)
 		return new RichString('{color.$color:$this}');
 }
+
+typedef TransString = {
+	var id:String;
+	var text:String;
+	var ?comment:String;
+}
+
+typedef TransLang = Map<String, Array<TransString>>;
+
+@:forward
+abstract Translations(TransLang) to TransLang from TransLang {
+	public inline function new(v)
+		this = v;
+
+	public function getLang(langId:String)
+		return this.get(langId);
+
+	public function t(langId:String, stringId:String, ?args:Array<Dynamic>) {
+		var lang = this.get(langId);
+		if (lang == null)
+			return stringId;
+		for (s in lang) {
+			if (s.id == stringId) {
+				if (args == null)
+					return s.text;
+				var text = s.text;
+				for (index => value in args) {
+					if (!StringTools.contains(text, '{$index}'))
+						continue;
+					text = StringTools.replace(text, '{$index}', value);
+				}
+				return text;
+			}
+		}
+		return stringId;
+	}
+
+	public function merge(newTranslations:Translations) {
+		for (lang => strings in newTranslations)
+			this.set(lang, strings);
+	}
+}

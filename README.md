@@ -23,6 +23,7 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
       * dialogs: Access to host dialogs. The dialog property is an implementation of [IDialog](/api/dialog/IDialog.hx)
       * mediaPlayer: Access to host media player. The mediaPlayer property is an implementation of [IMediaPlayer](/api/media/IMediaPlayer.hx)
       * updateClientState: a function to send to the client the state of the item.
+      * getCurrentLang: a function to get the language configured for the app.
 * init(initialState:ItemState):Promise<ItemState>
   * Entry point.
   * The server will call to this once, to initialize what you need.
