@@ -1,5 +1,5 @@
 /**
- * [Find here the action structure]{@link https://github.com/ideckia/ideckia_api/blob/develop/README.md#action-structure}
+ * [Find here the action structure]{@link https://github.com/ideckia/ideckia_api/blob/main/README.md#action-structure}
  */
 class ::className:: {
 
