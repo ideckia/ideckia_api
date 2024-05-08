@@ -5,15 +5,15 @@ using api.IdeckiaApi;
 @:keep
 @:autoBuild(api.action.IdeckiaAction.build())
 abstract class IdeckiaAction {
-	var server:IdeckiaServer;
+	var core:IdeckiaCore;
 
 	/**
-	 *  Method called to inject the properties and server access.
+	 *  Method called to inject the properties and core access.
 	 *
 	 *  @param props: Properties defined for the instance in the layout file
-	 *  @param server: Object to access to some tools that ideckia_server @see <https://github.com/ideckia/ideckia_api/blob/main/api/IdeckiaApi.hx#L126-L135>
+	 *  @param core: Object to access to some tools that ideckia_core @see <https://github.com/ideckia/ideckia_api/blob/main/api/IdeckiaApi.hx#L126-L135>
 	 */
-	abstract public function setup(props:Any, server:IdeckiaServer):Void;
+	abstract public function setup(props:Any, core:IdeckiaCore):Void;
 
 	/**
 	 *  Method called when the action is loaded

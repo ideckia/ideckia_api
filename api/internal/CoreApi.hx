@@ -43,18 +43,18 @@ typedef CreateActionDef = {
 	var ?destPath:String;
 }
 
-typedef ServerState = {
+typedef CoreState = {
 	> BaseState,
 	var ?id:StateId;
 	var ?actions:Array<ActionDef>;
 }
 
 enum Kind {
-	ChangeDir(toDir:DirName, state:ServerState);
-	States(?index:Int, list:Array<ServerState>);
+	ChangeDir(toDir:DirName, state:CoreState);
+	States(?index:Int, list:Array<CoreState>);
 }
 
-typedef ServerItem = {
+typedef CoreItem = {
 	var ?id:ItemId;
 	var ?kind:Kind;
 }
@@ -65,7 +65,7 @@ typedef Dir = {
 	var ?columns:UInt;
 	var ?bgColor:String;
 	var name:DirName;
-	var items:Array<ServerItem>;
+	var items:Array<CoreItem>;
 }
 
 typedef Layout = {
@@ -75,7 +75,7 @@ typedef Layout = {
 	var ?sharedVars:Array<{key:String, value:Any}>;
 	var ?textSize:UInt;
 	var dirs:Array<Dir>;
-	var ?fixedItems:Array<ServerItem>;
+	var ?fixedItems:Array<CoreItem>;
 	var ?icons:Array<{key:String, value:String}>;
 }
 

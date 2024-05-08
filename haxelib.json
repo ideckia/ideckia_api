@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.1.10",
-	"releasenote": "added api.action.Data.getTranslations",
+	"version": "1.2.0",
+	"releasenote": "rename Server -> Core",
 	"tags": [
 		"ideckia",
 		"nodejs",

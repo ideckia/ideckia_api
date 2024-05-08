@@ -4,11 +4,11 @@
 class ::className:: {
 
     /**
-     * Method called to inject the properties and server access
+     * Method called to inject the properties and core access
      */
-    setup(props, server) {
+    setup(props, core) {
         this.props = props == null ? {} : props;
-        this.server = server;
+        this.core = core;
     }
 
     /**

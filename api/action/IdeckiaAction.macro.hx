@@ -212,10 +212,10 @@ class IdeckiaAction {
 
 	/**
 		Create
-			function setup(props:Props, server:IdeckiaServer) {
+			function setup(props:Props, core:IdeckiaCore) {
 				this.props = props;
 				// default assignments
-				this.server = server;
+				this.core = core;
 			}
 	**/
 	static function createSetup(assignDefaults:Array<Expr>):Field {
@@ -228,14 +228,14 @@ class IdeckiaAction {
 						type: macro :Any
 					},
 					{
-						name: 'server',
-						type: macro :IdeckiaServer
+						name: 'core',
+						type: macro :IdeckiaCore
 					}
 				],
 				expr: macro {
 					this.props = (props == null) ? {} : props;
 					$b{assignDefaults};
-					this.server = server;
+					this.core = core;
 				}
 			}),
 			access: [APublic],

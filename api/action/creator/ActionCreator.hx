@@ -1,7 +1,7 @@
 package api.action.creator;
 
 import api.action.creator.Macros.TplFile;
-import api.internal.ServerApi;
+import api.internal.CoreApi;
 import sys.FileSystem;
 import haxe.io.Path;
 

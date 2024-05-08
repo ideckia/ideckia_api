@@ -37,8 +37,8 @@ typedef ClientMsg = {
 	var ?toDir:String;
 }
 
-// Server messages
-enum abstract ServerMsgType(String) {
+// Core messages
+enum abstract CoreMsgType(String) {
 	var layout;
 	var editorData;
 }
@@ -86,8 +86,8 @@ abstract ActionOutcome(TActionOutcome) from TActionOutcome to TActionOutcome {
 	}
 }
 
-typedef ServerMsg<T> = {
-	var type:ServerMsgType;
+typedef CoreMsg<T> = {
+	var type:CoreMsgType;
 	var data:T;
 }
 
@@ -158,7 +158,7 @@ typedef Promise<T> = Dynamic<T>;
 typedef Promise<T> = js.lib.Promise<T>;
 #end
 
-typedef IdeckiaServer = {
+typedef IdeckiaCore = {
 	var log:{
 		var error:(v:Dynamic) -> Void;
 		var debug:(v:Dynamic) -> Void;

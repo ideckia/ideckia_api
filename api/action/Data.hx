@@ -74,7 +74,7 @@ class Data {
 		var translations:Translations = new Map();
 		if (sys.FileSystem.exists(translationsDir) && sys.FileSystem.isDirectory(translationsDir)) {
 			for (langFile in sys.FileSystem.readDirectory(translationsDir)) {
-				var transContent = _getJson(translationsDir + '/$langFile');
+				var transContent = haxe.Json.parse(sys.io.File.getContent(translationsDir + '/$langFile'));
 				translations.set(StringTools.replace(langFile.toLowerCase(), '.json', ''), transContent);
 			}
 		}
