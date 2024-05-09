@@ -18,6 +18,7 @@ enum abstract Endpoint(String) to String {
 	var editorEndpoint = '/editor';
 	var pingEndpoint = '/ping';
 	var newTranslationEndpoint = '/translation/new';
+	var actionDescriptorsEndpoint = '/action/descriptors';
 	var newActionEndpoint = '/action/new';
 	var actionTemplatesEndpoint = '/action/templates';
 	var layoutAppendEndpoint = '/layout/append';

@@ -4,9 +4,10 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
 
 ## Concepts
 
-* Layout: Bunch of items
-* Item: An element that has one or more states and is clickable.
-* State: Definition of the item status: text, textColor, bgColor, icon and some actions which will be executed when the item is pressed.
+* Layout: Bunch of _items_
+* Item: An element that has one or more _states_ and is clickable.
+* State: Definition of the item status: text, textColor, bgColor, icon and some _actions_ which will be executed when the item is pressed.
+* Action: Action which will be fired (can be more than one in a state) in the host computer when the item is pressed in the client.
 
 ## Action structure
 
@@ -41,7 +42,7 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
 * getStatus():Void
   * Method called from the editor to show if the action has any problems.
 * show(currentState:ItemState):Promise<ItemState>
-  * Method called when the state that belongs this action shows up
+  * Method called when the state that belongs this action shows up.
 * hide():Void
   * Method called when the state that belongs this action goes out of sight.
 * getActionDescriptor():Promise<ActionDescriptor>  (Used by the editor)
