@@ -9,12 +9,13 @@ typedef Props = {
 
 @:name("::name::")
 @:description("::description::")
+@:translatable("lang")
 class ::className:: extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState>
 		return super.init(initialState);
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
-        return js.lib.Promise.reject('Not implemented');
+        return js.lib.Promise.reject(api.action.Translate.not_implemented.t());
         // return js.lib.Promise.resolve(new ActionOutcome({state: currentState}));
 	}
 

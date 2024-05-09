@@ -17,21 +17,22 @@ typedef TplFile = {
 
 class Macros {
 	public static macro function getHxTemplate():ExprOf<Array<TplFile>> {
-		return getTemplateMacro('haxe');
+		return getTemplateMacro('tpl_haxe');
 	}
 
 	public static macro function getJsTemplate():ExprOf<Array<TplFile>> {
-		return getTemplateMacro('javascript');
+		return getTemplateMacro('tpl_javascript');
 	}
 
 	public static macro function getTemplatesList():ExprOf<Array<String>> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(FileSystem.fullPath(posInfos.file));
-		var tplDirectory = Path.join([directory, 'tpl']);
+		var tplDirectory = Path.join([directory, 'templates']);
 
 		var templates = [
 			for (tpl in FileSystem.readDirectory(tplDirectory))
-				if (FileSystem.isDirectory(tplDirectory + '/$tpl')) macro $v{tpl}
+				if (StringTools.startsWith(tpl, 'tpl_')
+					&& FileSystem.isDirectory(tplDirectory + '/$tpl')) macro $v{StringTools.replace(tpl, 'tpl_', '')}
 		];
 		return macro $a{templates};
 	}
@@ -68,7 +69,7 @@ class Macros {
 	static function getTemplateMacro(templateType:String):ExprOf<Array<TplFile>> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(FileSystem.fullPath(posInfos.file));
-		var tplDirectory = Path.join([directory, 'tpl']);
+		var tplDirectory = Path.join([directory, 'templates']);
 
 		var templateFiles = getTemplate(tplDirectory, templateType);
 
@@ -88,6 +89,17 @@ class Macros {
 			addFile('readme.md');
 			addFile('presets.json');
 			addFile('test_action.js');
+
+			var langDir = 'lang';
+			var langFile = 'en.json';
+			var langDirTpl = {isDir: true, path: langDir, content: null};
+			var langFileTpl = {
+				isDir: false,
+				path: Path.join([langDir, langFile]),
+				content: sys.io.File.getContent(Path.join([tplDirectory, 'lang', langFile]))
+			};
+			macroTemplates.push(macro $v{langDirTpl});
+			macroTemplates.push(macro $v{langFileTpl});
 
 			return macro $a{macroTemplates};
 		}

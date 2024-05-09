@@ -27,6 +27,7 @@ class IdeckiaAction {
 		var localType:Type = Context.getLocalType();
 		var actionName:String = "";
 		var actionDescription:String = "";
+		var translationDir:String = "";
 		switch localType {
 			case TInst(t, params):
 				var classType:ClassType = t.get();
@@ -43,6 +44,13 @@ class IdeckiaAction {
 							case EConst(CString(s, kind)):
 								actionDescription = s;
 							default:
+						};
+					else if (metadata.name == ":translatable")
+						translationDir = metadata.params.length == 0 ? 'lang' : switch metadata.params[0].expr {
+							case EConst(CString(s, kind)):
+								s;
+							default:
+								'lang';
 						};
 
 				// Add :expose('IdeckiaAction') metadata to be available from Javascript under
@@ -182,19 +190,32 @@ class IdeckiaAction {
 			pos: Context.currentPos()
 		});
 
-		var setupExists = false;
+		var setupField = null;
 		var getActionDescExists = false;
 		for (field in fields) {
 			switch field.name {
 				case 'setup':
-					setupExists = true;
+					setupField = field;
 				case 'getActionDescriptor':
 					getActionDescExists = true;
 			}
 		}
 
-		if (!setupExists)
-			fields.push(createSetup(assignDefaults));
+		if (setupField == null) {
+			setupField = createSetup(assignDefaults);
+			fields.push(setupField);
+		}
+
+		if (translationDir != '')
+			switch setupField.kind {
+				case FFun(f):
+					switch f.expr.expr {
+						case EBlock(exprs):
+							exprs.push(macro api.action.Translate.load(core, $v{translationDir}));
+						default:
+					}
+				default:
+			}
 
 		// Generate _getActionDescriptor method
 		fields.push(createPrivateGetActionDescriptorFunction({
