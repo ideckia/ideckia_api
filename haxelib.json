@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.2.1",
-	"releasenote": "added api.action.Translate",
+	"version": "1.2.2",
+	"releasenote": "rename metadata translatable to translate",
 	"tags": [
 		"ideckia",
 		"nodejs",

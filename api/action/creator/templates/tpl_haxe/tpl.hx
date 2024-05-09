@@ -9,7 +9,7 @@ typedef Props = {
 
 @:name("::name::")
 @:description("::description::")
-@:translatable("lang")
+@:translate("lang")
 class ::className:: extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState>
 		return super.init(initialState);

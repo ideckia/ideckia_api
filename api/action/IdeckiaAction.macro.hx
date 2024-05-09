@@ -45,7 +45,7 @@ class IdeckiaAction {
 								actionDescription = s;
 							default:
 						};
-					else if (metadata.name == ":translatable")
+					else if (metadata.name == ":translate")
 						translationDir = metadata.params.length == 0 ? 'lang' : switch metadata.params[0].expr {
 							case EConst(CString(s, kind)):
 								s;
