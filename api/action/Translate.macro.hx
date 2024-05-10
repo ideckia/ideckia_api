@@ -1,5 +1,6 @@
 package api.action;
 
+import api.IdeckiaApi.Translations;
 import haxe.macro.Context;
 import haxe.macro.Expr;
 
@@ -9,9 +10,7 @@ class Translate {
 	static public function build():Array<Field> {
 		var currentFields = Context.getBuildFields();
 
-		var defPath = Context.definedValue("langPath");
-		var path = (defPath == null) ? 'lang' : defPath;
-		var translations = @:privateAccess api.action.Data._getTranslations(path);
+		var translations = getTranslations();
 		var fieldName;
 		for (l => texts in translations) {
 			for (t in texts) {
@@ -26,5 +25,18 @@ class Translate {
 		}
 
 		return currentFields;
+	}
+
+	@:noCompletion public static function t(textId:String, ?args:Array<Dynamic>) {
+		var translations = getTranslations();
+		var definedLanguage = Context.definedValue("language");
+		var language = (definedLanguage == null) ? 'en' : definedLanguage;
+		return translations.t(language, textId, args);
+	}
+
+	static function getTranslations() {
+		var definedTranslatePath = Context.definedValue("definedTranslatePath");
+		var translatePath = (definedTranslatePath == null) ? 'lang' : definedTranslatePath;
+		return @:privateAccess api.action.Data._getTranslations(translatePath);
 	}
 }

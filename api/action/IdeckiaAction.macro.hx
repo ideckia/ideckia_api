@@ -138,7 +138,7 @@ class IdeckiaAction {
 											isShared: isShared,
 											sharedName: sharedName,
 											type: propType,
-											description: propDescription,
+											description: api.action.Translate.t(propDescription),
 											values: propPossibleValues
 										});
 									}
@@ -218,16 +218,23 @@ class IdeckiaAction {
 			}
 
 		// Generate _getActionDescriptor method
-		fields.push(createPrivateGetActionDescriptorFunction({
-			name: actionName,
-			description: actionDescription,
-			props: propDescriptors
+		var exprPropDescriptors:Array<ExprOf<PropDescriptor>> = propDescriptors.map(pd -> macro {
+			name: $v{pd.name},
+			defaultValue: $v{pd.defaultValue},
+			isShared: $v{pd.isShared},
+			sharedName: $v{pd.sharedName},
+			type: $v{pd.type},
+			description: api.action.Translate.t($v{pd.description}),
+			values: $v{pd.values}
+		});
+		fields.push(createPrivateGetActionDescriptorFunction(macro {
+			name: $v{actionName},
+			description: api.action.Translate.t($v{actionDescription}),
+			props: $a{exprPropDescriptors}
 		}));
-
 		if (!getActionDescExists)
 			// Generate getActionDescriptor method
 			fields.push(createGetActionDescriptorFunction());
-
 		return fields;
 	}
 
@@ -339,7 +346,7 @@ class IdeckiaAction {
 		return possibleValues;
 	}
 
-	static function createPrivateGetActionDescriptorFunction(actionDescriptor:ActionDescriptor):Field {
+	static function createPrivateGetActionDescriptorFunction(actionDescriptor:ExprOf<ActionDescriptor>):Field {
 		return {
 			name: '_getActionDescriptor',
 			doc: 'Private method to get action properties descriptor (it can be used if getActionDescriptor is overwritten).',
@@ -347,7 +354,7 @@ class IdeckiaAction {
 			kind: FFun({
 				args: [],
 				ret: macro :ActionDescriptor,
-				expr: macro return $v{actionDescriptor}
+				expr: macro return ${actionDescriptor}
 			}),
 			pos: Context.currentPos()
 		};
