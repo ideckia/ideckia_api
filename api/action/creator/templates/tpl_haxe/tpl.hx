@@ -3,12 +3,12 @@ package;
 using api.IdeckiaApi;
 
 typedef Props = {
-	@:editable("Property description", "default value", ["possible", "values", "for the property"])
+	@:editable("prop_property_name", "default value", ["possible", "values", "for the property"])
 	var property_name:String;
 }
 
 @:name("::name::")
-@:description("::description::")
+@:description("action_description")
 @:translate("lang")
 class ::className:: extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState>

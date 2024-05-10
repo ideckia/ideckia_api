@@ -1,5 +1,13 @@
 [
 	{
+		"id": "action_description",
+		"text": "::description::"
+	},
+	{
+		"id": "prop_property_name",
+		"text": "Property description"
+	},
+	{
 		"id": "not_implemented",
 		"text": "Not implemented"
 	}
