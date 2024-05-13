@@ -13,7 +13,7 @@ class Translate {
 	}
 
 	@:noCompletion public static function tr(textId:String, ?args:Array<Dynamic>) {
-		return translations.tr(core.getCurrentLang(), textId, args);
+		return core == null ? textId : translations.tr(core.getCurrentLang(), textId, args);
 	}
 }
 
