@@ -11,17 +11,17 @@ class Translate {
 		var currentFields = Context.getBuildFields();
 
 		var translations = getTranslations();
-		var fieldName;
-		for (l => texts in translations) {
-			for (t in texts) {
-				currentFields.push({
-					name: t.id,
-					access: [APublic, AStatic, AInline],
-					pos: Context.currentPos(),
-					kind: FVar(macro :Translate.TranslateText, macro new TranslateText($v{t.id}))
-				});
-			}
-			break;
+		var textsLang = getDefinedValueWithDefault('language', 'en');
+		if (!translations.exists(textsLang))
+			textsLang = translations.keys().next();
+
+		for (t in translations.get(textsLang)) {
+			currentFields.push({
+				name: t.id,
+				access: [APublic, AStatic, AInline],
+				pos: Context.currentPos(),
+				kind: FVar(macro :Translate.TranslateText, macro new TranslateText($v{t.id}))
+			});
 		}
 
 		return currentFields;
@@ -29,14 +29,22 @@ class Translate {
 
 	@:noCompletion public static function tr(textId:String, ?args:Array<Dynamic>) {
 		var translations = getTranslations();
-		var definedLanguage = Context.definedValue("language");
-		var language = (definedLanguage == null) ? 'en' : definedLanguage;
+		var language = getDefinedValueWithDefault('language', 'en');
 		return translations.tr(language, textId, args);
 	}
 
 	static function getTranslations() {
-		var definedTranslatePath = Context.definedValue("definedTranslatePath");
-		var translatePath = (definedTranslatePath == null) ? 'lang' : definedTranslatePath;
-		return @:privateAccess api.action.Data._getTranslations(translatePath);
+		var translatePath = getDefinedValueWithDefault('definedTranslatePath', 'lang');
+		try {
+			return @:privateAccess api.action.Data._getTranslations(translatePath);
+		} catch (e:haxe.Exception) {
+			Context.error(e.message, Context.currentPos());
+			return null;
+		}
+	}
+
+	static function getDefinedValueWithDefault(definedName:String, defaultValue:String) {
+		var definedTranslatePath = Context.definedValue(definedName);
+		return (definedTranslatePath == null) ? defaultValue : definedTranslatePath;
 	}
 }

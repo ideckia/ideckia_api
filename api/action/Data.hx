@@ -77,6 +77,8 @@ class Data {
 				var transContent = haxe.Json.parse(sys.io.File.getContent(translationsDir + '/$langFile'));
 				translations.set(StringTools.replace(langFile.toLowerCase(), '.json', ''), transContent);
 			}
+		} else {
+			throw new haxe.Exception('Trying to get translations for a non existing [$translationsDir] directory.');
 		}
 
 		return translations;
