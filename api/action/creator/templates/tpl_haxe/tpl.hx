@@ -15,7 +15,7 @@ class ::className:: extends IdeckiaAction {
 		return super.init(initialState);
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
-        return js.lib.Promise.reject(api.action.Translate.not_implemented.t());
+        return js.lib.Promise.reject(api.action.Translate.not_implemented.tr());
         // return js.lib.Promise.resolve(new ActionOutcome({state: currentState}));
 	}
 
@@ -43,7 +43,7 @@ class ::className:: extends IdeckiaAction {
 		public function getActionDescriptor():js.lib.Promise<ActionDescriptor> {
 			return js.lib.Promise.resolve({
 				name : "::name::",
-				description : "::description::",
+				description : api.action.Translate.action_description.tr(),
 				props : [{
 					name : "property_name",
 					defaultValue: "default value",
@@ -51,7 +51,7 @@ class ::className:: extends IdeckiaAction {
 					value: "possible",
 					isShared: false,
 					sharedName : "shared_property_name",
-					description : "property description",
+					description : api.action.Translate.prop_property_name.tr(),
 					values : ["possible", "values", "for the property"]
 				}]
 			}));

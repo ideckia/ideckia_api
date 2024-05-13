@@ -27,11 +27,11 @@ class Translate {
 		return currentFields;
 	}
 
-	@:noCompletion public static function t(textId:String, ?args:Array<Dynamic>) {
+	@:noCompletion public static function tr(textId:String, ?args:Array<Dynamic>) {
 		var translations = getTranslations();
 		var definedLanguage = Context.definedValue("language");
 		var language = (definedLanguage == null) ? 'en' : definedLanguage;
-		return translations.t(language, textId, args);
+		return translations.tr(language, textId, args);
 	}
 
 	static function getTranslations() {

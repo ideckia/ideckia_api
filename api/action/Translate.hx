@@ -12,8 +12,8 @@ class Translate {
 		translations = api.action.Data.getTranslations(translationsDir);
 	}
 
-	@:noCompletion public static function t(textId:String, ?args:Array<Dynamic>) {
-		return translations.t(core.getCurrentLang(), textId, args);
+	@:noCompletion public static function tr(textId:String, ?args:Array<Dynamic>) {
+		return translations.tr(core.getCurrentLang(), textId, args);
 	}
 }
 
@@ -21,7 +21,7 @@ abstract TranslateText(String) to String from String {
 	inline public function new(id)
 		this = id;
 
-	public inline function t(?args:Array<Dynamic>) {
-		return Translate.t(this, args);
+	public inline function tr(?args:Array<Dynamic>) {
+		return Translate.tr(this, args);
 	}
 }

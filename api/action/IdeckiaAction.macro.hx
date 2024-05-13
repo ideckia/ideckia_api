@@ -138,7 +138,7 @@ class IdeckiaAction {
 											isShared: isShared,
 											sharedName: sharedName,
 											type: propType,
-											description: api.action.Translate.t(propDescription),
+											description: propDescription,
 											values: propPossibleValues
 										});
 									}
@@ -224,12 +224,12 @@ class IdeckiaAction {
 			isShared: $v{pd.isShared},
 			sharedName: $v{pd.sharedName},
 			type: $v{pd.type},
-			description: api.action.Translate.t($v{pd.description}),
+			description: api.action.Translate.tr($v{pd.description}),
 			values: $v{pd.values}
 		});
 		fields.push(createPrivateGetActionDescriptorFunction(macro {
 			name: $v{actionName},
-			description: api.action.Translate.t($v{actionDescription}),
+			description: api.action.Translate.tr($v{actionDescription}),
 			props: $a{exprPropDescriptors}
 		}));
 		if (!getActionDescExists)
@@ -387,7 +387,7 @@ class IdeckiaAction {
 		for (prop in propDescriptors) {
 			table += '| ${prop.name}';
 			table += ' | ${prop.type.replace('<', '&lt;').replace('>', '&gt;')}';
-			table += ' | ${prop.description}';
+			table += ' | ${api.action.Translate.tr(prop.description)}';
 			table += ' | ${prop.isShared}';
 			table += ' | ${prop.defaultValue}';
 			table += ' | ${prop.values} |\n';

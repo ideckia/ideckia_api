@@ -210,7 +210,7 @@ abstract Translations(TransLang) to TransLang from TransLang {
 	public function getLang(langId:String)
 		return this.get(langId);
 
-	public function t(langId:String, stringId:String, ?args:Array<Dynamic>) {
+	public function tr(langId:String, stringId:String, ?args:Array<Dynamic>) {
 		var lang = this.get(langId);
 		if (lang == null)
 			return stringId;
