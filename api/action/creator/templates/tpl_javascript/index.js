@@ -1,3 +1,5 @@
+const path = require('path');
+
 /**
  * [Find here the action structure]{@link https://github.com/ideckia/ideckia_api/blob/main/README.md#action-structure}
  */
@@ -9,6 +11,7 @@ class ::className:: {
     setup(props, core) {
         this.props = props == null ? {} : props;
         this.core = core;
+        this.translations = core.data.getTranslations(path.join(__dirname, 'lang'));
     }
 
     /**
@@ -25,7 +28,7 @@ class ::className:: {
      */
     execute(currentState) {
         return new Promise((resolve, reject) => {
-            reject('Not implemented');
+            reject(this.translations.tr(this.core.data.getCurrentLang(), "action_description"));
         });
         // return new Promise((resolve, reject) => {
         //     resolve({state: currentState});
@@ -72,7 +75,7 @@ class ::className:: {
         return new Promise((resolve, reject) => {
             resolve({
                 name: "::name::",
-                description: "::description::",
+                description: this.translations.tr(this.core.data.getCurrentLang(), "action_description"),
                 // props : [{
                 // 	name : "property_name",
                 // 	type : "String",

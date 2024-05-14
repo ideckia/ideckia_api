@@ -18,6 +18,10 @@ TODO
 
 TODO
 
+## Translations
+
+The translations are stored in `lang` directory. A JSON for each language.
+
 ## Test the action
 
 There is a script called `test_action.js` to test the new action. Set the `props` variable in the script with the properties you want and run this command:
