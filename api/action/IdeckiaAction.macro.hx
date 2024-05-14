@@ -211,7 +211,7 @@ class IdeckiaAction {
 				case FFun(f):
 					switch f.expr.expr {
 						case EBlock(exprs):
-							exprs.push(macro api.action.Translate.load(core, $v{translationDir}));
+							exprs.push(macro api.data.Translate.load(core, $v{translationDir}));
 						default:
 					}
 				default:
@@ -224,12 +224,12 @@ class IdeckiaAction {
 			isShared: $v{pd.isShared},
 			sharedName: $v{pd.sharedName},
 			type: $v{pd.type},
-			description: api.action.Translate.tr($v{pd.description}),
+			description: api.data.Translate.tr($v{pd.description}),
 			values: $v{pd.values}
 		});
 		fields.push(createPrivateGetActionDescriptorFunction(macro {
 			name: $v{actionName},
-			description: api.action.Translate.tr($v{actionDescription}),
+			description: api.data.Translate.tr($v{actionDescription}),
 			props: $a{exprPropDescriptors}
 		}));
 		if (!getActionDescExists)
@@ -387,7 +387,7 @@ class IdeckiaAction {
 		for (prop in propDescriptors) {
 			table += '| ${prop.name}';
 			table += ' | ${prop.type.replace('<', '&lt;').replace('>', '&gt;')}';
-			table += ' | ${api.action.Translate.tr(prop.description)}';
+			table += ' | ${api.data.Translate.tr(prop.description)}';
 			table += ' | ${prop.isShared}';
 			table += ' | ${prop.defaultValue}';
 			table += ' | ${prop.values} |\n';

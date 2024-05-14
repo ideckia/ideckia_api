@@ -1,4 +1,4 @@
-package api.action;
+package api.data;
 
 import api.IdeckiaApi.Translations;
 import haxe.macro.Context;
@@ -36,7 +36,7 @@ class Translate {
 	static function getTranslations() {
 		var translatePath = getDefinedValueWithDefault('definedTranslatePath', 'lang');
 		try {
-			return @:privateAccess api.action.Data._getTranslations(translatePath);
+			return @:privateAccess api.data.Data._getTranslations(translatePath);
 		} catch (e:haxe.Exception) {
 			Context.error(e.message, Context.currentPos());
 			return null;

@@ -1,4 +1,4 @@
-package api.action;
+package api.data;
 
 import api.IdeckiaApi.Translations;
 import haxe.io.Path;
@@ -37,28 +37,24 @@ class Data {
 	}
 
 	#if !macro
-	public static function getContent(filename:String) {
-		return _getContent(Path.join([js.Node.__dirname, filename]));
+	public static function getContent(path:String) {
+		return _getContent(path);
 	}
 
-	public static function getJson(filename:String) {
-		return _getJson(Path.join([js.Node.__dirname, filename]));
+	public static function getJson(path:String) {
+		return _getJson(path);
 	}
 
-	public static function getTranslations(translationDir:String):Translations {
-		return getTranslationsAbsolute(Path.join([js.Node.__dirname, translationDir]));
+	public static function getTranslations(path:String):Translations {
+		return _getTranslations(path);
 	}
 
-	public static function getTranslationsAbsolute(translationAbsoluteDir:String):Translations {
-		return _getTranslations(translationAbsoluteDir);
+	public static function getBytes(path:String) {
+		return _getBytes(path);
 	}
 
-	public static function getBytes(filename:String) {
-		return _getBytes(Path.join([js.Node.__dirname, filename]));
-	}
-
-	public static function getBase64(filename:String) {
-		return _getBase64(Path.join([js.Node.__dirname, filename]));
+	public static function getBase64(path:String) {
+		return _getBase64(path);
 	}
 	#end
 
@@ -71,7 +67,7 @@ class Data {
 	}
 
 	static function _getTranslations(translationsDir:String):Translations {
-		var translations:Translations = new Map();
+		var translations = new Map();
 		if (sys.FileSystem.exists(translationsDir) && sys.FileSystem.isDirectory(translationsDir)) {
 			for (langFile in sys.FileSystem.readDirectory(translationsDir)) {
 				var transContent = haxe.Json.parse(sys.io.File.getContent(translationsDir + '/$langFile'));
@@ -81,7 +77,7 @@ class Data {
 			throw new haxe.Exception('Trying to get translations for a non existing [$translationsDir] directory.');
 		}
 
-		return translations;
+		return new Translations(translations);
 	}
 
 	static function _getJson(filePath:String) {

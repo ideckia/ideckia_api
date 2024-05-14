@@ -1,19 +1,19 @@
-package api.action;
+package api.data;
 
 import api.IdeckiaApi.IdeckiaCore;
 
-@:build(api.action.Translate.build())
+@:build(api.data.Translate.build())
 class Translate {
 	static var translations:api.IdeckiaApi.Translations;
 	static var core:IdeckiaCore;
 
 	@:noCompletion static public function load(core:IdeckiaCore, translationsDir:String) {
 		Translate.core = core;
-		translations = api.action.Data.getTranslations(translationsDir);
+		translations = core.data.getTranslations(haxe.io.Path.join([js.Node.__dirname, translationsDir]));
 	}
 
 	@:noCompletion public static function tr(textId:String, ?args:Array<Dynamic>) {
-		return core == null ? textId : translations.tr(core.getCurrentLang(), textId, args);
+		return core == null ? textId : translations.tr(core.data.getCurrentLang(), textId, args);
 	}
 }
 

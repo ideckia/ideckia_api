@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.2.2",
-	"releasenote": "rename metadata translatable to translate",
+	"version": "1.2.3",
+	"releasenote": "forward some methods for Actions for handling file contents (json, plain, translations...)",
 	"tags": [
 		"ideckia",
 		"nodejs",

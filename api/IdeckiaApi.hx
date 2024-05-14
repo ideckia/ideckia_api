@@ -1,6 +1,12 @@
 package api;
 
 typedef IdeckiaAction = api.action.IdeckiaAction;
+#if !editor
+typedef Data = api.data.Data;
+#end
+#if !core
+typedef Translate = api.data.Translate;
+#end
 
 // Client messages
 enum abstract ClientMsgType(String) {
@@ -168,7 +174,14 @@ typedef IdeckiaCore = {
 	var dialog:api.dialog.IDialog;
 	var mediaPlayer:api.media.IMediaPlayer;
 	var updateClientState:(props:ItemState) -> Void;
-	var getCurrentLang:() -> String;
+	var data:{
+		var getCurrentLang:() -> String;
+		var getContent:(path:String) -> String;
+		var getJson:(path:String) -> Dynamic;
+		var getTranslations:(path:String) -> Translations;
+		var getBytes:(path:String) -> haxe.io.Bytes;
+		var getBase64:(path:String) -> String;
+	}
 }
 
 abstract RichString(String) to String {
@@ -202,13 +215,15 @@ typedef TransString = {
 
 typedef TransLang = Map<String, Array<TransString>>;
 
-@:forward
-abstract Translations(TransLang) to TransLang from TransLang {
-	public inline function new(v)
-		this = v;
+@:keep
+class Translations {
+	var translang:TransLang;
+
+	public function new(v)
+		translang = v;
 
 	public function tr(langId:String, stringId:String, ?args:Array<Dynamic>) {
-		var lang = this.get(langId);
+		var lang = translang.get(langId);
 		if (lang == null)
 			return stringId;
 		for (s in lang) {
@@ -228,7 +243,16 @@ abstract Translations(TransLang) to TransLang from TransLang {
 	}
 
 	public function merge(newTranslations:Translations) {
-		for (lang => strings in newTranslations)
-			this.set(lang, strings);
+		for (lang => strings in @:privateAccess newTranslations.translang)
+			translang.set(lang, strings);
 	}
+
+	public function exists(langId:String)
+		return translang.exists(langId);
+
+	public function get(langId:String)
+		return translang.get(langId);
+
+	public function keys()
+		return translang.keys();
 }

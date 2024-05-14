@@ -24,7 +24,13 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
       * dialogs: Access to host dialogs. The dialog property is an implementation of [IDialog](/api/dialog/IDialog.hx)
       * mediaPlayer: Access to host media player. The mediaPlayer property is an implementation of [IMediaPlayer](/api/media/IMediaPlayer.hx)
       * updateClientState: a function to send to the client the state of the item.
-      * getCurrentLang: a function to get the language configured for the app.
+      * data: A collection of methods for working with data
+        * getCurrentLang: Get the language configured for the app.
+		* getContent:(path:String): Reads and returns the content of the given path as String.
+		* getJson:(path:String): Read and returns the content of the given path parsed as JSON.
+		* getTranslations:(path:String): Read and returns the content of the given path parsed as [Translations](/api/IdeckiaApi.hx#L219).
+		* getBytes:(path:String) -> Reads and returns the content of the given path as haxe.io.Bytes.
+		* getBase64:(path:String) -> Reads and returns the content of the given path as String encoded in Base64.
 * init(initialState:ItemState):Promise<ItemState>
   * Entry point.
   * The core will call to this once, to initialize what you need.
