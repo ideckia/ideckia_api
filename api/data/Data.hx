@@ -37,23 +37,23 @@ class Data {
 	}
 
 	#if !macro
-	public static function getContent(path:String) {
+	public static inline function getContent(path:String) {
 		return _getContent(path);
 	}
 
-	public static function getJson(path:String) {
+	public static inline function getJson(path:String) {
 		return _getJson(path);
 	}
 
-	public static function getTranslations(path:String):Translations {
+	public static inline function getTranslations(path:String):Translations {
 		return _getTranslations(path);
 	}
 
-	public static function getBytes(path:String) {
+	public static inline function getBytes(path:String) {
 		return _getBytes(path);
 	}
 
-	public static function getBase64(path:String) {
+	public static inline function getBase64(path:String) {
 		return _getBase64(path);
 	}
 	#end

@@ -4,9 +4,6 @@ typedef IdeckiaAction = api.action.IdeckiaAction;
 #if !editor
 typedef Data = api.data.Data;
 #end
-#if !core
-typedef Translate = api.data.Translate;
-#end
 
 // Client messages
 enum abstract ClientMsgType(String) {
@@ -256,3 +253,45 @@ class Translations {
 	public function keys()
 		return translang.keys();
 }
+
+#if !core
+typedef Translate = api.data.Translate;
+
+macro function tr(textIdExpr:ExprOf<String>, ?argsExpr:ExprOf<Array<Dynamic>>) {
+	var definedTranslationsPath = haxe.macro.Context.definedValue('translationsPath');
+	var translationsDir = (definedTranslationsPath == null) ? 'lang' : definedTranslationsPath;
+	var idFound, text;
+
+	final textId = haxe.macro.ExprTools.getValue(textIdExpr);
+	final argsLength = (argsExpr == null) ? 0 : switch argsExpr.expr {
+		case EArrayDecl(arr):
+			arr.length;
+		default: 0;
+	}
+
+	for (langFile in sys.FileSystem.readDirectory(translationsDir)) {
+		var transContent:Array<TransString> = haxe.Json.parse(sys.io.File.getContent(translationsDir + '/$langFile'));
+
+		idFound = false;
+		for (t in transContent) {
+			if (textId == t.id) {
+				idFound = true;
+				text = t.text;
+
+				for (i in 0...argsLength) {
+					if (!StringTools.contains(text, '{$i}'))
+						haxe.macro.Context.error('No placeholder [{$i}] found in the text [id=$textId] from the translation file [$langFile].',
+							haxe.macro.Context.currentPos());
+				}
+				if (StringTools.contains(text, '{${argsLength}}'))
+					haxe.macro.Context.error('Found more placeholders than arguments in the text [id=$textId] from the translation file [$langFile].',
+						haxe.macro.Context.currentPos());
+			}
+		}
+		if (!idFound)
+			haxe.macro.Context.error('No text [id=$textId] found in the translation file [$langFile].', haxe.macro.Context.currentPos());
+	}
+
+	return macro translations.tr(core.data.getCurrentLang(), $textIdExpr, $argsExpr);
+}
+#end

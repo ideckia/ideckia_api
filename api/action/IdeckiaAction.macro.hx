@@ -206,16 +206,22 @@ class IdeckiaAction {
 			fields.push(setupField);
 		}
 
-		if (translationDir != '')
+		if (translationDir != '') {
+			fields.push({
+				name: 'translations',
+				kind: FVar(macro :api.IdeckiaApi.Translations),
+				pos: Context.currentPos()
+			});
 			switch setupField.kind {
 				case FFun(f):
 					switch f.expr.expr {
 						case EBlock(exprs):
-							exprs.push(macro api.data.Translate.load(core, $v{translationDir}));
+							exprs.push(macro translations = api.data.Data.getTranslations(haxe.io.Path.join([js.Node.__dirname, $v{translationDir}])));
 						default:
 					}
 				default:
 			}
+		}
 
 		// Generate _getActionDescriptor method
 		var exprPropDescriptors:Array<ExprOf<PropDescriptor>> = propDescriptors.map(pd -> macro {
@@ -224,12 +230,12 @@ class IdeckiaAction {
 			isShared: $v{pd.isShared},
 			sharedName: $v{pd.sharedName},
 			type: $v{pd.type},
-			description: api.data.Translate.tr($v{pd.description}),
+			description: translations.tr(core.data.getCurrentLang(), $v{pd.description}),
 			values: $v{pd.values}
 		});
 		fields.push(createPrivateGetActionDescriptorFunction(macro {
 			name: $v{actionName},
-			description: api.data.Translate.tr($v{actionDescription}),
+			description: translations.tr(core.data.getCurrentLang(), $v{actionDescription}),
 			props: $a{exprPropDescriptors}
 		}));
 		if (!getActionDescExists)

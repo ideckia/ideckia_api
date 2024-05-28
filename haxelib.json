@@ -5,8 +5,8 @@
 	"contributors": [
 		"josuigoa"
 	],
-	"version": "1.2.3",
-	"releasenote": "forward some methods for Actions for handling file contents (json, plain, translations...)",
+	"version": "1.2.4",
+	"releasenote": "added some translations assertions in compile time",
 	"tags": [
 		"ideckia",
 		"nodejs",
