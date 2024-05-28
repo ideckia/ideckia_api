@@ -206,12 +206,12 @@ class IdeckiaAction {
 			fields.push(setupField);
 		}
 
+		fields.push({
+			name: 'translations',
+			kind: FVar(macro :api.IdeckiaApi.Translations, macro new api.IdeckiaApi.Translations()),
+			pos: Context.currentPos()
+		});
 		if (translationDir != '') {
-			fields.push({
-				name: 'translations',
-				kind: FVar(macro :api.IdeckiaApi.Translations),
-				pos: Context.currentPos()
-			});
 			switch setupField.kind {
 				case FFun(f):
 					switch f.expr.expr {

@@ -216,8 +216,8 @@ typedef TransLang = Map<String, Array<TransString>>;
 class Translations {
 	var translang:TransLang;
 
-	public function new(v)
-		translang = v;
+	public function new(v:TransLang = null)
+		translang = v == null ? new Map() : v;
 
 	public function tr(langId:String, stringId:String, ?args:Array<Dynamic>) {
 		var lang = translang.get(langId);
