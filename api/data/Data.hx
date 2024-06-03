@@ -1,6 +1,6 @@
 package api.data;
 
-import api.IdeckiaApi.Translations;
+import api.IdeckiaApi.LocalizedTexts;
 import haxe.io.Path;
 import haxe.macro.Context;
 import haxe.macro.Expr;
@@ -18,10 +18,10 @@ class Data {
 		return macro $v{_getJson(Path.join([directory, filename]))};
 	}
 
-	public static macro function embedTranslations(translationDir:String):ExprOf<Translations> {
+	public static macro function embedLocalizations(localizationDir:String):ExprOf<LocalizedTexts> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		return macro $v{_getTranslations(Path.join([directory, translationDir]))};
+		return macro $v{_getLocalizations(Path.join([directory, localizationDir]))};
 	}
 
 	public static macro function embedBytes(filename:String):ExprOf<haxe.io.Bytes> {
@@ -45,8 +45,8 @@ class Data {
 		return _getJson(path);
 	}
 
-	public static inline function getTranslations(path:String):Translations {
-		return _getTranslations(path);
+	public static inline function getLocalizations(path:String):LocalizedTexts {
+		return _getLocalizations(path);
 	}
 
 	public static inline function getBytes(path:String) {
@@ -66,18 +66,18 @@ class Data {
 		}
 	}
 
-	static function _getTranslations(translationsDir:String):Translations {
-		var translations = new Map();
-		if (sys.FileSystem.exists(translationsDir) && sys.FileSystem.isDirectory(translationsDir)) {
-			for (langFile in sys.FileSystem.readDirectory(translationsDir)) {
-				var transContent = haxe.Json.parse(sys.io.File.getContent(translationsDir + '/$langFile'));
-				translations.set(StringTools.replace(langFile.toLowerCase(), '.json', ''), transContent);
+	static function _getLocalizations(localizationsDir:String):LocalizedTexts {
+		var locTexts = new Map();
+		if (sys.FileSystem.exists(localizationsDir) && sys.FileSystem.isDirectory(localizationsDir)) {
+			for (locFile in sys.FileSystem.readDirectory(localizationsDir)) {
+				var locContent = haxe.Json.parse(sys.io.File.getContent(localizationsDir + '/$locFile'));
+				locTexts.set(StringTools.replace(locFile.toLowerCase(), '.json', ''), locContent);
 			}
 		} else {
-			throw new haxe.Exception('Trying to get translations for a non existing [$translationsDir] directory.');
+			throw new haxe.Exception('Trying to get localizations for a non existing [$localizationsDir] directory.');
 		}
 
-		return new Translations(translations);
+		return new LocalizedTexts(locTexts);
 	}
 
 	static function _getJson(filePath:String) {

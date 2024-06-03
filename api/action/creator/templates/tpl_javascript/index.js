@@ -11,7 +11,7 @@ class ::className:: {
     setup(props, core) {
         this.props = props == null ? {} : props;
         this.core = core;
-        this.translations = core.data.getTranslations(path.join(__dirname, 'lang'));
+        this.localizedTexts = core.data.getLocalizations(path.join(__dirname, 'loc'));
     }
 
     /**
@@ -28,7 +28,7 @@ class ::className:: {
      */
     execute(currentState) {
         return new Promise((resolve, reject) => {
-            reject(this.translations.tr(this.core.data.getCurrentLang(), "action_description"));
+            reject(this.localizedTexts.tr(this.core.data.getCurrentLocale(), "action_description"));
         });
         // return new Promise((resolve, reject) => {
         //     resolve({state: currentState});
@@ -75,7 +75,7 @@ class ::className:: {
         return new Promise((resolve, reject) => {
             resolve({
                 name: "::name::",
-                description: this.translations.tr(this.core.data.getCurrentLang(), "action_description"),
+                description: this.localizedTexts.tr(this.core.data.getCurrentLocale(), "action_description"),
                 // props : [{
                 // 	name : "property_name",
                 // 	type : "String",

@@ -20,7 +20,7 @@ enum abstract Caller(String) {
 enum abstract Endpoint(String) to String {
 	var editorEndpoint = '/editor';
 	var pingEndpoint = '/ping';
-	var newTranslationEndpoint = '/translation/new';
+	var newLocalizationEndpoint = '/localization/new';
 	var actionDescriptorsEndpoint = '/action/descriptors';
 	var newActionEndpoint = '/action/new';
 	var actionTemplatesEndpoint = '/action/templates';
@@ -172,10 +172,10 @@ typedef IdeckiaCore = {
 	var mediaPlayer:api.media.IMediaPlayer;
 	var updateClientState:(props:ItemState) -> Void;
 	var data:{
-		var getCurrentLang:() -> String;
+		var getCurrentLocale:() -> String;
 		var getContent:(path:String) -> String;
 		var getJson:(path:String) -> Dynamic;
-		var getTranslations:(path:String) -> Translations;
+		var getLocalizations:(path:String) -> LocalizedTexts;
 		var getBytes:(path:String) -> haxe.io.Bytes;
 		var getBase64:(path:String) -> String;
 	}
@@ -204,26 +204,27 @@ abstract RichString(String) to String {
 		return new RichString('{color.$color:$this}');
 }
 
-typedef TransString = {
+typedef LocString = {
 	var id:String;
 	var text:String;
 	var ?comment:String;
 }
 
-typedef TransLang = Map<String, Array<TransString>>;
+typedef LocalesMap = Map<String, Array<LocString>>;
 
 @:keep
-class Translations {
-	var translang:TransLang;
+class LocalizedTexts {
+	var localesMap:LocalesMap;
 
-	public function new(v:TransLang = null)
-		translang = v == null ? new Map() : v;
+	public function new(v:LocalesMap = null)
+		localesMap = v;
 
-	public function tr(langId:String, stringId:String, ?args:Array<Dynamic>) {
-		var lang = translang.get(langId);
-		if (lang == null)
+	public function tr(localeId:String, stringId:String, ?args:Array<Dynamic>) {
+		if (localesMap == null || !localesMap.exists(localeId.toLowerCase()))
 			return stringId;
-		for (s in lang) {
+
+		var locale = localesMap.get(localeId.toLowerCase());
+		for (s in locale) {
 			if (s.id == stringId) {
 				if (args == null)
 					return s.text;
@@ -239,27 +240,27 @@ class Translations {
 		return stringId;
 	}
 
-	public function merge(newTranslations:Translations) {
-		for (lang => strings in @:privateAccess newTranslations.translang)
-			translang.set(lang, strings);
+	public function merge(other:LocalizedTexts) {
+		for (locale => strings in @:privateAccess other.localesMap)
+			localesMap.set(locale, strings);
 	}
 
-	public function exists(langId:String)
-		return translang.exists(langId);
+	public function exists(localeId:String)
+		return localesMap.exists(localeId);
 
-	public function get(langId:String)
-		return translang.get(langId);
+	public function get(localeId:String)
+		return localesMap.get(localeId);
 
 	public function keys()
-		return translang.keys();
+		return localesMap.keys();
 }
 
 #if !core
-typedef Translate = api.data.Translate;
+typedef Loc = api.data.Loc;
 
 macro function tr(textIdExpr:ExprOf<String>, ?argsExpr:ExprOf<Array<Dynamic>>) {
-	var definedTranslationsPath = haxe.macro.Context.definedValue('translationsPath');
-	var translationsDir = (definedTranslationsPath == null) ? 'lang' : definedTranslationsPath;
+	var definedLocalizationsPath = haxe.macro.Context.definedValue('localizationsPath');
+	var localizationsDir = (definedLocalizationsPath == null) ? 'loc' : definedLocalizationsPath;
 	var idFound, text;
 
 	final textId = haxe.macro.ExprTools.getValue(textIdExpr);
@@ -269,29 +270,29 @@ macro function tr(textIdExpr:ExprOf<String>, ?argsExpr:ExprOf<Array<Dynamic>>) {
 		default: 0;
 	}
 
-	for (langFile in sys.FileSystem.readDirectory(translationsDir)) {
-		var transContent:Array<TransString> = haxe.Json.parse(sys.io.File.getContent(translationsDir + '/$langFile'));
+	for (locFile in sys.FileSystem.readDirectory(localizationsDir)) {
+		var locContent:Array<LocString> = haxe.Json.parse(sys.io.File.getContent(localizationsDir + '/$locFile'));
 
 		idFound = false;
-		for (t in transContent) {
+		for (t in locContent) {
 			if (textId == t.id) {
 				idFound = true;
 				text = t.text;
 
 				for (i in 0...argsLength) {
 					if (!StringTools.contains(text, '{$i}'))
-						haxe.macro.Context.error('No placeholder [{$i}] found in the text [id=$textId] from the translation file [$langFile].',
+						haxe.macro.Context.error('No placeholder [{$i}] found in the text [id=$textId] from the file [$locFile].',
 							haxe.macro.Context.currentPos());
 				}
 				if (StringTools.contains(text, '{${argsLength}}'))
-					haxe.macro.Context.error('Found more placeholders than arguments in the text [id=$textId] from the translation file [$langFile].',
+					haxe.macro.Context.error('Found more placeholders than arguments in the text [id=$textId] from the file [$locFile].',
 						haxe.macro.Context.currentPos());
 			}
 		}
 		if (!idFound)
-			haxe.macro.Context.error('No text [id=$textId] found in the translation file [$langFile].', haxe.macro.Context.currentPos());
+			haxe.macro.Context.error('No text [id=$textId] found in the file [$locFile].', haxe.macro.Context.currentPos());
 	}
 
-	return macro translations.tr(core.data.getCurrentLang(), $textIdExpr, $argsExpr);
+	return macro localizedTexts.tr(core.data.getCurrentLocale(), $textIdExpr, $argsExpr);
 }
 #end

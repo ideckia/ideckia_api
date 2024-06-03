@@ -9,13 +9,13 @@ typedef Props = {
 
 @:name("::name::")
 @:description("action_description")
-@:translate("lang")
+@:localize("loc")
 class ::className:: extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState>
 		return super.init(initialState);
 
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
-        return js.lib.Promise.reject(Translate.not_implemented.tr());
+        return js.lib.Promise.reject(Loc.not_implemented.tr());
         // return js.lib.Promise.resolve(new ActionOutcome({state: currentState}));
 	}
 
@@ -43,7 +43,7 @@ class ::className:: extends IdeckiaAction {
 		public function getActionDescriptor():js.lib.Promise<ActionDescriptor> {
 			return js.lib.Promise.resolve({
 				name : "::name::",
-				description : Translate.action_description.tr(),
+				description : Loc.action_description.tr(),
 				props : [{
 					name : "property_name",
 					defaultValue: "default value",
@@ -51,7 +51,7 @@ class ::className:: extends IdeckiaAction {
 					value: "possible",
 					isShared: false,
 					sharedName : "shared_property_name",
-					description : Translate.prop_property_name.tr(),
+					description : Loc.prop_property_name.tr(),
 					values : ["possible", "values", "for the property"]
 				}]
 			}));

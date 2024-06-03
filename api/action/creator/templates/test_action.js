@@ -67,7 +67,7 @@ const core = {
         },
     },
     updateClientState: state => console.log('New state sent to the client: ' + state),
-    getCurrentLang: () => 'en'
+    getCurrentLocale: () => 'en_UK'
 };
 
 const action = new IdeckiaAction();

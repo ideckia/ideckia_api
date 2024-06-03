@@ -25,10 +25,10 @@ This is the API for the actions used by [ideckia](https://github.com/ideckia/ide
       * mediaPlayer: Access to host media player. The mediaPlayer property is an implementation of [IMediaPlayer](/api/media/IMediaPlayer.hx)
       * updateClientState: a function to send to the client the state of the item.
       * data: A collection of methods for working with data
-        * getCurrentLang: Get the language configured for the app.
+        * getCurrentLocale: Get the locale configured for the app.
 		* getContent:(path:String): Reads and returns the content of the given path as String.
 		* getJson:(path:String): Read and returns the content of the given path parsed as JSON.
-		* getTranslations:(path:String): Read and returns the content of the given path parsed as [Translations](/api/IdeckiaApi.hx#L219).
+		* getLocalizations:(path:String): Read and returns the content of the given path parsed as [Localizations](/api/IdeckiaApi.hx#L216).
 		* getBytes:(path:String) -> Reads and returns the content of the given path as haxe.io.Bytes.
 		* getBase64:(path:String) -> Reads and returns the content of the given path as String encoded in Base64.
 * init(initialState:ItemState):Promise<ItemState>

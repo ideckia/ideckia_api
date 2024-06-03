@@ -90,16 +90,16 @@ class Macros {
 			addFile('presets.json');
 			addFile('test_action.js');
 
-			var langDir = 'lang';
-			var langFile = 'en.json';
-			var langDirTpl = {isDir: true, path: langDir, content: null};
-			var langFileTpl = {
+			var locDir = 'loc';
+			var locFile = 'en_UK.json';
+			var locDirTpl = {isDir: true, path: locDir, content: null};
+			var locFileTpl = {
 				isDir: false,
-				path: Path.join([langDir, langFile]),
-				content: sys.io.File.getContent(Path.join([tplDirectory, 'lang', langFile]))
+				path: Path.join([locDir, locFile]),
+				content: sys.io.File.getContent(Path.join([tplDirectory, 'loc', locFile]))
 			};
-			macroTemplates.push(macro $v{langDirTpl});
-			macroTemplates.push(macro $v{langFileTpl});
+			macroTemplates.push(macro $v{locDirTpl});
+			macroTemplates.push(macro $v{locFileTpl});
 
 			return macro $a{macroTemplates};
 		}

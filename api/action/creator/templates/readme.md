@@ -18,9 +18,9 @@ TODO
 
 TODO
 
-## Translations
+## Localizations
 
-The translations are stored in `lang` directory. A JSON for each language.
+The localizations are stored in `loc` directory. A JSON for each locale.
 
 ## Test the action
 

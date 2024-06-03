@@ -27,7 +27,7 @@ class IdeckiaAction {
 		var localType:Type = Context.getLocalType();
 		var actionName:String = "";
 		var actionDescription:String = "";
-		var translationDir:String = "";
+		var localizationDir:String = "";
 		switch localType {
 			case TInst(t, params):
 				var classType:ClassType = t.get();
@@ -45,12 +45,12 @@ class IdeckiaAction {
 								actionDescription = s;
 							default:
 						};
-					else if (metadata.name == ":translate")
-						translationDir = metadata.params.length == 0 ? 'lang' : switch metadata.params[0].expr {
+					else if (metadata.name == ":localize")
+						localizationDir = metadata.params.length == 0 ? 'loc' : switch metadata.params[0].expr {
 							case EConst(CString(s, kind)):
 								s;
 							default:
-								'lang';
+								'loc';
 						};
 
 				// Add :expose('IdeckiaAction') metadata to be available from Javascript under
@@ -207,16 +207,16 @@ class IdeckiaAction {
 		}
 
 		fields.push({
-			name: 'translations',
-			kind: FVar(macro :api.IdeckiaApi.Translations, macro new api.IdeckiaApi.Translations()),
+			name: 'localizedTexts',
+			kind: FVar(macro :api.IdeckiaApi.LocalizedTexts, macro new api.IdeckiaApi.LocalizedTexts()),
 			pos: Context.currentPos()
 		});
-		if (translationDir != '') {
+		if (localizationDir != '') {
 			switch setupField.kind {
 				case FFun(f):
 					switch f.expr.expr {
 						case EBlock(exprs):
-							exprs.push(macro translations = api.data.Data.getTranslations(haxe.io.Path.join([js.Node.__dirname, $v{translationDir}])));
+							exprs.push(macro localizedTexts = api.data.Data.getLocalizations(haxe.io.Path.join([js.Node.__dirname, $v{localizationDir}])));
 						default:
 					}
 				default:
@@ -230,12 +230,12 @@ class IdeckiaAction {
 			isShared: $v{pd.isShared},
 			sharedName: $v{pd.sharedName},
 			type: $v{pd.type},
-			description: translations.tr(core.data.getCurrentLang(), $v{pd.description}),
+			description: localizedTexts.tr(core.data.getCurrentLocale(), $v{pd.description}),
 			values: $v{pd.values}
 		});
 		fields.push(createPrivateGetActionDescriptorFunction(macro {
 			name: $v{actionName},
-			description: translations.tr(core.data.getCurrentLang(), $v{actionDescription}),
+			description: localizedTexts.tr(core.data.getCurrentLocale(), $v{actionDescription}),
 			props: $a{exprPropDescriptors}
 		}));
 		if (!getActionDescExists)
@@ -393,7 +393,7 @@ class IdeckiaAction {
 		for (prop in propDescriptors) {
 			table += '| ${prop.name}';
 			table += ' | ${prop.type.replace('<', '&lt;').replace('>', '&gt;')}';
-			table += ' | ${api.data.Translate.tr(prop.description)}';
+			table += ' | ${api.data.Loc.tr(prop.description)}';
 			table += ' | ${prop.isShared}';
 			table += ' | ${prop.defaultValue}';
 			table += ' | ${prop.values} |\n';
