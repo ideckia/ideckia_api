@@ -246,10 +246,10 @@ class LocalizedTexts {
 	}
 
 	public function exists(localeId:String)
-		return localesMap.exists(localeId);
+		return localesMap.exists(localeId.toLowerCase());
 
 	public function get(localeId:String)
-		return localesMap.get(localeId);
+		return localesMap.get(localeId.toLowerCase());
 
 	public function keys()
 		return localesMap.keys();

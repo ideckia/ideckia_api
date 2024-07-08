@@ -17,11 +17,11 @@ class Loc {
 		if (localizations == null)
 			return currentFields;
 
-		var textxLocale = getDefinedValueWithDefault('locale', 'en_UK');
-		if (!localizations.exists(textxLocale))
-			textxLocale = localizations.keys().next();
+		var textsLocale = getDefinedValueWithDefault('locale', 'en_uk');
+		if (!localizations.exists(textsLocale))
+			textsLocale = localizations.keys().next();
 
-		for (t in localizations.get(textxLocale)) {
+		for (t in localizations.get(textsLocale)) {
 			currentFields.push({
 				name: INVALID_CHARS.replace(t.id, '_'),
 				access: [APublic, AStatic, AInline],
@@ -35,7 +35,7 @@ class Loc {
 
 	@:noCompletion public static function tr(textId:String, ?args:Array<Dynamic>) {
 		var localizations = getlocalizations();
-		var locale = getDefinedValueWithDefault('locale', 'en_UK');
+		var locale = getDefinedValueWithDefault('locale', 'en_uk');
 		return localizations.tr(locale, textId, args);
 	}
 
