@@ -139,7 +139,7 @@ class IdeckiaAction {
 											sharedName: sharedName,
 											type: propType,
 											description: propDescription,
-											values: propPossibleValues
+											possibleValues: propPossibleValues
 										});
 									}
 								}
@@ -152,7 +152,7 @@ class IdeckiaAction {
 						for (pd in propDescriptors) {
 							var propName = pd.name;
 							var defValue = pd.defaultValue;
-							var possibleValues = pd.values;
+							var possibleValues = pd.possibleValues;
 							if (defValue != null && defValue != 'null') {
 								/*
 									Example:
@@ -231,7 +231,7 @@ class IdeckiaAction {
 			sharedName: $v{pd.sharedName},
 			type: $v{pd.type},
 			description: localizedTexts.tr(core.data.getCurrentLocale(), $v{pd.description}),
-			values: $v{pd.values}
+			possibleValues: $v{pd.possibleValues}
 		});
 		fields.push(createPrivateGetActionDescriptorFunction(macro {
 			name: $v{actionName},
@@ -334,12 +334,8 @@ class IdeckiaAction {
 						switch v.expr {
 							case EConst(c):
 								switch c {
-									case CInt(v):
+									case CInt(v) | CFloat(v) | CString(v, _):
 										possibleValues.push(v);
-									case CFloat(f):
-										possibleValues.push(f);
-									case CString(s, kind):
-										possibleValues.push(s);
 									default:
 								}
 							default:
@@ -369,7 +365,7 @@ class IdeckiaAction {
 	static function createGetActionDescriptorFunction():Field {
 		return {
 			name: 'getActionDescriptor',
-			doc: 'Method that returns action properties descriptor (name, type, isShared, description, values).',
+			doc: 'Method that returns action properties descriptor (name, type, isShared, description, possibleValues).',
 			access: [APublic, AInline],
 			kind: FFun({
 				args: [],
@@ -396,7 +392,7 @@ class IdeckiaAction {
 			table += ' | ${api.data.Loc.tr(prop.description)}';
 			table += ' | ${prop.isShared}';
 			table += ' | ${prop.defaultValue}';
-			table += ' | ${prop.values} |\n';
+			table += ' | ${prop.possibleValues} |\n';
 		}
 
 		return table;
