@@ -67,7 +67,14 @@ const core = {
         },
     },
     updateClientState: state => console.log('New state sent to the client: ' + state),
-    getCurrentLocale: () => 'en_UK'
+    data: {
+        getCurrentLocale: () => 'en_UK',
+        getContent: (path) => path + '_content',
+        getJson: (path) => { path },
+        getLocalizations: (path) => new Map([['en_UK', { id: 'name', text: 'text' }]]),
+        getBytes: (path) => path + '_bytes',
+        getBase64: (path) => path + '_base64',
+    }
 };
 
 const action = new IdeckiaAction();
