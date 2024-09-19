@@ -9,31 +9,46 @@ class Data {
 	public static macro function embedContent(filename:String):ExprOf<String> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		return macro $v{_getContent(Path.join([directory, filename]))};
+		var data = _getContent(Path.join([directory, filename]));
+		if (data == null)
+			Context.fatalError('Could not find the file [$filename]', haxe.macro.Context.currentPos());
+		return macro $v{data};
 	}
 
 	public static macro function embedJson(filename:String):ExprOf<Dynamic> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		return macro $v{_getJson(Path.join([directory, filename]))};
+		var data = _getJson(Path.join([directory, filename]));
+		if (data == null)
+			Context.fatalError('Could not find the file [$filename]', haxe.macro.Context.currentPos());
+		return macro $v{data};
 	}
 
 	public static macro function embedLocalizations(localizationDir:String):ExprOf<LocalizedTexts> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		return macro $v{_getLocalizations(Path.join([directory, localizationDir]))};
+		var data = _getLocalizations(Path.join([directory, localizationDir]));
+		if (data == null)
+			Context.fatalError('Could not find the directory [$localizationDir]', haxe.macro.Context.currentPos());
+		return macro $v{data};
 	}
 
 	public static macro function embedBytes(filename:String):ExprOf<haxe.io.Bytes> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		return macro $v{_getBytes(Path.join([directory, filename]))};
+		var data = _getBytes(Path.join([directory, filename]));
+		if (data == null)
+			Context.fatalError('Could not find the file [$filename]', haxe.macro.Context.currentPos());
+		return macro $v{data};
 	}
 
 	public static macro function embedBase64(filename:String):ExprOf<String> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		return macro $v{_getBase64(Path.join([directory, filename]))};
+		var data = _getBase64(Path.join([directory, filename]));
+		if (data == null)
+			Context.fatalError('Could not find the file [$filename]', haxe.macro.Context.currentPos());
+		return macro $v{data};
 	}
 
 	#if !macro
