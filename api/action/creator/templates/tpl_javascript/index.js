@@ -28,7 +28,7 @@ class ::className:: {
      */
     execute(currentState) {
         return new Promise((resolve, reject) => {
-            reject(this.localizedTexts.tr(this.core.data.getCurrentLocale(), "action_description"));
+            reject(this.localizedTexts.tr(this.core.data.getCurrentLocale(), "not_implemented"));
         });
         // return new Promise((resolve, reject) => {
         //     resolve({state: currentState});
@@ -58,7 +58,7 @@ class ::className:: {
      */
     show(currentState) {
         return new Promise((resolve, reject) => {
-            resolve(initialState);
+            resolve(currentState);
         });
     }
 
