@@ -27,10 +27,11 @@ class Data {
 	public static macro function embedLocalizations(localizationDir:String):ExprOf<LocalizedTexts> {
 		var posInfos = Context.getPosInfos(Context.currentPos());
 		var directory = Path.directory(posInfos.file);
-		var data = _getLocalizations(Path.join([directory, localizationDir]));
-		if (data == null)
-			Context.fatalError('Could not find the directory [$localizationDir]', haxe.macro.Context.currentPos());
-		return macro $v{data};
+		try {
+			return macro $v{_getLocalizations(Path.join([directory, localizationDir]))};
+		} catch (e:haxe.Exception) {
+			Context.fatalError(e.message, haxe.macro.Context.currentPos());
+		}
 	}
 
 	public static macro function embedBytes(filename:String):ExprOf<haxe.io.Bytes> {
