@@ -21,6 +21,7 @@ class ActionCreator {
 			}
 
 			var isHxTpl = false;
+			var isTsTpl = false;
 			var tplFiles:Array<TplFile> = null;
 			var tplDirectory = createActionDef.tplDirectory;
 			var tplName = createActionDef.tplName.toLowerCase();
@@ -31,6 +32,9 @@ class ActionCreator {
 						tplFiles = Macros.getHxTemplate();
 					case 'javascript':
 						tplFiles = Macros.getJsTemplate();
+					case 'typescript':
+						isTsTpl = true;
+						tplFiles = Macros.getTsTemplate();
 					default:
 				};
 			} else {
@@ -70,8 +74,12 @@ class ActionCreator {
 			logInfo('Created [$name] action from template [$tplName] in [$directory]');
 
 			if (isHxTpl) {
-				logInfo('Trying to install ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
+				logInfo('Installing ideckia_api using lix: executing "lix install gh:ideckia/ideckia_api"');
 				Sys.command('cd ' + directory + ' && lix install gh:ideckia/ideckia_api');
+			}
+			if (isTsTpl) {
+				logInfo('Installing dependencies ');
+				Sys.command('cd ' + directory + ' && npm install');
 			}
 
 			resolve(directory);

@@ -20,6 +20,10 @@ class Macros {
 		return getTemplateMacro('tpl_haxe');
 	}
 
+	public static macro function getTsTemplate():ExprOf<Array<TplFile>> {
+		return getTemplateMacro('tpl_typescript');
+	}
+
 	public static macro function getJsTemplate():ExprOf<Array<TplFile>> {
 		return getTemplateMacro('tpl_javascript');
 	}
