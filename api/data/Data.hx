@@ -31,6 +31,7 @@ class Data {
 			return macro $v{_getLocalizations(Path.join([directory, localizationDir]))};
 		} catch (e:haxe.Exception) {
 			Context.fatalError(e.message, haxe.macro.Context.currentPos());
+			return macro null;
 		}
 	}
 
