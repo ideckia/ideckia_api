@@ -63,7 +63,11 @@ class Data {
 	}
 
 	public static inline function getLocalizations(path:String):LocalizedTexts {
-		return _getLocalizations(path);
+		try {
+			return _getLocalizations(path);
+		} catch (e:haxe.Exception) {
+			return new LocalizedTexts(new Map());
+		}
 	}
 
 	public static inline function getBytes(path:String) {
