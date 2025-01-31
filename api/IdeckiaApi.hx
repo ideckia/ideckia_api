@@ -172,7 +172,7 @@ enum abstract PropEditorFieldType(String) from String to String {
 					PropEditorFieldType.text;
 				};
 			case x:
-				if (StringTools.contains(fieldType, '{')) {
+				if (StringTools.startsWith(fieldType, '{')) {
 					PropEditorFieldType.object;
 				} else if (StringTools.contains(x, 'Array<')) {
 					var itemType = StringTools.replace(x, 'Array<', '');
