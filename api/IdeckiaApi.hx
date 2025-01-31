@@ -143,6 +143,38 @@ enum abstract ActionStatusCode(String) from String {
 	var ok;
 }
 
+enum abstract PropEditorFieldType(String) from String to String {
+	var text;
+	var number;
+	var password;
+	var boolean;
+	var path;
+	var icon;
+	var listOf;
+
+	public static function fromTypeName(fieldName:String, fieldType:String):String {
+		final editorFieldTypes = [text, number, password, boolean, path];
+		if (fieldType != null && (editorFieldTypes.contains(fieldType) || StringTools.startsWith(fieldType, listOf)))
+			return fieldType;
+
+		if (StringTools.startsWith(fieldType, 'Null<'))
+			fieldType = StringTools.replace(fieldType.substring(0, fieldType.length - 1), 'Null<', '');
+		return switch fieldType {
+			case 'Int' | 'UInt' | 'Float': PropEditorFieldType.number;
+			case 'Bool': PropEditorFieldType.boolean;
+			case 'String':
+				if (StringTools.contains(fieldName, 'password') || StringTools.contains(fieldName, 'pwd')) {
+					PropEditorFieldType.password;
+				} else if (StringTools.contains(fieldName, 'path')) {
+					PropEditorFieldType.path;
+				} else {
+					PropEditorFieldType.text;
+				};
+			case x: if (StringTools.contains(x, 'Array<')) StringTools.replace(x, 'Array', PropEditorFieldType.listOf) else x;
+		}
+	}
+}
+
 typedef ActionStatus = {
 	var code:ActionStatusCode;
 	var ?message:String;

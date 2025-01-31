@@ -3,7 +3,7 @@ package;
 using api.IdeckiaApi;
 
 typedef Props = {
-	@:editable("prop_property_name", "default value", ["possible", "values", "for the property"])
+	@:editable("prop_property_name", "default value", ["possible", "values", "for the property"], PropEditorFieldType.text)
 	var property_name:String;
 }
 
@@ -47,7 +47,7 @@ class ::className:: extends IdeckiaAction {
 				props : [{
 					name : "property_name",
 					defaultValue: "default value",
-					type: "String",
+					type: "text",
 					value: "possible",
 					isShared: false,
 					sharedName : "shared_property_name",

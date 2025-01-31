@@ -20,6 +20,7 @@ class IdeckiaAction {
 	static inline var EDITABLE_DESCRIPTION_IDX = 0;
 	static inline var EDITABLE_DEFAULT_VALUE_IDX = 1;
 	static inline var EDITABLE_POSSIBLE_VALUES_IDX = 2;
+	static inline var EDITABLE_FIELD_TYPE_IDX = 3;
 
 	static public function build() {
 		var fields:Array<Field> = Context.getBuildFields();
@@ -80,16 +81,8 @@ class IdeckiaAction {
 							case TAnonymous(a):
 								var anonType:AnonType = a.get();
 
-								var propDescriptor:PropDescriptor,
-									propDescription,
-									propPossibleValues,
-									defaultValue:Any,
-									isShared:Bool,
-									sharedName:String,
-									isEditable:Bool,
-									propType,
-									defaultExpr:Expr,
-									metas:haxe.macro.Metadata;
+								var propDescriptor:PropDescriptor, propDescription, propPossibleValues, defaultValue:Any, isShared:Bool, sharedName:String,
+									isEditable:Bool, propType, defaultExpr:Expr, metas:haxe.macro.Metadata;
 								anonType.fields.sort((field1, field2) -> {
 									var fieldLine1 = PositionTools.toLocation(field1.pos).range.start.line;
 									var fieldLine2 = PositionTools.toLocation(field2.pos).range.start.line;
@@ -100,8 +93,8 @@ class IdeckiaAction {
 									propPossibleValues = null;
 									defaultValue = null;
 									isShared = false;
-									sharedName = '';
 									propType = null;
+									sharedName = '';
 
 									metas = classField.meta.get();
 									isEditable = false;
@@ -118,6 +111,7 @@ class IdeckiaAction {
 												defaultValue = null;
 											}
 											propPossibleValues = extractPossibleValues(meta);
+											propType = extractFieldTypeExpr(meta);
 										} else if (meta.name == SHARED_METADATA) {
 											isShared = true;
 											sharedName = extractSharedName(meta);
@@ -129,7 +123,8 @@ class IdeckiaAction {
 									// Only @:editable and @:shared props goes in the descriptor
 									if (isEditable || isShared) {
 										// Get the property type
-										propType = TypeTools.toString(classField.type);
+										if (propType == null)
+											propType = PropEditorFieldType.fromTypeName(classField.name, TypeTools.toString(classField.type));
 
 										// Create the descriptor and add it to the array
 										propDescriptors.push({
@@ -317,7 +312,18 @@ class IdeckiaAction {
 	 * Get the default expression for the property
 	 */
 	static function extractDefaultValueExpr(meta:MetadataEntry) {
-		return meta.params[EDITABLE_DEFAULT_VALUE_IDX];
+		var param = meta.params[EDITABLE_DEFAULT_VALUE_IDX];
+		var def = null;
+		if (param != null) {
+			def = param;
+			switch param.expr {
+				case EConst(CIdent(i)):
+					if (i == 'null')
+						def = null;
+				default:
+			}
+		}
+		return def;
 	}
 
 	/*
@@ -327,9 +333,9 @@ class IdeckiaAction {
 		var param = meta.params[EDITABLE_POSSIBLE_VALUES_IDX];
 		var possibleValues = null;
 		if (param != null) {
-			possibleValues = [];
 			switch param.expr {
 				case EArrayDecl(values):
+					possibleValues = [];
 					for (v in values) {
 						switch v.expr {
 							case EConst(c):
@@ -346,6 +352,23 @@ class IdeckiaAction {
 		}
 
 		return possibleValues;
+	}
+
+	/*
+	 * Get the editor field type (text, password or path) expression for the property
+	 */
+	static function extractFieldTypeExpr(meta:MetadataEntry) {
+		var param = meta.params[EDITABLE_FIELD_TYPE_IDX];
+		var fieldType = null;
+		if (param != null) {
+			fieldType = switch param.expr {
+				case EConst(CString(s, _)): s;
+				case EField(_, field): field;
+				default: 'text';
+			}
+		}
+
+		return fieldType;
 	}
 
 	static function createPrivateGetActionDescriptorFunction(actionDescriptor:ExprOf<ActionDescriptor>):Field {

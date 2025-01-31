@@ -47,7 +47,7 @@ class ::className:: implements IdeckiaAction {
                 description: this.localizedTexts.tr(this.core.data.getCurrentLocale(), "action_description"),
                 // props : [{
                 // 	name : "property_name",
-                // 	type : "String",
+                // 	type : "text",
                 // 	isShared : false,
                 // 	sharedName : "shared_property_name",
                 //	defaultValue: "default value",
