@@ -150,10 +150,11 @@ enum abstract PropEditorFieldType(String) from String to String {
 	var boolean;
 	var path;
 	var icon;
+	var object;
 	var listOf;
 
 	public static function fromTypeName(fieldName:String, fieldType:String):String {
-		final editorFieldTypes = [text, number, password, boolean, path];
+		final editorFieldTypes = [text, number, password, boolean, path, icon, object];
 		if (fieldType != null && (editorFieldTypes.contains(fieldType) || StringTools.startsWith(fieldType, listOf)))
 			return fieldType;
 
@@ -170,7 +171,14 @@ enum abstract PropEditorFieldType(String) from String to String {
 				} else {
 					PropEditorFieldType.text;
 				};
-			case x: if (StringTools.contains(x, 'Array<')) StringTools.replace(x, 'Array', PropEditorFieldType.listOf) else x;
+			case x:
+				if (StringTools.contains(fieldType, '{')) {
+					PropEditorFieldType.object;
+				} else if (StringTools.contains(x, 'Array<')) {
+					var itemType = StringTools.replace(x, 'Array<', '');
+					itemType = StringTools.replace(itemType, '>', '');
+					PropEditorFieldType.listOf + '<${PropEditorFieldType.fromTypeName(fieldName, itemType)}>';
+				} else x;
 		}
 	}
 }
