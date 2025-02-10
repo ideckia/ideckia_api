@@ -53,6 +53,10 @@ const core = {
             console.log(title);
             return Promise.resolve(['item0', 'item1']);
         },
+        custom: (path) => {
+            console.log(path);
+            return Promise.resolve(['item0', 'item1']);
+        },
     },
     mediaPlayer: {
         play: (path) => {
