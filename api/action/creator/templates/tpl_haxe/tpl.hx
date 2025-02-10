@@ -14,6 +14,8 @@ class ::className:: extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState>
 		return super.init(initialState);
 
+	override public function deinit():Void {}
+
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
         return js.lib.Promise.reject(Loc.not_implemented.tr());
         // return js.lib.Promise.resolve(new ActionOutcome({state: currentState}));

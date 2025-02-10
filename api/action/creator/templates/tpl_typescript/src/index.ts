@@ -20,6 +20,9 @@ class ::className:: implements IdeckiaAction {
         return Promise.resolve(initialState);
     }
 
+    deinit(): void {
+    }
+
     execute(currentState: ItemState): Promise<ActionOutcome> {
         this.core.dialog.error('Errorea', this.localizedTexts.tr(this.core.data.getCurrentLocale(), "not_implemented"));
         return Promise.resolve({ state: currentState });

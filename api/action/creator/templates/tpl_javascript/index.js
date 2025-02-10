@@ -24,6 +24,12 @@ class ::className:: {
     }
 
     /**
+     *  Method called when the action is unloaded
+     */
+    deinit() {
+    }
+
+    /**
      * Method called when the item is clicked in the client
      */
     execute(currentState) {

@@ -25,6 +25,11 @@ abstract class IdeckiaAction {
 		return js.lib.Promise.resolve(initialState);
 
 	/**
+	 *  Method called when the action is unloaded
+	 */
+	public function deinit():Void {}
+
+	/**
 	 *  Method called when the item is clicked in the client
 	 *
 	 *  @param currentState: The current ItemState of the item @see <https://github.com/ideckia/ideckia_api/blob/main/api/IdeckiaApi.hx#L74-L85>
