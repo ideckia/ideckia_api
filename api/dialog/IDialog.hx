@@ -94,9 +94,13 @@ interface IDialog {
 		@param title The title of the window
 		@param text The text of the window
 		@param showUsername Display the username field
+		@param userLabel Label for the username field
+		@param passwordLabel Label for the password field
 		@returns A promise with the an object containing username (if required) and password
 	**/
-	function password(title:String, text:String, showUsername:Bool = false, ?options:WindowOptions):Promise<Option<{username:String, password:String}>>;
+	function password(title:String, text:String, showUsername:Bool = false, userLabel:String = "username", passwordLabel:String = "password",
+		?options:WindowOptions):Promise<Option<{username:String, password:String
+		}>>;
 
 	/**
 		Create and show a progress dialog
@@ -112,10 +116,11 @@ interface IDialog {
 		Open a color selection dialog
 
 		@param title The title of the window
+		@param label Label of the widget
 		@param initialColor The initial selected color.
 		@returns A promise with the selected color
 	**/
-	function color(title:String, initialColor:String = "#FFFFFF", ?options:WindowOptions):Promise<Option<Color>>;
+	function color(title:String, label:String = "Select color", initialColor:String = "#FFFFFF", ?options:WindowOptions):Promise<Option<Color>>;
 
 	/**
 		Open a dialog to get user input text

@@ -31,7 +31,7 @@ const core = {
             console.log(title);
             return Promise.resolve('');
         },
-        password: (title, _text, _username = false) => {
+        password: (title, _text, _userLabel = "username", _passwordLabel = "password", _username = false) => {
             console.log(title);
             return Promise.resolve(['username', 'password']);
         },
@@ -41,7 +41,7 @@ const core = {
                 progress: (percentage) => console.log(`progress: ${percentage}`)
             };
         },
-        color: (title, _initialColor = "#FFFFFF", _palette = false) => {
+        color: (title, _label = "Select color", _initialColor = "#FFFFFF", _palette = false) => {
             console.log(title);
             return Promise.resolve({ red: 192, green: 192, blue: 192 });
         },
