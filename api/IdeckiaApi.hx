@@ -305,8 +305,16 @@ macro function tr(textIdExpr:ExprOf<String>, ?argsExpr:ExprOf<Array<Dynamic>>) {
 
 	final textId = haxe.macro.ExprTools.getValue(textIdExpr);
 	final argsLength = (argsExpr == null) ? 0 : switch argsExpr.expr {
-		case EArrayDecl(arr):
-			arr.length;
+		case EArrayDecl(arr): arr.length;
+		case EConst(CIdent(ident)) if (ident == 'null'): 0;
+		case EConst(_):
+			argsExpr.expr = EArrayDecl([
+				{
+					expr: argsExpr.expr,
+					pos: haxe.macro.Context.currentPos()
+				}
+			]);
+			1;
 		default: 0;
 	}
 
