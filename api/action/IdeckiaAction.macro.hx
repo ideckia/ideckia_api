@@ -165,7 +165,7 @@ class IdeckiaAction {
 										this.props.delay_ms = 1000;
 									}
 								 */
-								if (possibleValues != null) {
+								if (possibleValues != null && possibleValues.length > 0) {
 									assignDefaults.push(macro @:pos(Context.currentPos()) {
 										if (!$v{possibleValues}.contains(this.props.$propName))
 											this.props.$propName = ${defaultExprMap.get(propName)};
