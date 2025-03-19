@@ -315,13 +315,12 @@ class IdeckiaAction {
 		var param = meta.params[EDITABLE_DEFAULT_VALUE_IDX];
 		var def = null;
 		if (param != null) {
-			def = param;
-			switch param.expr {
-				case EConst(CIdent(i)):
-					if (i == 'null')
-						def = null;
+			def = switch param.expr {
+				case EConst(CIdent(i)) if (i == 'null'):
+					def = null;
 				default:
-			}
+					param;
+			};
 		}
 		return def;
 	}
@@ -342,6 +341,8 @@ class IdeckiaAction {
 								switch c {
 									case CInt(v) | CFloat(v) | CString(v, _):
 										possibleValues.push(v);
+									case CIdent(i) if (i != 'null'):
+										possibleValues.push(i);
 									default:
 								}
 							default:
