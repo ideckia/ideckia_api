@@ -1,8 +1,5 @@
 const { IdeckiaAction } = require('.');
 
-// put here the properties you want to test
-const props = {};
-
 const core = {
     log: {
         error: text => console.error(text),
@@ -81,6 +78,9 @@ const core = {
     }
 };
 
+// put here the properties you want to test
+const props = {};
+
 const action = new IdeckiaAction();
 action.setup(props, core);
 
@@ -91,7 +91,9 @@ const itemState = {
     icon: '',
     bgColor: '0x999999',
 }
-action.init(itemState);
+action.init(itemState)
+    .then(responseState => console.log(responseState))
+    .catch(error => console.error('init.rejected: ' + error));
 action.execute(itemState)
     .then(responseState => console.log(responseState))
-    .catch(error => console.error('Rejected: ' + error));
+    .catch(error => console.error('execute.rejected: ' + error));
