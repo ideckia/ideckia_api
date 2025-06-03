@@ -12,7 +12,7 @@ class ActionCreator {
 
 	public static function create(createActionDef:CreateActionDef, logInfo:(data:Dynamic, ?posInfos:Null<haxe.PosInfos>) -> Void) {
 		return new js.lib.Promise((resolve, reject) -> {
-			var name = ~/\s+/g.replace(createActionDef.name, '-').toLowerCase();
+			var name = ~/\s+/g.replace(createActionDef.name, '-');
 			var description = createActionDef.description;
 			var splittedName = name.split('-');
 			var className = '';
@@ -45,7 +45,7 @@ class ActionCreator {
 			if (actionPath == null || actionPath == '')
 				actionPath = Path.directory(Sys.programPath());
 
-			var directory = Path.join([FileSystem.fullPath(actionPath), name]);
+			var directory = Path.join([FileSystem.fullPath(actionPath), name.toLowerCase()]);
 			if (FileSystem.exists(directory)) {
 				reject('Already exists an action with the name [$name].');
 				return;
