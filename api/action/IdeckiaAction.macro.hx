@@ -467,7 +467,7 @@ class IdeckiaAction {
 			case TFloat(s):
 				s;
 			case TString(s):
-				'"$s"';
+				'$s';
 			default:
 				null;
 		};
